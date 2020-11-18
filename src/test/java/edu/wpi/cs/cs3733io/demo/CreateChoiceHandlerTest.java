@@ -9,7 +9,7 @@ import java.io.OutputStream;
 import org.junit.Assert;
 import org.junit.Test;
 
-import edu.wpi.cs.cs3733io.demo.CreateChoiceHandler;
+import edu.wpi.cs.cs3733io.CreateChoiceHandler;
 
 /**
  * A simple test harness for locally invoking your Lambda function handler.

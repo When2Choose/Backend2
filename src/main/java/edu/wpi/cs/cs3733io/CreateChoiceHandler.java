@@ -1,4 +1,4 @@
-package edu.wpi.cs.cs3733io.demo;
+package edu.wpi.cs.cs3733io;
 
 import java.io.BufferedReader;
 import java.io.IOException;
