@@ -1,0 +1,473 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: CS3733GAOA API
+  description: CS3733 API
+  
+# tags are used for organizing operations
+tags:
+- name: admins
+  description: Secured Admin-only calls
+- name: users
+  description: Operations available to regular consumers
+
+paths: 
+  /createChoice:
+    post:
+      tags:
+        - users
+      summary: User creates a choice.
+      description: User requests to create a choice and is redirected to login.
+      operationId: createChoice
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: ChoiceRequest
+        description: Group count, description, and list of alternatives.
+        schema:
+          $ref: '#/definitions/Choice'
+      responses:
+        200:
+          description: Choice Created
+        400:
+          description: Choice NOT Created
+          
+          
+  /choice:
+    get:
+      summary: Request a choice. 
+      description: Get the information of a choice.
+      operationId: getChoice
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Choice paramenters retrieved
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Choice'
+        400:
+          description: Choice paramenters NOT retrieved        
+  
+
+  /choice/{choiceId}/addFeedback:
+    post:
+      tags:
+        - users
+      summary: User requests to add feedback to an alternative.
+      description: User requests to add feedback to an alternative. 
+      operationId: addFeedback
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: choiceId
+        in: path
+        description: Id of Choice.
+        required: true
+        type: integer
+      - name: addFeedback
+        in: body 
+        description: Adding feedback
+        schema:
+          $ref: '#/definitions/AddingFeedback'
+      responses:
+        200:
+          description: Feedback Added 
+        400:
+          description: Feedback NOT Added 
+          
+  /choice/{choiceId}/{alternativeIndex}/approveAlternative:        
+    post:
+      tags:
+        - users
+      summary: User approves an alternative.
+      description: User requests to approve an alternative.
+      operationId: approveAlternative
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: choiceId
+        in: path
+        description: Id of Choice.
+        required: true
+        type: integer
+      - name: alternativeIndex
+        in: path
+        description: Index of Alterantive
+        required: true
+        type: integer
+      - name: approve
+        in: body 
+        description: Adding feedback
+        schema:
+          $ref: '#/definitions/Approve'
+      responses:
+        200:
+          description: Approve Added 
+        400:
+          description: Approve NOT Added
+          
+  /choice/{choiceId}/{alternativeIndex}/disapproveAlternative:        
+    post:
+      tags:
+          - users
+      summary: User disapprove an alternative.
+      description: User requests to disapprove an alternative.
+      operationId: disapproveAlternative
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: choiceId
+        in: path
+        description: Id of Choice.
+        required: true
+        type: integer
+      - name: alternativeIndex
+        in: path
+        description: Index of Alterantive
+        required: true
+        type: integer
+      - name: disapprove
+        in: body 
+        description: Adding feedback
+        schema:
+          $ref: '#/definitions/Disapprove'
+      responses:
+        200:
+          description: Disapprove Added 
+        400:
+          description: Disapprove NOT Added 
+          
+  /choice/{choiceId}/{alternativeIndex}/removeApprove:        
+    post:
+      tags:
+          - users
+      summary: User removes approval from an alternative.
+      description: User removes approval from an alternative.
+      operationId: removeApprove
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: choiceId
+        in: path
+        description: Id of Choice.
+        required: true
+        type: integer
+      - name: alternativeIndex
+        in: path
+        description: Index of Alterantive
+        required: true
+        type: integer
+      - name: removeApprove
+        in: body 
+        description: Adding feedback
+        schema:
+          $ref: '#/definitions/RemoveApprove'
+      responses:
+        200:
+          description: Removed Approval  
+        400:
+          description: NO Removed Approval
+          
+  /choice/{choiceId}/{alternativeIndex}/removeDisapprove:        
+    post:
+      tags:
+          - users
+      summary: User removes disapproval from an alternative.
+      description: User removes disapproval from an alternative.
+      operationId: removeDisapprove
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: choiceId
+        in: path
+        description: Id of Choice.
+        required: true
+        type: integer
+      - name: alternativeIndex
+        in: path
+        description: Index of Alterantive
+        required: true
+        type: integer
+      - name: removeDisapprove
+        in: body 
+        description: Adding feedback
+        schema:
+          $ref: '#/definitions/RemoveDisapprove'
+      responses:
+        200:
+          description: Removed Disapproval  
+        400:
+          description: NO Removed Disapproval 
+          
+        
+  /loginRequest/userLogin:
+    post:
+      tags:
+      - users
+      summary: User requests to login. 
+      description: User requests to enter a choice, name and optional password.
+      operationId: userLogin
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: userLogin
+        description: Trying to login
+        schema:
+          $ref: '#/definitions/UserLogin'
+      responses:
+        200:
+          description: User Logged In
+        400:
+          description: User Login Failed
+  
+  /loginRequest/adminLogin:
+    post:
+      tags:
+      - admin
+      summary: Admin requests to login. 
+      description: Admin must prove username and password.
+      operationId: adminLogin
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: adminLogin
+        description: Admin tries to login.
+        schema:
+          $ref: '#/definitions/AdminLogin'
+      responses:
+        200:
+          description: Administrator Logged In
+        400:
+          description: Administrator Login Failed
+
+  /administratorGetAllChoices:
+    get:
+      summary: This is the administrator gettting choices
+      description: same as summary 
+      operationId: getChoices
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Choices Got
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/ListOfChoices'
+        400:
+          description: No Choices got
+          
+  /administrator/deleteChoices:
+    post:
+      tags:
+      - admin
+      summary: Admin requests delete choices. 
+      description: Admin enters days old choices to delete. 
+      operationId: deleteChoices
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: LoginAdminRequest
+        description: Administrator is trying to delete choices.
+        schema:
+          $ref: '#/definitions/AdminDeleteChoices'
+      responses:
+        200:
+          description: Choices Deleted
+        400:
+          description: Choices NOT Deleted
+          
+          
+  /administrator/generateReport:
+    get:
+      summary: Administrator gets a report.
+      description: Report of all choices.
+      operationId: generateReport
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Report Generated
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/ListOfChoices'
+        400:
+          description: Report Not Generated
+    
+  
+definitions:
+
+  UserLogin:
+    type: object
+    required:
+    - name
+    - choiceId
+    properties:
+      name:
+        type: string
+      choiceId:
+        type: integer
+      passowrd:
+        type: string
+
+
+  Choice:
+    type: object
+    required:
+    - memberCount
+    - description
+    - alternatives
+    properties:
+      memberCount:
+        type: integer
+      alternatives:
+        type: object
+        items:
+          $ref: '#/definitions/ListOfAlternatives'
+      description:
+        type: string
+      choiceId:
+        type: integer
+      isCompleted:
+        type: boolean
+      dateCompleted:
+        type: string
+      
+      
+        
+  ListOfChoices:      
+    type: array
+    items:
+      $ref: '#/definitions/Choice'
+  
+  Alternative:
+    type: object
+    required:
+    - name
+    properties:
+      name:
+        type: string
+      index:
+        type: integer
+    
+  
+  ListOfAlternatives:      
+    type: array
+    items:
+      $ref: '#/definitions/Alternative'
+        
+  
+  AddingFeedback:
+    type: object
+    required:
+    - alternativeIndex
+    - feedbackText
+    properties:
+      alternativeIndex:
+        type: integer
+      feedbackText:
+        type: string
+        
+  Approve:
+    type: object
+    required:
+    - choiceId
+    properties:
+      alternative:
+        type: object
+        items:
+          $ref: '#/definitions/Alternative'
+      choiceId:
+        type: integer
+        
+        
+  Disapprove:
+    type: object
+    required:
+    - choiceId
+    properties:
+      alternative:
+        type: object
+        items:
+          $ref: '#/definitions/Alternative'
+      choiceId:
+        type: integer
+        
+  RemoveApprove:
+    type: object
+    required:
+    - choiceId
+    properties:
+      alternative:
+        type: object
+        items:
+          $ref: '#/definitions/Alternative'
+      choiceId:
+        type: integer
+        
+  RemoveDisapprove:
+    type: object
+    required:
+    - choiceId
+    properties:
+      alternative:
+        type: object
+        items:
+          $ref: '#/definitions/Alternative'
+      choiceId:
+        type: integer
+        
+
+
+  AdminLogin:
+    type: object
+    required:
+    - name
+    - password
+    properties:
+      name:
+        type: string
+      passowrd:
+        type: string
+        
+  AdminDeleteChoices:
+    type: object
+    required:
+    - days
+    properties:
+      days:
+        type: integer
+        
+        
+      
+
+#Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /CS3733GAOA/CS3733GAOA/1.0.0
+schemes:
+ - https
