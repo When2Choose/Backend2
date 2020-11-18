@@ -261,7 +261,7 @@ paths:
         400:
           description: Administrator Login Failed
 
-  /administratorGetAllChoices:
+  /administrator:
     get:
       summary: This is the administrator gettting choices
       description: same as summary 
@@ -369,11 +369,34 @@ definitions:
     type: object
     required:
     - name
+    - id
     properties:
       name:
         type: string
-      index:
+      id:
         type: integer
+      feedbackList:
+        type: array
+        items: 
+          $ref: '#/definitions/ListOfFeedback'
+      approvers:
+        type: array
+        items: 
+          type: string
+      disapprovers:
+        type: array
+        items: 
+          type: string
+  
+  ListOfFeedback:
+    type: array
+    items:
+      $ref: '#/definitions/Feedback'
+  
+  Feedback:
+    type: object
+    required:
+    - text
     
   
   ListOfAlternatives:      
