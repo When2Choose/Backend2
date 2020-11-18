@@ -44,16 +44,23 @@ public class CreateChoiceHandler implements RequestStreamHandler {
 			node = Jackson.fromJsonString(node.get("body").asText(), JsonNode.class);
 		}
 
-		int groupMembers;
-		String description, alternatives;
+		int memberCount, choiceId;
+		String description, alternatives, dateCompleted;
+		boolean isCompleted;
 
-		String param = node.get("groupMembers").asText();
-		groupMembers = Integer.parseInt(param);
+		String param = node.get("memberCount").asText();
+		memberCount = Integer.parseInt(param);
 		param = node.get("description").asText();
 		description = param;
 		param = node.get("alternatives").asText();
 		alternatives = param;
-
+		param = node.get("choiceId").asText();
+		choiceId = Integer.parseInt(param);
+		param = node.get("isCompleted").asText();
+		isCompleted = Boolean.parseBoolean(param);
+		param = node.get("dateCompleted").asText();
+		dateCompleted = param;
+		
 //	    	boolean error = false;
 //			try {
 //	    		arg1 = Double.parseDouble(param);
@@ -91,8 +98,8 @@ public class CreateChoiceHandler implements RequestStreamHandler {
 
 		PrintWriter pw = new PrintWriter(output);
 
-		int statusCode = 2001;
-		String responeString = Integer.toString(groupMembers) + " " + alternatives + " " + description;
+		int statusCode = 200;
+		String responeString = Integer.toString(memberCount) + " " + alternatives + " " + description + " " + choiceId + " " + isCompleted + " " + dateCompleted;
 
 		// Needed for CORS integration...
 		String response = "{ \n" + "  \"isBase64Encoded\" : false, \n" + "  \"statusCode\"      : " + statusCode
