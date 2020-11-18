@@ -32,6 +32,10 @@ paths:
       responses:
         200:
           description: Choice Created
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Choice'
         400:
           description: Choice NOT Created
           
