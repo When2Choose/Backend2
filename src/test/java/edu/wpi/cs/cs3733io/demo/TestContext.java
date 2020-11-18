@@ -1,4 +1,4 @@
-package edu.wpi.cs.cs3733aago.demo;
+package edu.wpi.cs.cs3733io.demo;
 
 import com.amazonaws.services.lambda.runtime.ClientContext;
 import com.amazonaws.services.lambda.runtime.CognitoIdentity;
