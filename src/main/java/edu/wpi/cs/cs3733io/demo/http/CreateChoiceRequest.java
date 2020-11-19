@@ -9,7 +9,7 @@ public class CreateChoiceRequest {
 
 	//@formatter:off 
 	public int getMemberCount() { return memberCount; }
-	public void setmemberCount(int memberCount) { this.memberCount = memberCount; }
+	public void setMemberCount(int mcnt) { this.memberCount = mcnt; }
 	
 	public String getDescription() { return description; }
 	public void setDescription(String description) { this.description = description; }
