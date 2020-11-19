@@ -38,31 +38,3 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 
 }
 
-//	@Override
-//	public AddResponse handleRequest(AddRequest req, Context context) {
-//		logger = context.getLogger();
-//		logger.log("Loading Java Lambda handler of RequestHandler");
-//		logger.log(req.toString());
-//
-//		String param = node.get("memberCount").asText();
-//		memberCount = Integer.parseInt(param);
-//		param = node.get("description").asText();
-//		description = param;
-//		param = node.get("alternatives").asText();
-//		alternatives = param;
-//		param = node.get("choiceId").asText();
-//		choiceId = Integer.parseInt(param);
-//		param = node.get("isCompleted").asText();
-//		isCompleted = Boolean.parseBoolean(param);
-//		param = node.get("dateCompleted").asText();
-//		dateCompleted = param;
-//
-//		boolean fail = false;
-//		String failMessage = "";
-//		AddResponse response;
-//
-//		response = new AddResponse(123321, 200);
-//		return response;
-//	}
-//
-//}
