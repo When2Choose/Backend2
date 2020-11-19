@@ -23,7 +23,7 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 	CreateChoiceResponse response;
 
 	// This function needs to return a new page for the user to go to along with a
-	// json containing the alternatives,
+	// json containing the alternatives, and alterantive information
 	@Override
 	public CreateChoiceResponse handleRequest(CreateChoiceRequest choiceRequest, Context context) {
 		if (context != null) {
