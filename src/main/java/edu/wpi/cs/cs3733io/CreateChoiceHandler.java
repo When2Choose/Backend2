@@ -21,7 +21,7 @@ import edu.wpi.cs.cs3733io.model.Choice;
 public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, CreateChoiceResponse> {
 	LambdaLogger logger;
 	CreateChoiceResponse response;
-
+ int i =5;
 	// This function needs to return a new page for the user to go to along with a
 	// json containing the alternatives,
 	@Override
@@ -35,6 +35,6 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 		response = new CreateChoiceResponse(choice.toString(), 200);
 		return response;
 	}
-
+//cbbefwvgubwevhbcfuvbwerncv
 }
 
