@@ -17,5 +17,4 @@ public class AdminLoginResponse {
 		this.statusCode = statusCode;
 		this.error = errorMessage;
 	}
-
 }

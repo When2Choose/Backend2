@@ -1,7 +1,6 @@
 package edu.wpi.cs.cs3733io.http;
 
 public class UserLoginResponse {
-	
 	public String response;
 	public int statusCode;  // HTTP status code.
 	public String error;
@@ -17,5 +16,4 @@ public class UserLoginResponse {
 		this.statusCode = statusCode;
 		this.error = errorMessage;
 	}
-	
 }

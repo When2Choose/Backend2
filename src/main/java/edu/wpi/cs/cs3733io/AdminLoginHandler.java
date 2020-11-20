@@ -6,9 +6,8 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 import edu.wpi.cs.cs3733io.http.AdminLoginRequest;
 import edu.wpi.cs.cs3733io.http.AdminLoginResponse;
-import edu.wpi.cs.cs3733io.http.CreateChoiceResponse;
 import edu.wpi.cs.cs3733io.model.Administrator;
-import edu.wpi.cs.cs3733io.model.Choice;
+
 
 public class AdminLoginHandler implements RequestHandler<AdminLoginRequest, AdminLoginResponse> {
 	LambdaLogger logger;

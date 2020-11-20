@@ -1,7 +1,6 @@
 package edu.wpi.cs.cs3733io.http;
 
 public class UserLoginRequest {
-
 	String name;
 	String password;
 	
@@ -28,5 +27,4 @@ public class UserLoginRequest {
 
 	public UserLoginRequest() {
 	}
-	
 }
