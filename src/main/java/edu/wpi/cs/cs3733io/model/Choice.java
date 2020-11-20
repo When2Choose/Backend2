@@ -39,6 +39,7 @@ public class Choice {
 	 */
 	public Choice(int memberCount, String description, LinkedList<String> alternativeNames) {
 		uuid =  UUID.randomUUID();
+		uuidString = uuid.toString();
 		this.memberCount = memberCount;
 		this.description = description;
 		this.alternativeNames = alternativeNames;
@@ -47,7 +48,8 @@ public class Choice {
 	}
 
 	public Choice(String uuidString, int memberCount, String description, String dateCompleted, boolean isCompleted, LinkedList<String> alternativeNames) {
-		uuid =  UUID.randomUUID();
+		this.uuidString = uuidString;
+		uuid = UUID.fromString(uuidString);
 		this.memberCount = memberCount;
 		this.description = description;
 		this.alternativeNames = alternativeNames;
