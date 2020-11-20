@@ -14,17 +14,14 @@ public class Choice {
 	String dateCompleted;
 
 	//@formatter:off 
-//	public int getId() { return id; }
-//	public void setId(int i) { this.id = i; }
-//	
-//	public int getMemberCount() { return memberCount; }
-//	public void setmemberCount(int mcnt) { this.memberCount = mcnt; }
-//	
-//	public String getDescription() { return description; }
-//	public void setDescription(String description) { this.description = description; }
-//	
-//	public LinkedList<String> getAlternatives() { return alternatives; }
-//	public void setAlternatives(LinkedList<String> alternatives) { this.alternatives = alternatives; } 
+	public String getUuidString() { return uuidString; }
+	public void getUuidString(String uuidString) { this.uuidString = uuidString; }
+	
+	public int getMemberCount() { return memberCount; }
+	
+	public String getDescription() { return description; }
+	
+	public LinkedList<String> getAlternatives() { return alternativeNames; }
 	
 	public boolean getIsCompleted() {return isCompleted; }
 	public void setIsCompleted(boolean flag) { this.isCompleted = flag; }
@@ -42,6 +39,7 @@ public class Choice {
 	 */
 	public Choice(int memberCount, String description, LinkedList<String> alternativeNames) {
 		uuid =  UUID.randomUUID();
+		uuidString = uuid.toString();
 		this.memberCount = memberCount;
 		this.description = description;
 		this.alternativeNames = alternativeNames;
@@ -49,13 +47,14 @@ public class Choice {
 		this.isCompleted = false;
 	}
 
-	public Choice(String uuidString, int memberCount, String description, String dateCompleted, LinkedList<String> alternativeNames) {
-		uuid =  UUID.randomUUID();
+	public Choice(String uuidString, int memberCount, String description, String dateCompleted, boolean isCompleted, LinkedList<String> alternativeNames) {
+		this.uuidString = uuidString;
+		uuid = UUID.fromString(uuidString);
 		this.memberCount = memberCount;
 		this.description = description;
 		this.alternativeNames = alternativeNames;
-		this.dateCompleted = "Not Complete";
-		this.isCompleted = false;
+		this.dateCompleted = dateCompleted;
+		this.isCompleted = isCompleted;
 	}
 	/**
 	 * Converts a choice to a string including all fields.
