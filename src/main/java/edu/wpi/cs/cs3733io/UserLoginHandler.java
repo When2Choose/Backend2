@@ -5,15 +5,15 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 
-import edu.wpi.cs.cs3733io.http.DeleteChoicesRequest;
-import edu.wpi.cs.cs3733io.http.DeleteChoicesResponse;
+import edu.wpi.cs.cs3733io.http.UserLoginRequest;
+import edu.wpi.cs.cs3733io.http.UserLoginResponse;
 
-public class UserLoginHandler implements RequestHandler<DeleteChoicesRequest, DeleteChoicesResponse> {
+public class UserLoginHandler implements RequestHandler<UserLoginRequest, UserLoginResponse> {
 	LambdaLogger logger;
-	DeleteChoicesResponse response;
+	UserLoginResponse response;
 
 	@Override
-	public DeleteChoicesResponse handleRequest(DeleteChoicesRequest input, Context context) {	
+	public UserLoginResponse handleRequest(UserLoginRequest input, Context context) {	
 		return response;
 	}
 
