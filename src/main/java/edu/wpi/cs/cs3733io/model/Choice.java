@@ -4,14 +4,14 @@ import java.util.LinkedList;
 import java.util.UUID;
 
 public class Choice {
-	public final UUID uuid = new UUID(64,64);
+	public final UUID uuid; 
+	String uuidString;
 	public final int memberCount;
 	public final String description;
 	public final LinkedList<String> alternativeNames;
 	LinkedList<Alternative> alternatives;
 	boolean isCompleted;
 	String dateCompleted;
-	
 
 	//@formatter:off 
 //	public int getId() { return id; }
@@ -33,15 +33,15 @@ public class Choice {
 	public void setDateCompleted(String dateCompleted) { this.dateCompleted = dateCompleted; }
 	//@formatter:on 
 
-
 	/**
-	 * A Choice that people can access. 
+	 * A Choice that people can access.
 	 * 
 	 * @param memberCount
 	 * @param description
 	 * @param alternativeNames
 	 */
 	public Choice(int memberCount, String description, LinkedList<String> alternativeNames) {
+		uuid =  UUID.randomUUID();
 		this.memberCount = memberCount;
 		this.description = description;
 		this.alternativeNames = alternativeNames;
@@ -49,23 +49,39 @@ public class Choice {
 		this.isCompleted = false;
 	}
 
+	public Choice(String uuidString, int memberCount, String description, String dateCompleted, LinkedList<String> alternativeNames) {
+		uuid =  UUID.randomUUID();
+		this.memberCount = memberCount;
+		this.description = description;
+		this.alternativeNames = alternativeNames;
+		this.dateCompleted = "Not Complete";
+		this.isCompleted = false;
+	}
 	/**
-	 * Converts a choice to a string including all fields. 
+	 * Converts a choice to a string including all fields.
 	 */
 	public String toString() {
 		return "[ID:" + uuid.toString() + "] [Member Count:" + Integer.toString(memberCount) + "] [Alternatives:"
-				+ alternativeNames +  "] [DateCompleted:" + dateCompleted + " Description:"
-				+ description + "]";
+				+ alternativeNames + "] [DateCompleted:" + dateCompleted + "] [Description:" + description + "]";
 	}
-	
+
 	/**
-	 * Creates a list of alternatives that correspond to 
+	 * Creates a list of alternatives that correspond to
 	 */
 	public void createAlternatives() {
 		int index = 0;
-		for(String name : alternativeNames) {
+		for (String name : alternativeNames) {
 			alternatives.addLast(new Alternative(name, index));
 			index++;
 		}
+	}
+	
+	/**
+	 * Complete the choice.
+	 * @param date
+	 */
+	public void competed(String date) {
+		dateCompleted = date;
+		isCompleted = true;
 	}
 }
