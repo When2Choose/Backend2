@@ -23,12 +23,12 @@ public class ChoicesDAO {
 		}
 	}
 
-	public Choice getChoice(String name) throws Exception {
+	public Choice getChoice(String uuid) throws Exception {
 
 		try {
 			Choice choice = null;
-			PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE name=?;");
-			ps.setString(1, name);
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE uuid=?;");
+			ps.setString(1, uuid);
 			ResultSet resultSet = ps.executeQuery();
 
 			while (resultSet.next()) {
@@ -47,7 +47,7 @@ public class ChoicesDAO {
 
 	public boolean updateChoice(Choice choice) throws Exception {
 		try {
-			String query = "UPDATE " + tblName + " SET value=? WHERE name=?;";
+			String query = "UPDATE " + tblName + " SET value=? WHERE uuid=?;";
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setString(1, choice.getUuidString());
 			ps.setString(2, choice.getDescription());
@@ -90,7 +90,7 @@ public class ChoicesDAO {
 //				return false;
 //			}
 
-			PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName + " (uuid, description, complete, date_completed, member_count) VALUES (\"?\", \"?\", ?, \"?\", ?);");
+			PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName + " (uuid, description, complete, date_completed, member_count) VALUES (?,?,?,?,?)");
 			ps.setString(1, choice.getUuidString());
 			ps.setString(2, choice.getDescription());
 			ps.setBoolean(3, choice.getIsCompleted());

@@ -33,7 +33,7 @@ public class DatabaseUtil {
 		// this is resistant to any SQL-injection attack.
 		String schemaName = dbName;
 
-		// These three environment variables must be set!
+		
 		String dbUsername = System.getenv("dbUsername");
 		if (dbUsername == null) {
 			System.err.println("Environment variable dbUsername is not set!");
