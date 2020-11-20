@@ -26,7 +26,7 @@ paths:
       parameters:
       - in: body
         name: ChoiceRequest
-        description: Group count, description, and list of alternatives.
+        description: Send number of users, alternatives as array, description.
         schema:
           $ref: '#/definitions/Choice'
       responses:
@@ -58,7 +58,7 @@ paths:
           description: Choice paramenters NOT retrieved        
   
 
-  /choice/{choiceId}/addFeedback:
+  /choice/addFeedback:
     post:
       tags:
         - users
@@ -70,11 +70,6 @@ paths:
       produces:
       - application/json
       parameters:
-      - name: choiceId
-        in: path
-        description: Id of Choice.
-        required: true
-        type: integer
       - name: addFeedback
         in: body 
         description: Adding feedback
@@ -86,7 +81,7 @@ paths:
         400:
           description: Feedback NOT Added 
           
-  /choice/{choiceId}/{alternativeIndex}/approveAlternative:        
+  /choice/approveAlternative:        
     post:
       tags:
         - users
@@ -98,16 +93,6 @@ paths:
       produces:
       - application/json
       parameters:
-      - name: choiceId
-        in: path
-        description: Id of Choice.
-        required: true
-        type: integer
-      - name: alternativeIndex
-        in: path
-        description: Index of Alterantive
-        required: true
-        type: integer
       - name: approve
         in: body 
         description: Adding feedback
@@ -119,7 +104,7 @@ paths:
         400:
           description: Approve NOT Added
           
-  /choice/{choiceId}/{alternativeIndex}/disapproveAlternative:        
+  /choice/disapproveAlternative:        
     post:
       tags:
           - users
@@ -131,16 +116,6 @@ paths:
       produces:
       - application/json
       parameters:
-      - name: choiceId
-        in: path
-        description: Id of Choice.
-        required: true
-        type: integer
-      - name: alternativeIndex
-        in: path
-        description: Index of Alterantive
-        required: true
-        type: integer
       - name: disapprove
         in: body 
         description: Adding feedback
@@ -152,7 +127,7 @@ paths:
         400:
           description: Disapprove NOT Added 
           
-  /choice/{choiceId}/{alternativeIndex}/removeApprove:        
+  /choice/removeApprove:        
     post:
       tags:
           - users
@@ -164,16 +139,6 @@ paths:
       produces:
       - application/json
       parameters:
-      - name: choiceId
-        in: path
-        description: Id of Choice.
-        required: true
-        type: integer
-      - name: alternativeIndex
-        in: path
-        description: Index of Alterantive
-        required: true
-        type: integer
       - name: removeApprove
         in: body 
         description: Adding feedback
@@ -185,7 +150,7 @@ paths:
         400:
           description: NO Removed Approval
           
-  /choice/{choiceId}/{alternativeIndex}/removeDisapprove:        
+  /choice/removeDisapprove:        
     post:
       tags:
           - users
@@ -197,16 +162,6 @@ paths:
       produces:
       - application/json
       parameters:
-      - name: choiceId
-        in: path
-        description: Id of Choice.
-        required: true
-        type: integer
-      - name: alternativeIndex
-        in: path
-        description: Index of Alterantive
-        required: true
-        type: integer
       - name: removeDisapprove
         in: body 
         description: Adding feedback
@@ -219,7 +174,7 @@ paths:
           description: NO Removed Disapproval 
           
         
-  /loginRequest/userLogin:
+  /userLogin:
     post:
       tags:
       - users
@@ -242,7 +197,7 @@ paths:
         400:
           description: User Login Failed
   
-  /loginRequest/adminLogin:
+  /adminLogin:
     post:
       tags:
       - admin
@@ -350,9 +305,9 @@ definitions:
       memberCount:
         type: integer
       alternatives:
-        type: object
+        type: array
         items:
-          $ref: '#/definitions/ListOfAlternatives'
+          type: string
       description:
         type: string
       choiceId:
@@ -403,10 +358,12 @@ definitions:
     - text
     
   
-  ListOfAlternatives:      
-    type: array
-    items:
-      $ref: '#/definitions/Alternative'
+#  ListOfAlternatives:      
+#    type: array
+#    items:
+#      $ref: '#/definitions/Alternative'
+#    minItems: 1
+#    maxItems: 5
         
   
   AddingFeedback:
@@ -495,6 +452,8 @@ definitions:
 
 #Added by API Auto Mocking Plugin
 host: virtserver.swaggerhub.com
-basePath: /CS3733GAOA/CS3733GAOA/1.0.0
+# basePath: /CS3733GAOA/CS3733GAOA/1.0.0
 schemes:
  - https
+# Added by API Auto Mocking Plugin
+basePath: /agalgano08/CS3733io/1.0.0
