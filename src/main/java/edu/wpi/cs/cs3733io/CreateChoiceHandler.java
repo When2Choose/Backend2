@@ -4,8 +4,8 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
-import edu.wpi.cs.cs3733io.demo.http.CreateChoiceRequest;
-import edu.wpi.cs.cs3733io.demo.http.CreateChoiceResponse;
+import edu.wpi.cs.cs3733io.http.CreateChoiceRequest;
+import edu.wpi.cs.cs3733io.http.CreateChoiceResponse;
 import edu.wpi.cs.cs3733io.model.Choice;
 
 public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, CreateChoiceResponse> {
