@@ -14,8 +14,14 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 
 	// This function needs to return a new page for the user to go to along with a
 	// json containing the alternatives, and alterantive information
+	
 	@Override
 	public CreateChoiceResponse handleRequest(CreateChoiceRequest choiceRequest, Context context) {
+		
+		logger = context.getLogger();
+		logger.log("Loading Java Lambda handler of CalculatorHandler");
+		logger.log(choiceRequest.toString());
+		
 		if (context != null) {
 			context.getLogger();
 		}

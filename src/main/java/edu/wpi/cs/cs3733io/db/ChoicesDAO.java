@@ -22,7 +22,7 @@ public class ChoicesDAO {
     	}
     }
 
-    public Choice getConstant(String name) throws Exception {
+    public Choice getChoice(String name) throws Exception {
         
         try {
             Choice choice = null;
@@ -43,15 +43,35 @@ public class ChoicesDAO {
             throw new Exception("Failed in getting choice: " + e.getMessage());
         }
     }
+    
+    public boolean updateChoice(Choice choice) throws Exception {
+        try {
+        	String query = "UPDATE " + tblName + " SET value=? WHERE name=?;";
+        	PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, choice.getUuidString());
+            ps.setString(2, choice.getDescription());
+            ps.setBoolean(3, choice.getIsCompleted());
+            ps.setString(4, choice.getDateCompleted());
+            ps.setInt(5, choice.memberCount);
+            int numAffected = ps.executeUpdate();
+            ps.close();
+            
+            return (numAffected == 1);
+        } catch (Exception e) {
+            throw new Exception("Failed to update report: " + e.getMessage());
+        }
+    }
+    
 
     private Choice generateChoice(ResultSet resultSet) throws Exception {
-        int memberCount  = resultSet.getInt("memberCount");
+        int memberCount  = resultSet.getInt("member_count");
+        boolean isCompleted = resultSet.getBoolean("is_completed");
         String description = resultSet.getString("description");
-        String dateCompleted = resultSet.getString("dateCompleted");
+        String dateCompleted = resultSet.getString("date_completed");
         String uuid = resultSet.getString("uuid");
         LinkedList<String> alternativeNames = new LinkedList<String>();
         
-        return new Choice (uuid, memberCount, description, dateCompleted, alternativeNames);
+        return new Choice (uuid, memberCount, description, dateCompleted, isCompleted, alternativeNames);
     }
 	
 }
