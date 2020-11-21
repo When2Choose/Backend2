@@ -2,6 +2,9 @@ package edu.wpi.cs.cs3733io.db;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import edu.wpi.cs.cs3733io.model.User;
 
@@ -83,6 +86,27 @@ public class UsersDAO {
 
 		} catch (Exception e) {
 			throw new Exception("Failed to insert user: " + e.getMessage());
+		}
+	}
+	
+	public List<User> getAllUsers() throws Exception {
+
+		List<User> users = new ArrayList<>();
+		try {
+			Statement statement = conn.createStatement();
+			String query = "SELECT * FROM " + tblName + ";";
+			ResultSet resultSet = statement.executeQuery(query);
+
+			while (resultSet.next()) {
+				User c = generateUser(resultSet);
+				users.add(c);
+			}
+			resultSet.close();
+			statement.close();
+			return users;
+
+		} catch (Exception e) {
+			throw new Exception("Failed in getting users: " + e.getMessage());
 		}
 	}
 	
