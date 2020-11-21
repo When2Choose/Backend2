@@ -15,7 +15,7 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, UserLo
 
 	boolean createUser(String name, String choiceId) throws Exception {
 		if (logger != null) {
-			logger.log("in loginUser");
+			logger.log("in loginUser FOR NO PASSWORD");
 		}
 		UsersDAO dao = new UsersDAO();
 
@@ -26,7 +26,7 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, UserLo
 	
 	boolean createUser(String name,  String password, String choiceId) throws Exception {
 		if (logger != null) {
-			logger.log("in loginUser");
+			logger.log("in loginUser FOR A PASSWORD");
 		}
 		UsersDAO dao = new UsersDAO();
 
@@ -45,26 +45,34 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, UserLo
 			context.getLogger();
 		}
 
-		User user = new User(userRequest.getName(), userRequest.getChoiceId(), userRequest.getPassword());
-		response = new UserLoginResponse(user.toString(), 300);
+		if (userRequest.getPassword() == null || userRequest.getPassword() == "") {
 
-		try {
-			if (user.getPassword() == null || user.getPassword() == "") {
+			User user = new User(userRequest.getName(), userRequest.getChoiceId());
+			response = new UserLoginResponse(user.toString(), 300);
+			try {
 				if (createUser(user.name, user.choiceId)) {
 					response = new UserLoginResponse(user.toString(), 200);
+					logger.log("if function worked");
 				}
-			} else {
+			} catch (Exception e) {
+				response = new UserLoginResponse("Unable to create user user with password " + "(" + e.getMessage() + ")", 400);
+				e.printStackTrace();
+			}
+		} else {
+			User user = new User(userRequest.getName(), userRequest.getChoiceId(), userRequest.getPassword());
+			response = new UserLoginResponse(user.toString(), 300);
+			try {
 				if (createUser(user.name, user.getPassword(), user.choiceId)) {
 					response = new UserLoginResponse(user.toString(), 200);
 				}
+			} catch (Exception e) {
+				response = new UserLoginResponse("Unable to create user with password " + "(" + e.getMessage() + ")",
+						400);
+				e.printStackTrace();
+
 			}
-
-		} catch (Exception e) {
-			response = new UserLoginResponse("Unable to create user " + "(" + e.getMessage() + ")", 400);
-			e.printStackTrace();
 		}
-
 		return response;
-	}
 
+	}
 }
