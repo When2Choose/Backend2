@@ -51,7 +51,8 @@ public class Choice {
 	public Choice(String uuidString, int memberCount, String description, String dateCompleted, boolean isCompleted,
 			String[] alternativeNames) {
 		this.uuidString = uuidString;
-		uuid = UUID.fromString(uuidString);
+		uuid = UUID.randomUUID(); // this needs to be deleted
+		//uuid = UUID.fromString(uuidString);
 		this.memberCount = memberCount;
 		this.description = description;
 		this.alternativeNames = alternativeNames;
