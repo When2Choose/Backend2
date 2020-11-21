@@ -131,7 +131,7 @@ public class ChoicesDAO {
 		String description = resultSet.getString("description");
 		String dateCompleted = resultSet.getString("date_completed");
 		String uuid = resultSet.getString("uuid");
-		LinkedList<String> alternativeNames = new LinkedList<String>();
+		String[] alternativeNames = {};
 
 		return new Choice(uuid, memberCount, description, dateCompleted, isCompleted, alternativeNames);
 	}
