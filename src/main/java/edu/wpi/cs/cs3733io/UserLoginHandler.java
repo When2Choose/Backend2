@@ -15,7 +15,7 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, UserLo
 
 	boolean createUser(String name, String choiceId) throws Exception {
 		if (logger != null) {
-			logger.log("in loginUser");
+			logger.log("in loginUser FOR NO PASSWORD");
 		}
 		UsersDAO dao = new UsersDAO();
 
@@ -24,8 +24,19 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, UserLo
 		return dao.addUser(user);
 	}
 	
+	boolean createUser(String name,  String password, String choiceId) throws Exception {
+		if (logger != null) {
+			logger.log("in loginUser FOR A PASSWORD");
+		}
+		UsersDAO dao = new UsersDAO();
+
+		User user = new User(name, password, choiceId);
+
+		return dao.addUser(user);
+	}
+	
 	@Override
-	public UserLoginResponse handleRequest(UserLoginRequest userRequest, Context context) {	
+	public UserLoginResponse handleRequest(UserLoginRequest userRequest, Context context) {
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler of UserLoginHandler");
 		logger.log(userRequest.toString());
@@ -33,22 +44,35 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, UserLo
 		if (context != null) {
 			context.getLogger();
 		}
-		
-		User user = new User(userRequest.getName(), userRequest.getChoiceId());
-		response = new UserLoginResponse(user.toString(), 300);
-		
-		try {
-			if (createUser(user.name, user.choiceId)) {
-				response = new UserLoginResponse(user.toString(), 200);
+
+		if (userRequest.getPassword() == null || userRequest.getPassword() == "") {
+
+			User user = new User(userRequest.getName(), userRequest.getChoiceId());
+			response = new UserLoginResponse(user.toString(), 300);
+			try {
+				if (createUser(user.name, user.choiceId)) {
+					response = new UserLoginResponse(user.toString(), 200);
+					logger.log("if function worked");
+				}
+			} catch (Exception e) {
+				response = new UserLoginResponse("Unable to create user user with password " + "(" + e.getMessage() + ")", 400);
+				e.printStackTrace();
 			}
+		} else {
+			User user = new User(userRequest.getName(), userRequest.getChoiceId(), userRequest.getPassword());
+			response = new UserLoginResponse(user.toString(), 300);
+			try {
+				if (createUser(user.name, user.getPassword(), user.choiceId)) {
+					response = new UserLoginResponse(user.toString(), 200);
+				}
+			} catch (Exception e) {
+				response = new UserLoginResponse("Unable to create user with password " + "(" + e.getMessage() + ")",
+						400);
+				e.printStackTrace();
 
-		} catch (Exception e) {
-			response = new UserLoginResponse(
-					"Unable to create user " + "(" + e.getMessage() + ")", 400);
-			e.printStackTrace();
+			}
 		}
-
 		return response;
-	}
 
+	}
 }
