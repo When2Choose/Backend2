@@ -1,5 +1,30 @@
 package edu.wpi.cs.cs3733io.http;
 
 public class UserLoginRequest {
+	String name;
+	String choiceId;
+	
 
+	//@formatter:off 
+	public String getName() { return name; }
+	public void setName(String name) { this.name = name; }
+	
+	public String getChoiceId() { return choiceId; }
+	public void setUuidChoiceString(String uuidChoiceString) { this.choiceId = uuidChoiceString; }
+	
+
+	//@formatter:on
+
+	public String toString() {
+		return "Creating Choice with (name: " + name + ") (password: " + choiceId
+				+ "Alternatives: ";
+	}
+
+	public UserLoginRequest(String name, String uuidChoiceString) {
+		this.name = name;
+		this.choiceId = uuidChoiceString;
+	}
+
+	public UserLoginRequest() {
+	}
 }
