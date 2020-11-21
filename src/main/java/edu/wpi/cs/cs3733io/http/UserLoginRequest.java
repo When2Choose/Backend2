@@ -10,19 +10,20 @@ public class UserLoginRequest {
 	public void setName(String name) { this.name = name; }
 	
 	public String getChoiceId() { return choiceId; }
-	public void setUuidChoiceString(String uuidChoiceString) { this.choiceId = uuidChoiceString; }
-	
+	public void setChoiceId(String choiceId) {
+		this.choiceId = choiceId;
+	}	
 
 	//@formatter:on
 
+
 	public String toString() {
-		return "Creating Choice with (name: " + name + ") (password: " + choiceId
-				+ "Alternatives: ";
+		return " Creating Choice with (name: " + name + ") (choiceId: " + choiceId + ") ";
 	}
 
-	public UserLoginRequest(String name, String uuidChoiceString) {
+	public UserLoginRequest(String name, String choiceId) {
 		this.name = name;
-		this.choiceId = uuidChoiceString;
+		this.choiceId = choiceId;
 	}
 
 	public UserLoginRequest() {
