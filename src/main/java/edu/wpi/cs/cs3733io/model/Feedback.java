@@ -14,7 +14,7 @@ public class Feedback {
 		this.uuidChoice = uuidChoice;
 		this.uuidAlternative = uuidAlternative;
 	}
-
+	
 	public String getUserName() {
 		return userName;
 	}	

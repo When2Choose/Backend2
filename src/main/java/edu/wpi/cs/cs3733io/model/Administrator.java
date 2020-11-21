@@ -4,18 +4,8 @@ import java.util.UUID;
 
 public class Administrator {
 	public final String name;
-	String password;
+	public final String password;
 	public final UUID uuidChoice;
-	
-	public Administrator(String name, UUID uuidChoice) {
-		this.name = name;
-		this.uuidChoice = uuidChoice;
-	}
-	
-	public Administrator(String name) {
-		uuidChoice =  UUID.randomUUID();
-		this.name = name;
-	}
 	
 	public Administrator(String name, String password) {
 		uuidChoice =  UUID.randomUUID();
@@ -38,6 +28,10 @@ public class Administrator {
 		return uuidChoice;
 	} 
 	
+	public String getPassword() {
+		return password;
+	}
+
 	public boolean requestDeleteAllChoices(int nDaysOld) {
 		return false;
 	}

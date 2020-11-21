@@ -5,20 +5,6 @@ import java.util.LinkedList;
 import edu.wpi.cs.cs3733io.model.Choice;
 
 public class AlternativesDAO {
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	public static LinkedList<String> getAlternatives(String uuid) {

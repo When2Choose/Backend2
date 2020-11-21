@@ -16,8 +16,7 @@ public class AdminLoginRequest {
 	//@formatter:on
 
 	public String toString() {
-		return "Creating Choice with (name: " + name + ") (password: " + password
-				+ "Alternatives: ";
+		return "Creating admin with (name: " + name + ") (password: " + password + ")";
 	}
 
 	public AdminLoginRequest(String name, String password) {

@@ -6,7 +6,8 @@ public class User {
 	public final String name;
 	String password;
 	public final UUID uuidChoice;
-	
+	String uuidChoiceString;
+
 	
 	public User(String name, UUID uuidChoice) {
 		this.name = name;
@@ -29,6 +30,29 @@ public class User {
 		this.name = name;
 		this.password = password;
 	}
+	
+	public User(String name, String password,  String uuidChoiceString) {
+		this.uuidChoiceString = uuidChoiceString;
+		this.name = name;
+		this.password = password;
+		this.uuidChoice = UUID.randomUUID();
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getUuidChoiceString() {
+		return uuidChoiceString;
+	}
+
+	public void setUuidChoiceString(String uuidChoiceString) {
+		this.uuidChoiceString = uuidChoiceString;
+	}
 
 	public String getName() {
 		return name;
@@ -38,6 +62,8 @@ public class User {
 		return uuidChoice;
 	} 
 	
-	
+	public String toString() {
+		return "[ID: " + uuidChoice.toString() + "] [name:" + name + "] [password:" + password + "]";
+	}
 
 }
