@@ -27,7 +27,7 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, UserLo
 	@Override
 	public UserLoginResponse handleRequest(UserLoginRequest userRequest, Context context) {	
 		logger = context.getLogger();
-		logger.log("Loading Java Lambda handler of LoginUserHandler");
+		logger.log("Loading Java Lambda handler of UserLoginHandler");
 		logger.log(userRequest.toString());
 
 		if (context != null) {
