@@ -5,13 +5,13 @@ public class User {
 	String password;
 	public final String choiceId;
 
-	public User(String name, String uuidChoiceString) {
-		this.choiceId = uuidChoiceString;
+	public User(String name, String choiceId) {
+		this.choiceId = choiceId;
 		this.name = name;
 	}
 	
-	public User(String name, String password,  String uuidChoiceString) {
-		this.choiceId = uuidChoiceString;
+	public User(String name, String password,  String choiceId) {
+		this.choiceId = choiceId;
 		this.name = name;
 		this.password = password;
 	}
