@@ -3,6 +3,8 @@ package edu.wpi.cs.cs3733io.http;
 public class UserLoginRequest {
 	String name;
 	String choiceId;
+	String password;
+
 	
 
 	//@formatter:off 
@@ -13,8 +15,16 @@ public class UserLoginRequest {
 	public void setChoiceId(String choiceId) {
 		this.choiceId = choiceId;
 	}	
+		public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
 
 	//@formatter:on
+
 
 
 	public String toString() {
