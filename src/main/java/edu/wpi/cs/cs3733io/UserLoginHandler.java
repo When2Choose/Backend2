@@ -59,7 +59,7 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, UserLo
 				e.printStackTrace();
 			}
 		} else {
-			User user = new User(userRequest.getName(), userRequest.getChoiceId(), userRequest.getPassword());
+			User user = new User(userRequest.getName(),userRequest.getPassword() ,userRequest.getChoiceId() );
 			response = new UserLoginResponse(user.toString(), 300);
 			try {
 				if (createUser(user.name, user.getPassword(), user.choiceId)) {
