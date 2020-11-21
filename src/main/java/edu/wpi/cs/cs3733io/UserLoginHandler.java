@@ -13,13 +13,13 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, UserLo
 	LambdaLogger logger;
 	UserLoginResponse response;
 
-	boolean createUser(String name, String password) throws Exception {
+	boolean createUser(String name, String choiceId) throws Exception {
 		if (logger != null) {
 			logger.log("in loginUser");
 		}
 		UsersDAO dao = new UsersDAO();
 
-		User user = new User(name, password);
+		User user = new User(name, choiceId);
 
 		return dao.addUser(user);
 	}
@@ -34,11 +34,11 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, UserLo
 			context.getLogger();
 		}
 		
-		User user = new User(userRequest.getName(), userRequest.getPassword());
+		User user = new User(userRequest.getName(), userRequest.getChoiceId());
 		response = new UserLoginResponse(user.toString(), 300);
 		
 		try {
-			if (createUser(user.name, user.getPassword())) {
+			if (createUser(user.name, user.choiceId)) {
 				response = new UserLoginResponse(user.toString(), 200);
 			}
 

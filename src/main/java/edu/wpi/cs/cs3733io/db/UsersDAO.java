@@ -22,12 +22,13 @@ public class UsersDAO {
     	}
     }
     
-	public User getUser(String name) throws Exception {
+	public User getUser(String name, String ChoiceId) throws Exception {
 
 		try {
 			User user = null;
-			PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE name=?;");
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE (name = ?) AND (choiceId = ?);");
 			ps.setString(1, name);
+			ps.setString(2, ChoiceId);
 			ResultSet resultSet = ps.executeQuery();
 
 			while (resultSet.next()) {
@@ -46,11 +47,11 @@ public class UsersDAO {
 	
 	public boolean updateUser(User user) throws Exception {
 		try {
-			String query = "UPDATE " + tblName + " SET value=? WHERE name=?;";
+			String query = "UPDATE " + tblName + " SET value=? WHERE (name = ?) AND (choiceId = ?);";
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setString(1, user.getName());
 			ps.setString(2, user.getPassword());
-			ps.setString(3, user.getUuidChoiceString());
+			ps.setString(3, user.getChoiceId());
 			int numAffected = ps.executeUpdate();
 			ps.close();
 
@@ -62,8 +63,9 @@ public class UsersDAO {
 	
 	public boolean deleteUser(User user) throws Exception {
 		try {
-			PreparedStatement ps = conn.prepareStatement("DELETE FROM " + tblName + " WHERE name = ?;");
+			PreparedStatement ps = conn.prepareStatement("DELETE FROM " + tblName + " WHERE (name = ?) AND (choiceId = ?);");
 			ps.setString(1, user.getName());
+			ps.setString(2, user.getChoiceId());
 			int numAffected = ps.executeUpdate();
 			ps.close();
 
@@ -77,10 +79,10 @@ public class UsersDAO {
 	public boolean addUser(User user) throws Exception {
 		try {
 			
-			PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName + " (name, password, choice_id) VALUES (?,?,?)");
+			PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName + " (name, password, choiceId) VALUES (?,?,?)");
 			ps.setString(1, user.getName());
 			ps.setString(2, user.getPassword());
-			ps.setString(3, user.getUuidChoiceString());
+			ps.setString(3, user.getChoiceId());
 			ps.execute();
 			return true;
 
@@ -113,9 +115,9 @@ public class UsersDAO {
 	private User generateUser(ResultSet resultSet) throws Exception {
 		String name = resultSet.getString("name");
 		String password = resultSet.getString("password");
-		String choice_id = resultSet.getString("choice_id");
+		String choiceId = resultSet.getString("choiceId");
 
-		return new User(name, password, choice_id);
+		return new User(name, password, choiceId);
 	}
     
 }
