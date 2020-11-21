@@ -10,8 +10,10 @@ public class UserLoginRequest {
 	public void setName(String name) { this.name = name; }
 	
 	public String getChoiceId() { return choiceId; }
-	public void setUuidChoiceString(String choiceId) { this.choiceId = choiceId; }
 	
+	public void setChoiceId(String choiceId) {
+		this.choiceId = choiceId;
+	}	
 
 	//@formatter:on
 
