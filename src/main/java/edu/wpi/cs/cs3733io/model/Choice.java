@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.UUID;
 
 public class Choice {
-	public final UUID uuid; 
+	public final UUID uuid;
 	String uuidString;
 	public final int memberCount;
 	public final String description;
@@ -38,7 +38,7 @@ public class Choice {
 	 * @param alternativeNames
 	 */
 	public Choice(int memberCount, String description, LinkedList<String> alternativeNames) {
-		uuid =  UUID.randomUUID();
+		uuid = UUID.randomUUID();
 		uuidString = uuid.toString();
 		this.memberCount = memberCount;
 		this.description = description;
@@ -47,7 +47,8 @@ public class Choice {
 		this.isCompleted = false;
 	}
 
-	public Choice(String uuidString, int memberCount, String description, String dateCompleted, boolean isCompleted, LinkedList<String> alternativeNames) {
+	public Choice(String uuidString, int memberCount, String description, String dateCompleted, boolean isCompleted,
+			LinkedList<String> alternativeNames) {
 		this.uuidString = uuidString;
 		uuid = UUID.fromString(uuidString);
 		this.memberCount = memberCount;
@@ -56,12 +57,16 @@ public class Choice {
 		this.dateCompleted = dateCompleted;
 		this.isCompleted = isCompleted;
 	}
+
 	/**
 	 * Converts a choice to a string including all fields.
 	 */
 	public String toString() {
-		return "[ID:" + uuid.toString() + "] [Member Count:" + Integer.toString(memberCount) + "] [Alternatives:"
-				+ alternativeNames + "] [DateCompleted:" + dateCompleted + "] [Description:" + description + "]";
+
+		return "{" + "\"ID\" : \"" + uuid.toString() + "\"," + "\"Member Count\" :" + "\""
+				+ Integer.toString(memberCount) + "\"," + " \"Alternatives\" :" + "\"" + alternativeNames + "\","
+				+ "\"DateCompleted\" :" + "\"" + dateCompleted + "\"," + "\"Description\" :" + "\"" + description
+				+ "\"}";
 	}
 
 	/**
@@ -74,9 +79,10 @@ public class Choice {
 			index++;
 		}
 	}
-	
+
 	/**
 	 * Complete the choice.
+	 * 
 	 * @param date
 	 */
 	public void competed(String date) {
