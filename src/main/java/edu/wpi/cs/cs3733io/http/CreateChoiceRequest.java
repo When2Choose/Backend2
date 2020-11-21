@@ -1,12 +1,13 @@
 package edu.wpi.cs.cs3733io.http;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class CreateChoiceRequest {
 	int memberCount;
 	String description;
-	LinkedList<String> alternativeNames;
+	String[] alternativeNames;
 	
 
 	//@formatter:off 
@@ -16,8 +17,8 @@ public class CreateChoiceRequest {
 	public String getDescription() { return description; }
 	public void setDescription(String description) { this.description = description; }
 	
-	public LinkedList<String> getAlternativeNames() { return alternativeNames; }
-	public void setAlternativeNames(LinkedList<String> alternatives) { this.alternativeNames = alternatives; } 
+	public String[] getAlternativeNames() { return alternativeNames; }
+	public void setAlternativeNames(String[] alternatives) { this.alternativeNames = alternatives; } 
 	//@formatter:on
 
 	public String toString() {
@@ -25,7 +26,7 @@ public class CreateChoiceRequest {
 				+ "Alternatives: ";
 	}
 
-	public CreateChoiceRequest(int memberCount, String description, LinkedList<String> alternatives) {
+	public CreateChoiceRequest(int memberCount, String description, String[] alternatives) {
 		this.memberCount = memberCount;
 		this.description = description;
 		this.alternativeNames = alternatives;

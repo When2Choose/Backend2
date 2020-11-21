@@ -5,9 +5,9 @@ import java.util.UUID;
 
 public class Alternative {
 
-	public final UUID uuid = new UUID(64, 64);
+	public final UUID uuid;
+	String choiceUuid;
 	public final String name;
-	public final int index;
 	LinkedList<String> approvers;
 	LinkedList<String> disapprovers;
 
@@ -19,9 +19,10 @@ public class Alternative {
 	public void setDisapprovers(LinkedList<String> disapprovers) { this.approvers = disapprovers; } 
 	//@formatter:on 
 
-	public Alternative(String name, int index) {
+	public Alternative(String name, String choiceUuid) {
+		uuid = UUID.randomUUID();
+		this.choiceUuid = choiceUuid;
 		this.name = name;
-		this.index = index;
 	}
 
 }
