@@ -1,5 +1,6 @@
 package edu.wpi.cs.cs3733io.model;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.UUID;
 
@@ -8,8 +9,10 @@ public class Choice {
 	String uuidString;
 	public final int memberCount;
 	public final String description;
+
 	public final String[] alternativeNames;
 	LinkedList<Alternative> alternatives;
+
 	boolean isCompleted;
 	String dateCompleted;
 
@@ -63,6 +66,7 @@ public class Choice {
 	 * Converts a choice to a string including all fields.
 	 */
 	public String toString() {
+
 		
 		String alts = "[";
 		for(String s : alternativeNames) {
@@ -70,20 +74,21 @@ public class Choice {
 		}
 		alts = alts+ "]";
 
+
 		return "{" + "\"ID\" : \"" + uuid.toString() + "\"," + "\"Member Count\" :" + "\""
+
 				+ Integer.toString(memberCount) + "\"," + " \"Alternatives\" :" + "\"" + alts + "\","
 				+ "\"DateCompleted\" :" + "\"" + dateCompleted + "\"," + "\"Description\" :" + "\"" + description
 				+ "\"}";
+
 	}
 
 	/**
 	 * Creates a list of alternatives that correspond to
 	 */
 	public void createAlternatives() {
-		int index = 0;
 		for (String name : alternativeNames) {
-			alternatives.addLast(new Alternative(name, index));
-			index++;
+			alternatives.add(new Alternative(name, this.uuidString));
 		}
 	}
 

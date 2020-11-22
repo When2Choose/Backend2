@@ -1,12 +1,15 @@
 package edu.wpi.cs.cs3733io.http;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class CreateChoiceRequest {
 	int memberCount;
 	String description;
+
 	String[] alternatives;
+
 	
 
 	//@formatter:off 
@@ -18,6 +21,7 @@ public class CreateChoiceRequest {
 	
 	public String[] getAlternatives() { return alternatives; }
 	public void setAlternatives(String[] alternatives) { this.alternatives = alternatives; } 
+
 	//@formatter:on
 
 	public String toString() {
