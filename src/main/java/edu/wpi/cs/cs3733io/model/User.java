@@ -9,8 +9,8 @@ public class User {
 		this.choiceId = choiceId;
 		this.name = name;
 	}
-	
-	public User(String name, String password,  String choiceId) {
+
+	public User(String name, String password, String choiceId) {
 		this.choiceId = choiceId;
 		this.name = name;
 		this.password = password;
@@ -28,14 +28,13 @@ public class User {
 		return choiceId;
 	}
 
-
-
 	public String getName() {
 		return name;
 	}
 
 	public String toString() {
-		return "[ID: " +  choiceId + "] [name:" + name + "] [password:" + password + "]";
+		return "{ \"ID:\" " + "\"" + choiceId + "\"," + "\"name:" + "\"" + name + "\"," + "\"password:" + "\""
+				+ password + "\"" + "}";
 	}
 
 }
