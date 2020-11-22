@@ -54,7 +54,7 @@ public class Choice {
 			String[] alternativeNames) {
 		this.uuidString = uuidString;
 		uuid = UUID.randomUUID(); // this needs to be deleted
-		//uuid = UUID.fromString(uuidString);
+		// uuid = UUID.fromString(uuidString);
 		this.memberCount = memberCount;
 		this.description = description;
 		this.alternativeNames = alternativeNames;
@@ -67,19 +67,20 @@ public class Choice {
 	 */
 	public String toString() {
 
-		
 		String alts = "[";
-		for(String s : alternativeNames) {
-			alts = alts+ ", " +  "\""+ s+ "\"";
+		for (String s : alternativeNames) {
+			if (alts.equals("[")) {
+				alts = alts + "\"" + s + "\"";
+			} else {
+				alts = alts + ", " + "\"" + s + "\"";
+			}
 		}
-		alts = alts+ "]";
-
+		alts = alts + "]";
 
 		return "{" + "\"ID\" : \"" + uuid.toString() + "\"," + "\"Member Count\" :" + "\""
 
-				+ Integer.toString(memberCount) + "\"," + " \"Alternatives\" :" + "\"" + alts + "\","
-				+ "\"DateCompleted\" :" + "\"" + dateCompleted + "\"," + "\"Description\" :" + "\"" + description
-				+ "\"}";
+				+ Integer.toString(memberCount) + "\"," + " \"Alternatives\" :" + alts + "," + "\"DateCompleted\" :"
+				+ "\"" + dateCompleted + "\"," + "\"Description\" :" + "\"" + description + "\"}";
 
 	}
 
