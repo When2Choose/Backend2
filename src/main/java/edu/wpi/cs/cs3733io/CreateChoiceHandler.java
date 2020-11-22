@@ -39,9 +39,9 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 		}
 		
 		Choice choice = new Choice(choiceRequest.getMemberCount(), choiceRequest.getDescription(),
-				choiceRequest.getAlternativeNames());
+				choiceRequest.getAlternatives());
 		response = new CreateChoiceResponse(choice.toString(), 300);
-		
+		/*
 		try {
 			if (createChoice(choice.getMemberCount(), choice.description, choice.alternativeNames)) {
 				response = new CreateChoiceResponse(choice.toString(), 200);
@@ -52,7 +52,7 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 					"Unable to create choice " + "(" + e.getMessage() + ")", 400);
 			e.printStackTrace();
 		}
-
+*/
 		return response;
 	}
 
