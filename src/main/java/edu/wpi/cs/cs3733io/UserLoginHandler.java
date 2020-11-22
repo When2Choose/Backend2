@@ -15,7 +15,7 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, UserLo
 
 	boolean createUser(String name, String choiceId) throws Exception {
 		if (logger != null) {
-			logger.log("in loginUser FOR NO PASSWORD");
+			logger.log("in loginUser FOR NO PASSWORD ");
 		}
 		UsersDAO dao = new UsersDAO();
 
@@ -26,7 +26,7 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, UserLo
 	
 	boolean createUser(String name,  String password, String choiceId) throws Exception {
 		if (logger != null) {
-			logger.log("in loginUser FOR A PASSWORD");
+			logger.log("in loginUser FOR A PASSWORD ");
 		}
 		UsersDAO dao = new UsersDAO();
 
@@ -55,7 +55,7 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, UserLo
 					logger.log("if function worked");
 				}
 			} catch (Exception e) {
-				response = new UserLoginResponse("Unable to create user user with password " + "(" + e.getMessage() + ")", 400);
+				response = new UserLoginResponse("Unable to create user without password " + "(" + e.getMessage() + ")", 400);
 				e.printStackTrace();
 			}
 		} else {
