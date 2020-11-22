@@ -6,7 +6,7 @@ import java.util.List;
 public class CreateChoiceRequest {
 	int memberCount;
 	String description;
-	LinkedList<String> alternativeNames;
+	String[] alternatives;
 	
 
 	//@formatter:off 
@@ -16,8 +16,8 @@ public class CreateChoiceRequest {
 	public String getDescription() { return description; }
 	public void setDescription(String description) { this.description = description; }
 	
-	public LinkedList<String> getAlternativeNames() { return alternativeNames; }
-	public void setAlternativeNames(LinkedList<String> alternatives) { this.alternativeNames = alternatives; } 
+	public String[] getAlternatives() { return alternatives; }
+	public void setAlternatives(String[] alternatives) { this.alternatives = alternatives; } 
 	//@formatter:on
 
 	public String toString() {
@@ -25,10 +25,10 @@ public class CreateChoiceRequest {
 				+ "Alternatives: ";
 	}
 
-	public CreateChoiceRequest(int memberCount, String description, LinkedList<String> alternatives) {
+	public CreateChoiceRequest(int memberCount, String description, String[] alternatives) {
 		this.memberCount = memberCount;
 		this.description = description;
-		this.alternativeNames = alternatives;
+		this.alternatives = alternatives;
 	}
 
 	public CreateChoiceRequest() {
