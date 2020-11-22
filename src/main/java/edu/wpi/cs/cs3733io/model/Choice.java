@@ -1,15 +1,18 @@
 package edu.wpi.cs.cs3733io.model;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.UUID;
 
 public class Choice {
-	public final UUID uuid; 
+	public final UUID uuid;
 	String uuidString;
 	public final int memberCount;
 	public final String description;
-	public final LinkedList<String> alternativeNames;
+
+	public final String[] alternativeNames;
 	LinkedList<Alternative> alternatives;
+
 	boolean isCompleted;
 	String dateCompleted;
 
@@ -21,7 +24,7 @@ public class Choice {
 	
 	public String getDescription() { return description; }
 	
-	public LinkedList<String> getAlternatives() { return alternativeNames; }
+	public String[] getAlternatives() { return alternativeNames; }
 	
 	public boolean getIsCompleted() {return isCompleted; }
 	public void setIsCompleted(boolean flag) { this.isCompleted = flag; }
@@ -37,8 +40,8 @@ public class Choice {
 	 * @param description
 	 * @param alternativeNames
 	 */
-	public Choice(int memberCount, String description, LinkedList<String> alternativeNames) {
-		uuid =  UUID.randomUUID();
+	public Choice(int memberCount, String description, String[] alternativeNames) {
+		uuid = UUID.randomUUID();
 		uuidString = uuid.toString();
 		this.memberCount = memberCount;
 		this.description = description;
@@ -47,36 +50,52 @@ public class Choice {
 		this.isCompleted = false;
 	}
 
-	public Choice(String uuidString, int memberCount, String description, String dateCompleted, boolean isCompleted, LinkedList<String> alternativeNames) {
+	public Choice(String uuidString, int memberCount, String description, String dateCompleted, boolean isCompleted,
+			String[] alternativeNames) {
 		this.uuidString = uuidString;
-		uuid = UUID.fromString(uuidString);
+		uuid = UUID.randomUUID(); // this needs to be deleted
+		// uuid = UUID.fromString(uuidString);
 		this.memberCount = memberCount;
 		this.description = description;
 		this.alternativeNames = alternativeNames;
 		this.dateCompleted = dateCompleted;
 		this.isCompleted = isCompleted;
 	}
+
 	/**
 	 * Converts a choice to a string including all fields.
 	 */
 	public String toString() {
-		return "[ID:" + uuid.toString() + "] [Member Count:" + Integer.toString(memberCount) + "] [Alternatives:"
-				+ alternativeNames + "] [DateCompleted:" + dateCompleted + "] [Description:" + description + "]";
+
+		String alts = "[";
+		for (String s : alternativeNames) {
+			if (alts.equals("[")) {
+				alts = alts + "\"" + s + "\"";
+			} else {
+				alts = alts + ", " + "\"" + s + "\"";
+			}
+		}
+		alts = alts + "]";
+
+		return "{" + "\"ID\" : \"" + uuid.toString() + "\"," + "\"Member Count\" :" + "\""
+
+				+ Integer.toString(memberCount) + "\"," + " \"Alternatives\" :" + alts + "," + "\"DateCompleted\" :"
+				+ "\"" + dateCompleted + "\"," + "\"Description\" :" + "\"" + description + "\"}";
+
 	}
 
 	/**
 	 * Creates a list of alternatives that correspond to
 	 */
 	public void createAlternatives() {
-		int index = 0;
 		for (String name : alternativeNames) {
-			alternatives.addLast(new Alternative(name, index));
-			index++;
+			alternatives.add(new Alternative(name, this.uuidString));
 		}
 	}
-	
+
 	/**
 	 * Complete the choice.
+	 * 
 	 * @param date
 	 */
 	public void competed(String date) {

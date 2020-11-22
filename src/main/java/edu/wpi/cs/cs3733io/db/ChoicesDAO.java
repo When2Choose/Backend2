@@ -23,26 +23,26 @@ public class ChoicesDAO {
 		}
 	}
 
-	public Choice getChoice(String uuid) throws Exception {
+	public Choice getChoice(String uuidString) throws Exception {
 
-		try {
-			Choice choice = null;
-			PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE uuid=?;");
-			ps.setString(1, uuid);
-			ResultSet resultSet = ps.executeQuery();
+        try {
+            Choice choice = null;
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE uuid=?;");
+            ps.setString(1,  uuidString);
+            ResultSet resultSet = ps.executeQuery();
+            
+            while (resultSet.next()) {
+            	choice = generateChoice(resultSet);
+            }
+            resultSet.close();
+            ps.close();
+            
+            return choice;
 
-			while (resultSet.next()) {
-				choice = generateChoice(resultSet);
-			}
-			resultSet.close();
-			ps.close();
-
-			return choice;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception("Failed in getting choice: " + e.getMessage());
-		}
+        } catch (Exception e) {
+        	e.printStackTrace();
+            throw new Exception("Failed in getting choice: " + e.getMessage());
+        }
 	}
 
 	public boolean updateChoice(Choice choice) throws Exception {
@@ -127,11 +127,11 @@ public class ChoicesDAO {
 
 	private Choice generateChoice(ResultSet resultSet) throws Exception {
 		int memberCount = resultSet.getInt("member_count");
-		boolean isCompleted = resultSet.getBoolean("is_completed");
+		boolean isCompleted = resultSet.getBoolean("complete");
 		String description = resultSet.getString("description");
 		String dateCompleted = resultSet.getString("date_completed");
 		String uuid = resultSet.getString("uuid");
-		LinkedList<String> alternativeNames = new LinkedList<String>();
+		String[] alternativeNames = {};
 
 		return new Choice(uuid, memberCount, description, dateCompleted, isCompleted, alternativeNames);
 	}

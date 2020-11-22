@@ -1,5 +1,6 @@
 package edu.wpi.cs.cs3733io;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import com.amazonaws.services.lambda.runtime.Context;
@@ -15,7 +16,7 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 	LambdaLogger logger;
 	CreateChoiceResponse response;
 
-	boolean createChoice(int memberCount, String description, LinkedList<String> alternativeNames) throws Exception {
+	boolean createChoice(int memberCount, String description, String[] alternativeNames) throws Exception {
 		if (logger != null) {
 			logger.log("in createChoice");
 		}
@@ -38,7 +39,7 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 		}
 		
 		Choice choice = new Choice(choiceRequest.getMemberCount(), choiceRequest.getDescription(),
-				choiceRequest.getAlternativeNames());
+				choiceRequest.getAlternatives());
 		response = new CreateChoiceResponse(choice.toString(), 300);
 		
 		try {
