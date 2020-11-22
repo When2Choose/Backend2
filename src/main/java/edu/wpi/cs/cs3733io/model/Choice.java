@@ -9,8 +9,10 @@ public class Choice {
 	String uuidString;
 	public final int memberCount;
 	public final String description;
-	public final String alternativeNames[];
-	ArrayList<Alternative> alternatives;
+
+	public final String[] alternativeNames;
+	LinkedList<Alternative> alternatives;
+
 	boolean isCompleted;
 	String dateCompleted;
 
@@ -52,7 +54,7 @@ public class Choice {
 			String[] alternativeNames) {
 		this.uuidString = uuidString;
 		uuid = UUID.randomUUID(); // this needs to be deleted
-		//uuid = UUID.fromString(uuidString);
+		// uuid = UUID.fromString(uuidString);
 		this.memberCount = memberCount;
 		this.description = description;
 		this.alternativeNames = alternativeNames;
@@ -64,14 +66,22 @@ public class Choice {
 	 * Converts a choice to a string including all fields.
 	 */
 	public String toString() {
-		String altString = "";
-//		for (int i = 0; i < alternativeNames.length; i++) {
-//			altString = altString + alternativeNames[i];
-//		}
+
+		String alts = "[";
+		for (String s : alternativeNames) {
+			if (alts.equals("[")) {
+				alts = alts + "\"" + s + "\"";
+			} else {
+				alts = alts + ", " + "\"" + s + "\"";
+			}
+		}
+		alts = alts + "]";
 
 		return "{" + "\"ID\" : \"" + uuid.toString() + "\"," + "\"Member Count\" :" + "\""
-				+ Integer.toString(memberCount) + "\"," + " \"Alternatives\" :" + altString + "\"DateCompleted\" :"
+
+				+ Integer.toString(memberCount) + "\"," + " \"Alternatives\" :" + alts + "," + "\"DateCompleted\" :"
 				+ "\"" + dateCompleted + "\"," + "\"Description\" :" + "\"" + description + "\"}";
+
 	}
 
 	/**

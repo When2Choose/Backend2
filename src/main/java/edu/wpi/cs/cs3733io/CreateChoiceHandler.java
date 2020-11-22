@@ -39,7 +39,7 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 		}
 		
 		Choice choice = new Choice(choiceRequest.getMemberCount(), choiceRequest.getDescription(),
-				choiceRequest.getAlternativeNames());
+				choiceRequest.getAlternatives());
 		response = new CreateChoiceResponse(choice.toString(), 300);
 		
 		try {
