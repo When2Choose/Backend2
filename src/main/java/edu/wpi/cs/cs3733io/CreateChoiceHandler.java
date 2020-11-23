@@ -7,31 +7,40 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
+import edu.wpi.cs.cs3733io.db.AlternativesDAO;
 import edu.wpi.cs.cs3733io.db.ChoicesDAO;
 import edu.wpi.cs.cs3733io.http.CreateChoiceRequest;
 import edu.wpi.cs.cs3733io.http.CreateChoiceResponse;
+import edu.wpi.cs.cs3733io.model.Alternative;
 import edu.wpi.cs.cs3733io.model.Choice;
 
 public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, CreateChoiceResponse> {
 	LambdaLogger logger;
 	CreateChoiceResponse response;
 
-	boolean createChoice(int memberCount, String description, String[] alternativeNames) throws Exception {
+	boolean createChoice(Choice choice) throws Exception {
 		if (logger != null) {
 			logger.log("in createChoice");
 		}
 		ChoicesDAO dao = new ChoicesDAO();
+		AlternativesDAO alternativesDAO = new AlternativesDAO();
 
-		Choice choice = new Choice(memberCount, description, alternativeNames);
+		choice.createAlternatives();
 
-		return dao.addChoice(choice);
+		boolean success = true;
+
+		for (Alternative alternative : choice.getAlternatives()) {
+			success &= alternativesDAO.addAlternative(alternative);
+		}
+
+		return dao.addChoice(choice) && success;
 	}
 
 	@Override
 	public CreateChoiceResponse handleRequest(CreateChoiceRequest choiceRequest, Context context) {
 
 		logger = context.getLogger();
-		logger.log("Loading Java Lambda handler of CalculatorHandler");
+		logger.log("Loading Java Lambda handler of Create Choice");
 		logger.log(choiceRequest.toString());
 
 		if (context != null) {
@@ -43,7 +52,7 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 		response = new CreateChoiceResponse(choice.toString(), 300);
 		
 		try {
-			if (createChoice(choice.getMemberCount(), choice.description, choice.alternativeNames)) {
+			if (createChoice(choice)) {
 				response = new CreateChoiceResponse(choice.toString(), 200);
 			}
 
