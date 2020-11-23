@@ -43,7 +43,7 @@ public class UserLoginRequest {
 
 
 	public String toString() {
-		return " Creating Choice with (name: " + name + ") (choiceId: " + choiceId + ") (password:" + password + ") ";
+		return " User is: (name: " + name + ") (choiceId: " + choiceId + ") (password:" + password + ") ";
 	}
 
 

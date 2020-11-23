@@ -16,46 +16,55 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, UserLo
 	UserLoginResponse response;
 	boolean flag = false;
 
-	boolean createUser(String name, String choiceId) throws Exception {
-		if (logger != null) {
-
-			logger.log("in loginUser FOR NO PASSWORD ");
-
-		}
-		UsersDAO dao = new UsersDAO();
-
-		User user = new User(name, choiceId);
-
-		return dao.addUser(user);
-	}
-
-	boolean createUser(String name, String password, String choiceId) throws Exception {
+	boolean addUser(User user) {
 		if (logger != null) {
 			logger.log("in loginUser FOR A PASSWORD ");
 		}
 		UsersDAO dao = new UsersDAO();
-
-		User user = new User(name, password, choiceId);
-
-		return dao.addUser(user);
+		try {
+			return dao.addUser(user);
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
-	boolean getNumberOfUsers(String uuid) {
+	int getNumberOfUsers(String uuid) {
 		if (logger != null) {
 			logger.log("in getNumberOfUsers");
 		}
-		ChoicesDAO dao = new ChoicesDAO();
-		UsersDAO dao2 = new UsersDAO();
+		UsersDAO usersDAO = new UsersDAO();
 		try {
-			dao.getChoice(uuid).getMemberCount();
+			return usersDAO.getNumberOfUsers(uuid);
 		} catch (Exception e) {
-			flag = true;
+			return -1;
 		}
+	}
+
+	int getMaxMembers(String choiceID) {
+		if (logger != null) {
+			logger.log("in getMaxMembers");
+		}
+		ChoicesDAO choicesDAO = new ChoicesDAO();
 		try {
-			if (dao2.getNumberOfUsers(uuid) < dao.getChoice(uuid).getMemberCount()) {
-				return true;
-			} else
-				return false;
+			return choicesDAO.getChoice(choiceID).getMemberCount();
+		} catch (Exception e) {
+			return -1;
+		}
+	}
+
+	private boolean choiceIDValid(String choiceID) {
+		ChoicesDAO choicesDAO = new ChoicesDAO();
+		try {
+			return choicesDAO.getChoice(choiceID) != null;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	boolean userExists(User user) {
+		UsersDAO usersDAO = new UsersDAO();
+		try {
+			return usersDAO.getUser(user) != null;
 		} catch (Exception e) {
 			return false;
 		}
@@ -71,50 +80,33 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, UserLo
 			context.getLogger();
 		}
 
-		try {
-			if (getNumberOfUsers(userRequest.getChoiceId())) {
-				if (userRequest.getPassword() == null || userRequest.getPassword() == "") {
-
-					User user = new User(userRequest.getName(), userRequest.getChoiceId());
-					response = new UserLoginResponse(user.toString(), 300);
-					try {
-						if (createUser(user.name, user.choiceId)) {
-							response = new UserLoginResponse(user.toString(), 200);
-							logger.log("if function worked");
-						}
-					} catch (Exception e) {
-						response = new UserLoginResponse(
-								"Unable to create user without password " + "(" + e.getMessage() + ")", 400);
-						e.printStackTrace();
+		if (choiceIDValid(userRequest.getChoiceId())) {
+			User user = new User(userRequest.getName(), userRequest.getPassword(), userRequest.getChoiceId());
+			// Choice ID exists
+			if (userExists(user)) {
+				// Time to log in user
+				response = new UserLoginResponse(user.toString(), 200);
+			} else {
+				// Create a new user, if possible
+				if (getNumberOfUsers(userRequest.getChoiceId()) < getMaxMembers(userRequest.getChoiceId())) {
+					boolean addNewUserSuccess = addUser(user);
+					if (addNewUserSuccess) {
+						// successfully added new user to table
+						response = new UserLoginResponse(user.toString(), 200);
+					} else {
+						// failure in SQL, probably
+						response = new UserLoginResponse("Error while creating new user. Check logs.", 400);
 					}
 				} else {
-					User user = new User(userRequest.getName(), userRequest.getPassword(), userRequest.getChoiceId());
-					response = new UserLoginResponse(user.toString(), 300);
-					try {
-						if (createUser(user.name, user.getPassword(), user.choiceId)) {
-							response = new UserLoginResponse(user.toString(), 200);
-						}
-					} catch (Exception e) {
-						response = new UserLoginResponse(
-								"Unable to create user with password " + "(" + e.getMessage() + ")", 400);
-						e.printStackTrace();
-
-					}
+					// max users hit.
+					response = new UserLoginResponse("Too many users for given choice.", 400);
 				}
-			} else {
-				if (flag) {
-					response = new UserLoginResponse("Choice ID: " + userRequest.getChoiceId() + " does not exist",
-							400);
-				} else
-					response = new UserLoginResponse(
-							"Max number of users hit for choice Id: " + userRequest.getChoiceId(), 400);
 			}
-		} catch (Exception e) {
-			response = new UserLoginResponse("Unable to get choice", 400);
-
-			e.printStackTrace();
+		} else {
+			// Invalid choice ID
+			response = new UserLoginResponse("Choice ID: " + userRequest.getChoiceId() + " does not exist",
+					400);
 		}
-
 		return response;
 	}
 

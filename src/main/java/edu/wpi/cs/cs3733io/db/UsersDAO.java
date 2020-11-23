@@ -22,13 +22,14 @@ public class UsersDAO {
     	}
     }
     
-	public User getUser(String name, String ChoiceId) throws Exception {
+	public User getUser(User inputUser) throws Exception {
 
 		try {
 			User user = null;
-			PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE (name = ?) AND (choiceId = ?);");
-			ps.setString(1, name);
-			ps.setString(2, ChoiceId);
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE (name = ?) AND (choiceId = ?) AND (password = ?);");
+			ps.setString(1, inputUser.getName());
+			ps.setString(2, inputUser.getChoiceId());
+			ps.setString(3, inputUser.getPassword());
 			ResultSet resultSet = ps.executeQuery();
 
 			while (resultSet.next()) {
