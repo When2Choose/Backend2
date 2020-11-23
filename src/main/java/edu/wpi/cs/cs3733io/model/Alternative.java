@@ -5,9 +5,10 @@ import java.util.UUID;
 
 public class Alternative {
 
-	public final UUID uuid;
-	String choiceUuid;
+	public final UUID alternativeUUID;
+	public final String choiceUUID;
 	public final String name;
+	public boolean isChosen;
 	LinkedList<String> approvers;
 	LinkedList<String> disapprovers;
 
@@ -20,9 +21,10 @@ public class Alternative {
 	//@formatter:on 
 
 	public Alternative(String name, String choiceUuid) {
-		uuid = UUID.randomUUID();
-		this.choiceUuid = choiceUuid;
+		this.alternativeUUID = UUID.randomUUID();
+		this.choiceUUID = choiceUuid;
 		this.name = name;
+		this.isChosen = false;
 	}
 
 }
