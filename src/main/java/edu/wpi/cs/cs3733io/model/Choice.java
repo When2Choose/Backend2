@@ -72,8 +72,7 @@ public class Choice {
     public Choice(String uuidString, int memberCount, String description, String dateCompleted, boolean isCompleted,
                   String[] alternativeNames) {
         this.uuidString = uuidString;
-        uuid = UUID.fromString(uuidString); // this needs to be deleted
-        // uuid = UUID.fromString(uuidString);
+        uuid = UUID.fromString(uuidString);
         this.memberCount = memberCount;
         this.description = description;
         this.alternativeNames = alternativeNames;
@@ -106,8 +105,8 @@ public class Choice {
      * Creates a list of alternatives that correspond to
      */
     public void createAlternatives() {
-        for (String name : alternativeNames) {
-            alternatives.add(new Alternative(name, this.uuidString));
+        for (int i = 0; i < 5; i++) {
+            alternatives.add(new Alternative(alternativeNames[i], i, this.uuidString));
         }
     }
 
