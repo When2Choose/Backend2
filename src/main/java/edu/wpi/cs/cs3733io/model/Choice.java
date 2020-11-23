@@ -84,22 +84,21 @@ public class Choice {
     /**
      * Converts a choice to a string including all fields.
      */
-    public String toString() {
+    public String toString(LinkedList<Alternative> alternatives) {
 
         String alts = "[";
-        for (String s : alternativeNames) {
+        for (Alternative alternative : alternatives) {
             if (alts.equals("[")) {
-                alts = alts + "\"" + s + "\"";
+                alts = alts + alternative.toJSON();
             } else {
-                alts = alts + ", " + "\"" + s + "\"";
+                alts = alts + ", " + alternative.toJSON();
             }
         }
         alts = alts + "]";
 
-        return "{" + "\"ID\" : \"" + uuidString + "\"," + "\"Member Count\" :" + "\""
-
-                + memberCount + "\"," + " \"Alternatives\" :" + alts + "," + "\"DateCompleted\" :"
-                + "\"" + dateCompleted + "\"," + "\"Description\" :" + "\"" + description + "\"}";
+        return "{" + "\"ID\" : \"" + uuidString + "\"," + "\"MemberCount\" :"
+                + memberCount + "," + " \"Alternatives\" :" + alts + "," + "\"DateCompleted\" :"
+                + "\"" + dateCompleted + "\"," + "\"Description\" :\"" + description + "\"}";
 
     }
 
