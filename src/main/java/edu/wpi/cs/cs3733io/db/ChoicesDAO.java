@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
+
+import edu.wpi.cs.cs3733io.model.Alternative;
 import edu.wpi.cs.cs3733io.model.Choice;
 
 public class ChoicesDAO {
@@ -103,6 +105,8 @@ public class ChoicesDAO {
 			throw new Exception("Failed to insert choice: " + e.getMessage());
 		}
 	}
+
+
 
 	public List<Choice> getAllChoices() throws Exception {
 
