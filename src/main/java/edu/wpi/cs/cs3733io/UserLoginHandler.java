@@ -14,8 +14,8 @@ import edu.wpi.cs.cs3733io.model.User;
 public class UserLoginHandler implements RequestHandler<UserLoginRequest, UserLoginResponse> {
 	LambdaLogger logger;
 	UserLoginResponse response;
-    boolean flag = false;
-    
+	boolean flag = false;
+
 	boolean createUser(String name, String choiceId) throws Exception {
 		if (logger != null) {
 
@@ -28,6 +28,7 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, UserLo
 
 		return dao.addUser(user);
 	}
+
 	boolean createUser(String name, String password, String choiceId) throws Exception {
 		if (logger != null) {
 			logger.log("in loginUser FOR A PASSWORD ");
@@ -45,7 +46,9 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, UserLo
 		}
 		ChoicesDAO dao = new ChoicesDAO();
 		UsersDAO dao2 = new UsersDAO();
-		try {dao.getChoice(uuid).getMemberCount();} catch (Exception e) {
+		try {
+			dao.getChoice(uuid).getMemberCount();
+		} catch (Exception e) {
 			flag = true;
 		}
 		try {
@@ -57,8 +60,9 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, UserLo
 			return false;
 		}
 	}
+
 	@Override
-	public UserLoginResponse handleRequest(UserLoginRequest userRequest, Context context) {	
+	public UserLoginResponse handleRequest(UserLoginRequest userRequest, Context context) {
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler of UserLoginHandler");
 		logger.log(userRequest.toString());
@@ -98,10 +102,12 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, UserLo
 					}
 				}
 			} else {
-				if(flag) {
-					response = new UserLoginResponse("Choice ID: "+ userRequest.getChoiceId() +" does not exist", 400);
-				}else
-				response = new UserLoginResponse("Max number of users hit for choice Id: "+ userRequest.getChoiceId(), 400);
+				if (flag) {
+					response = new UserLoginResponse("Choice ID: " + userRequest.getChoiceId() + " does not exist",
+							400);
+				} else
+					response = new UserLoginResponse(
+							"Max number of users hit for choice Id: " + userRequest.getChoiceId(), 400);
 			}
 		} catch (Exception e) {
 			response = new UserLoginResponse("Unable to get choice", 400);
