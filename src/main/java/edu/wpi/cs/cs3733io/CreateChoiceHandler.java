@@ -18,14 +18,13 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 	LambdaLogger logger;
 	CreateChoiceResponse response;
 
-	boolean createChoice(int memberCount, String description, String[] alternativeNames) throws Exception {
+	boolean createChoice(Choice choice) throws Exception {
 		if (logger != null) {
 			logger.log("in createChoice");
 		}
 		ChoicesDAO dao = new ChoicesDAO();
 		AlternativesDAO alternativesDAO = new AlternativesDAO();
 
-		Choice choice = new Choice(memberCount, description, alternativeNames);
 		choice.createAlternatives();
 
 		boolean success = true;
@@ -53,7 +52,7 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 		response = new CreateChoiceResponse(choice.toString(), 300);
 		
 		try {
-			if (createChoice(choice.getMemberCount(), choice.description, choice.alternativeNames)) {
+			if (createChoice(choice)) {
 				response = new CreateChoiceResponse(choice.toString(), 200);
 			}
 

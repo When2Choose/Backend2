@@ -96,7 +96,7 @@ public class Choice {
         }
         alts = alts + "]";
 
-        return "{" + "\"ID\" : \"" + uuid.toString() + "\"," + "\"Member Count\" :" + "\""
+        return "{" + "\"ID\" : \"" + uuidString + "\"," + "\"Member Count\" :" + "\""
 
                 + memberCount + "\"," + " \"Alternatives\" :" + alts + "," + "\"DateCompleted\" :"
                 + "\"" + dateCompleted + "\"," + "\"Description\" :" + "\"" + description + "\"}";
