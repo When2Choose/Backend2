@@ -18,7 +18,9 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, UserLo
     
 	boolean createUser(String name, String choiceId) throws Exception {
 		if (logger != null) {
+
 			logger.log("in loginUser FOR NO PASSWORD ");
+
 		}
 		UsersDAO dao = new UsersDAO();
 
@@ -26,7 +28,6 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, UserLo
 
 		return dao.addUser(user);
 	}
-
 	boolean createUser(String name, String password, String choiceId) throws Exception {
 		if (logger != null) {
 			logger.log("in loginUser FOR A PASSWORD ");
@@ -56,9 +57,8 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, UserLo
 			return false;
 		}
 	}
-
 	@Override
-	public UserLoginResponse handleRequest(UserLoginRequest userRequest, Context context) {
+	public UserLoginResponse handleRequest(UserLoginRequest userRequest, Context context) {	
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler of UserLoginHandler");
 		logger.log(userRequest.toString());
@@ -66,6 +66,7 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, UserLo
 		if (context != null) {
 			context.getLogger();
 		}
+
 		try {
 			if (getNumberOfUsers(userRequest.getChoiceId())) {
 				if (userRequest.getPassword() == null || userRequest.getPassword() == "") {
@@ -104,9 +105,11 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, UserLo
 			}
 		} catch (Exception e) {
 			response = new UserLoginResponse("Unable to get choice", 400);
+
 			e.printStackTrace();
 		}
-		return response;
 
+		return response;
 	}
+
 }
