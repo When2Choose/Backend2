@@ -112,6 +112,27 @@ public class UsersDAO {
 		}
 	}
 	
+	public int getNumberOfUsers(String choiceId) throws Exception {
+
+		List<User> users = new ArrayList<>();
+		try {
+			PreparedStatement statement = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE choiceId = ?;");
+			statement.setString(1, choiceId);
+			ResultSet resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				User c = generateUser(resultSet);
+				users.add(c);
+			}
+			resultSet.close();
+			statement.close();
+			return users.size();
+
+		} catch (Exception e) {
+			throw new Exception("Failed in getting users: " + e.getMessage());
+		}
+	}
+	
 	private User generateUser(ResultSet resultSet) throws Exception {
 		String name = resultSet.getString("name");
 		String password = resultSet.getString("password");
