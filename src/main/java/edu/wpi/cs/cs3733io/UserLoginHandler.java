@@ -8,7 +8,6 @@ import edu.wpi.cs.cs3733io.db.ChoicesDAO;
 import edu.wpi.cs.cs3733io.db.UsersDAO;
 import edu.wpi.cs.cs3733io.http.UserLoginRequest;
 import edu.wpi.cs.cs3733io.http.UserLoginResponse;
-import edu.wpi.cs.cs3733io.model.Choice;
 import edu.wpi.cs.cs3733io.model.User;
 
 public class UserLoginHandler implements RequestHandler<UserLoginRequest, UserLoginResponse> {
