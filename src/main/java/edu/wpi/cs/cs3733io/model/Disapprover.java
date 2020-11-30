@@ -36,21 +36,22 @@ public class Disapprover {
 				+ "\"AlternativeIndex\" : " + "\"" + Integer.toString(alternativeIndex) + "\"" + "}";
 
 	}
-	
+
 	public String toString(LinkedList<Disapprover> disapproverNames) {
 
-		String dispprovers = "[";
-        for (Disapprover a : disapproverNames) {
-            if (dispprovers.equals("[")) {
-            	dispprovers = dispprovers + "\"" + a.getUserName() + "\"" ;
-            } else {
-            	dispprovers = dispprovers + ", " + "\"" + a.getUserName()+ "\"" ;
-            }
-        }
-        dispprovers = dispprovers + "]";
-		
-		return "{" + "\"Dispprovers\" : " + "\"" + dispprovers + ",\"" + "\"ChoiceId\"  : " + "\"" + choiceUuid + ",\""
-				+ "\"AlternativeIndex\" : " + "\"" + Integer.toString(alternativeIndex) + "\"" + "}";
+		String disapprovers = "[";
+		for (Disapprover a : disapproverNames) {
+			if (disapprovers.equals("[")) {
+				disapprovers = disapprovers + "\"" + a.getUserName() + "\"";
+			} else {
+				disapprovers = disapprovers + ", " + "\"" + a.getUserName() + "\"";
+			}
+		}
+		disapprovers = disapprovers + "]";
+
+		return "{" + "\"Disapprovers\" : " + "\"" + disapprovers + ",\"" + "\"ChoiceId\"  : " + "\"" + choiceUuid + ",\""
+				+ "\"AlternativeIndex\" : " + "\"" + Integer.toString(alternativeIndex) + ",\"" + "\"NumberOfDisapprovers\"  : "
+				+ "\"" + Integer.toString(disapproverNames.size()) + "\"" + "}";
 
 	}
 }
