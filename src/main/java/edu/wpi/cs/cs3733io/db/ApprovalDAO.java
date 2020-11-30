@@ -34,6 +34,21 @@ public class ApprovalDAO {
 		}
 	}
 
+	public boolean removeApprove(Approver approver) throws Exception {
+		try {
+			PreparedStatement ps = conn.prepareStatement(
+					"DELETE FROM " + tblName + " WHERE user_name =? AND alternative_index=? AND choice_uuid=?;");
+			ps.setString(1, approver.getUserName());
+			ps.setInt(2, approver.getAlternativeIndex());
+			ps.setString(3, approver.getChoiceUuid());
+			ps.execute();
+			return true;
+
+		} catch (Exception e) {
+			throw new Exception("Failed to remove approver: " + e.getMessage());
+		}
+	}
+
 	public LinkedList<Approver> getApprovers(String choiceUuid, int alternativeIndex) throws Exception {
 
 		try {
