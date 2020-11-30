@@ -3,6 +3,8 @@ package edu.wpi.cs.cs3733io.db;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.LinkedList;
+
+import edu.wpi.cs.cs3733io.model.Approver;
 import edu.wpi.cs.cs3733io.model.Disapprover;
 
 public class DisapprovalDAO {
@@ -31,6 +33,21 @@ public class DisapprovalDAO {
 
 		} catch (Exception e) {
 			throw new Exception("Failed to insert disapprovers: " + e.getMessage());
+		}
+	}
+	
+	public boolean removeDisapprover(Disapprover disapprover) throws Exception {
+		try {
+			PreparedStatement ps = conn.prepareStatement(
+					"DELETE FROM " + tblName + " WHERE user_name =? AND alternative_index=? AND choice_uuid=?;");
+			ps.setString(1, disapprover.getUserName());
+			ps.setInt(2, disapprover.getAlternativeIndex());
+			ps.setString(3, disapprover.getChoiceUuid());
+			ps.execute();
+			return true;
+
+		} catch (Exception e) {
+			throw new Exception("Failed to remove disapprover: " + e.getMessage());
 		}
 	}
 
