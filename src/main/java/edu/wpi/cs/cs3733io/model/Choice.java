@@ -1,7 +1,12 @@
 package edu.wpi.cs.cs3733io.model;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.TimeZone;
 import java.util.UUID;
 
 public class Choice {
@@ -14,6 +19,7 @@ public class Choice {
     LinkedList<Alternative> alternatives;
 
     boolean isCompleted;
+    String dateCreated;
     String dateCompleted;
 
     //@formatter:off
@@ -48,10 +54,21 @@ public class Choice {
     public void setDateCompleted(String dateCompleted) {
         this.dateCompleted = dateCompleted;
     }
+    
+    public String getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(String dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+	
     //@formatter:on
 
 
-    /**
+
+
+	/**
      * A Choice that people can access.
      *
      * @param memberCount
@@ -64,18 +81,22 @@ public class Choice {
         this.memberCount = memberCount;
         this.description = description;
         this.alternativeNames = alternativeNames;
+        SimpleDateFormat sDF = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        sDF.setTimeZone(TimeZone.getTimeZone("EST"));
+        Date date = new Date();
+        this.dateCreated = sDF.format(date) + " EST";
         this.dateCompleted = "Not Complete";
         this.isCompleted = false;
         alternatives = new LinkedList<>();
     }
 
-    public Choice(String uuidString, int memberCount, String description, String dateCompleted, boolean isCompleted,
-                  String[] alternativeNames) {
+    public Choice(String uuidString, int memberCount, String description, String dateCompleted, String dateCreated, boolean isCompleted, String[] alternativeNames) {
         this.uuidString = uuidString;
         uuid = UUID.fromString(uuidString);
         this.memberCount = memberCount;
         this.description = description;
         this.alternativeNames = alternativeNames;
+        this.dateCreated = dateCreated;
         this.dateCompleted = dateCompleted;
         this.isCompleted = isCompleted;
     }
@@ -99,6 +120,25 @@ public class Choice {
                 + memberCount + "," + " \"Alternatives\" :" + alts + "," + "\"DateCompleted\" :"
                 + "\"" + dateCompleted + "\"," + "\"Description\" :\"" + description + "\"}";
 
+    }
+    
+	String toJSON() {
+		return String.format("{\"ID\": \"%s\", \"DateCreated\": \"%s\", \"isCompleted\": %s}", uuidString, dateCreated, isCompleted);
+	}
+	
+    public String toStringForGeneratingReport(List<Choice> choices) {
+		String choicesJSON = "[";
+		for(Choice aChoice: choices)
+	      {
+            if (choicesJSON.equals("[")) {
+            	choicesJSON = choicesJSON + aChoice.toJSON();
+            } else {
+            	choicesJSON = choicesJSON + ", " + aChoice.toJSON();
+            }
+	      }
+		choicesJSON += "]";
+		
+        return "{" + " \"Choices\" :" + choicesJSON + "\"}";
     }
 
     /**

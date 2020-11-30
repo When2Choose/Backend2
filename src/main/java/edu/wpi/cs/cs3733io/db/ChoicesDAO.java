@@ -56,6 +56,7 @@ public class ChoicesDAO {
 			ps.setBoolean(3, choice.getIsCompleted());
 			ps.setString(4, choice.getDateCompleted());
 			ps.setInt(5, choice.memberCount);
+			ps.setString(6, choice.getDateCreated());
 			int numAffected = ps.executeUpdate();
 			ps.close();
 
@@ -92,12 +93,13 @@ public class ChoicesDAO {
 //				return false;
 //			}
 
-			PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName + " (uuid, description, complete, date_completed, member_count) VALUES (?,?,?,?,?)");
+			PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName + " (uuid, description, complete, date_completed, member_count, date_created) VALUES (?,?,?,?,?,?)");
 			ps.setString(1, choice.getUuidString());
 			ps.setString(2, choice.getDescription());
 			ps.setBoolean(3, choice.getIsCompleted());
 			ps.setString(4, choice.getDateCompleted());
 			ps.setInt(5, choice.memberCount);
+			ps.setString(6, choice.getDateCreated());
 			ps.execute();
 			return true;
 
@@ -134,10 +136,11 @@ public class ChoicesDAO {
 		boolean isCompleted = resultSet.getBoolean("complete");
 		String description = resultSet.getString("description");
 		String dateCompleted = resultSet.getString("date_completed");
+		String dateCreated = resultSet.getString("date_created");
 		String uuid = resultSet.getString("uuid");
 		String[] alternativeNames = {};
 
-		return new Choice(uuid, memberCount, description, dateCompleted, isCompleted, alternativeNames);
+		return new Choice(uuid, memberCount, description, dateCompleted, dateCreated, isCompleted, alternativeNames);
 	}
 
 }
