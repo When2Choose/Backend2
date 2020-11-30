@@ -50,7 +50,8 @@ public class Approver {
         approvers = approvers + "]";
 		
 		return "{" + "\"Approvers\" : " + "\"" + approvers + ",\"" + "\"ChoiceId\"  : " + "\"" + choiceUuid + ",\""
-				+ "\"AlternativeIndex\" : " + "\"" + Integer.toString(alternativeIndex) + "\"" + "}";
+		+ "\"AlternativeIndex\" : " + "\"" + Integer.toString(alternativeIndex) + ",\"" + "\"NumberOfDisapprovers\"  : "
+		+ "\"" + Integer.toString(approverNames.size()) + "\"" + "}";
 
 	}
 }
