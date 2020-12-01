@@ -21,6 +21,8 @@ public class Alternative {
 		this.index = index;
 		this.name = name;
 		this.isChosen = isChosen;
+		approvers = new LinkedList<String>();
+		disapprovers = new LinkedList<String>();
 	}
 
 	//@formatter:off 
@@ -37,11 +39,13 @@ public class Alternative {
 		this.index = index;
 		this.name = name;
 		this.isChosen = false;
+		approvers = new LinkedList<String>();
+		disapprovers = new LinkedList<String>();
 	}
 
 	String toJSON() {
 		return String.format(
-				"{\"alternativeUUID\": \"%s\", \"choiceUUID\": \"%s\", \"index\": %d, \"description\": \"%s\", \"Approvers\": \"%s\", \"Disapprovers\": \"%s\" ,\"isChosen\": %d}",
+				"{\"alternativeUUID\": \"%s\", \"choiceUUID\": \"%s\", \"index\": %d, \"description\": \"%s\", \"Approvers\": %s, \"Disapprovers\": %s ,\"isChosen\": %d}",
 				alternativeUUID, choiceUUID, index, name, approverJSON(), dispproverJSON(),isChosen ? 0 : 1);
 	}
 
@@ -59,7 +63,7 @@ public class Alternative {
 
 	private String approverJSON() {
 		if (approvers == null || approvers.isEmpty()) {
-			return "";
+			return "[]";
 		}
 
 		String approverJSON = "[";
@@ -76,7 +80,7 @@ public class Alternative {
 
 	private String dispproverJSON() {
 		if (disapprovers == null || disapprovers.isEmpty()) {
-			return "";
+			return "[]";
 		}
 
 		String disapproverJSON = "[";
