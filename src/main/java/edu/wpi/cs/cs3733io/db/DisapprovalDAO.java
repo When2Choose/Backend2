@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.LinkedList;
 
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
+
 import edu.wpi.cs.cs3733io.model.Approver;
 import edu.wpi.cs.cs3733io.model.Disapprover;
 
@@ -51,7 +53,7 @@ public class DisapprovalDAO {
 		}
 	}
 	
-	public Disapprover getDisapprover(String choiceUuid, int alternativeIndex, String userName) throws Exception {
+	public Disapprover getDisapprover(String choiceUuid, int alternativeIndex, String userName, LambdaLogger logger) throws Exception {
 		try {
 			Disapprover disapprover = null;
 			PreparedStatement ps = conn
@@ -67,11 +69,12 @@ public class DisapprovalDAO {
 
 			resultSet.close();
 			ps.close();
-
+			logger.log("successful disapprove search");
 			return disapprover;
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.log(e.getMessage());
 			throw new Exception("Failed in getting disapprover: " + e.getMessage());
 		}
 	}

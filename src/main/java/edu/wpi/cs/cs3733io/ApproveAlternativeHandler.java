@@ -47,20 +47,42 @@ public class ApproveAlternativeHandler
 
 		try {
 			Disapprover disapprover = disapproveDAO.getDisapprover(approver.getChoiceUuid(), approver.getAlternativeIndex(),
-					approver.getUserName());
+					approver.getUserName(), logger);
 
-			if (approver.getAlternativeIndex() == disapprover.getAlternativeIndex()
-					&& approver.getChoiceUuid().equals(disapprover.getChoiceUuid())
-					&& approver.getUserName().equals(disapprover.getUserName())) {
-				return false;
-			} else
-				return true;
+			if (disapprover == null) {
+			    return false;
+            }
+
+            return approver.getAlternativeIndex() == disapprover.getAlternativeIndex()
+                    && approver.getChoiceUuid().equals(disapprover.getChoiceUuid())
+                    && approver.getUserName().equals(disapprover.getUserName());
 
 		} catch (Exception e) {
 			return true;
 		}
-
 	}
+
+    boolean isApprover(Approver approver) {
+        if (logger != null) {
+            logger.log("in isDisapprover");
+        }
+
+        ApprovalDAO approvalDAO = new ApprovalDAO();
+
+        try {
+            Approver possibleApprover = approvalDAO.getApprover(approver.getChoiceUuid(), approver.getAlternativeIndex(),
+                    approver.getUserName());
+            if (possibleApprover == null)
+                return false;
+
+            return approver.getAlternativeIndex() == possibleApprover.getAlternativeIndex()
+                    && approver.getChoiceUuid().equals(possibleApprover.getChoiceUuid())
+                    && approver.getUserName().equals(possibleApprover.getUserName());
+
+        } catch (Exception e) {
+            return true;
+        }
+    }
 
 	@Override
 	public ApproveAlternativeResponse handleRequest(ApproveAlternativeRequest approveRequest, Context context) {
@@ -76,7 +98,7 @@ public class ApproveAlternativeHandler
 				approveRequest.getUser());
 
 		try {
-			if (isDisapprover(approver)) {
+			if (!isDisapprover(approver) && !isApprover(approver)) {
 				if (addApprover(approver)) {
 
 					LinkedList<Approver> approvers = getApprovers(approver.getChoiceUuid(),
@@ -84,7 +106,12 @@ public class ApproveAlternativeHandler
 					response = new ApproveAlternativeResponse(approver.toString(approvers), 200);
 				}
 			} else {
-				response = new ApproveAlternativeResponse("User is on disapprove List", 400);
+			    if (isDisapprover(approver)) {
+                    response = new ApproveAlternativeResponse("User is on disapprove List", 400);
+                } else {
+                    response = new ApproveAlternativeResponse("User is on approve List", 400);
+                }
+
 			}
 
 		} catch (Exception e) {

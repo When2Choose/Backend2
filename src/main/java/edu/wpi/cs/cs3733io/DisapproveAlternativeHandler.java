@@ -39,28 +39,50 @@ public class DisapproveAlternativeHandler
 		return disapprovalDAO.getDisapprovers(choiceUuid, alternativeIndex);
 	}
 
-	boolean isApprover(Disapprover disapprover) {
+	boolean isDisapprover(Disapprover disapprover) {
 		if (logger != null) {
-			logger.log("in isApprover");
+			logger.log("in isDisapprover");
 		}
 
-		ApprovalDAO approveDAO = new ApprovalDAO();
+		DisapprovalDAO disapproveDAO = new DisapprovalDAO();
 
 		try {
-			Approver approver = approveDAO.getApprover(disapprover.getChoiceUuid(), disapprover.getAlternativeIndex(),
-					disapprover.getUserName());
+			Disapprover possibleDisapprover = disapproveDAO.getDisapprover(disapprover.getChoiceUuid(), disapprover.getAlternativeIndex(),
+					disapprover.getUserName(), logger);
 
-			if (approver.getAlternativeIndex() == disapprover.getAlternativeIndex()
-					&& approver.getChoiceUuid().equals(disapprover.getChoiceUuid())
-					&& approver.getUserName().equals(disapprover.getUserName())) {
+			if (possibleDisapprover == null) {
 				return false;
-			} else
-				return true;
+			}
+
+			return disapprover.getAlternativeIndex() == possibleDisapprover.getAlternativeIndex()
+					&& disapprover.getChoiceUuid().equals(possibleDisapprover.getChoiceUuid())
+					&& disapprover.getUserName().equals(possibleDisapprover.getUserName());
 
 		} catch (Exception e) {
 			return true;
 		}
+	}
 
+	boolean isApprover(Disapprover disapprover) {
+		if (logger != null) {
+			logger.log("in isDisapprover");
+		}
+
+		ApprovalDAO approvalDAO = new ApprovalDAO();
+
+		try {
+			Approver possibleApprover = approvalDAO.getApprover(disapprover.getChoiceUuid(), disapprover.getAlternativeIndex(),
+					disapprover.getUserName());
+			if (possibleApprover == null)
+				return false;
+
+			return disapprover.getAlternativeIndex() == possibleApprover.getAlternativeIndex()
+					&& disapprover.getChoiceUuid().equals(possibleApprover.getChoiceUuid())
+					&& disapprover.getUserName().equals(possibleApprover.getUserName());
+
+		} catch (Exception e) {
+			return true;
+		}
 	}
 
 	@Override
@@ -77,7 +99,7 @@ public class DisapproveAlternativeHandler
 				disApproveRequest.getUser());
 
 		try {
-			if (isApprover(disapprover)) {
+			if (!isApprover(disapprover) && !isDisapprover(disapprover)) {
 				if (addDisapprover(disapprover)) {
 
 					LinkedList<Disapprover> disapprovers = getDisapprovers(disapprover.getChoiceUuid(),

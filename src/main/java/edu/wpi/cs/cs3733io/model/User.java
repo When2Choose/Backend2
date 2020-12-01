@@ -28,7 +28,7 @@ public class User {
 	}
 
 	public String toString() {
-		return "{ \"ID:\" " + "\"" + choiceId + "\"," + "\"name:" + "\"" + name + "\"," + "\"password:" + "\""
+		return "{ \"ID\": " + "\"" + choiceId + "\"," + "\"name\": \"" + name + "\"," + "\"password\": \""
 				+ password + "\"" + "}";
 	}
 
