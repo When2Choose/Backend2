@@ -39,8 +39,33 @@ public class DisapproveAlternativeHandler
 		return disapprovalDAO.getDisapprovers(choiceUuid, alternativeIndex);
 	}
 
+	boolean isApprover(Disapprover disapprover) {
+		if (logger != null) {
+			logger.log("in isApprover");
+		}
+
+		ApprovalDAO approveDAO = new ApprovalDAO();
+
+		try {
+			Approver approver = approveDAO.getApprover(disapprover.getChoiceUuid(), disapprover.getAlternativeIndex(),
+					disapprover.getUserName());
+
+			if (approver.getAlternativeIndex() == disapprover.getAlternativeIndex()
+					&& approver.getChoiceUuid().equals(disapprover.getChoiceUuid())
+					&& approver.getUserName().equals(disapprover.getUserName())) {
+				return false;
+			} else
+				return true;
+
+		} catch (Exception e) {
+			return true;
+		}
+
+	}
+
 	@Override
-	public DisapproveAlternativeResponse handleRequest(DisapproveAlternativeRequest disApproveRequest, Context context) {
+	public DisapproveAlternativeResponse handleRequest(DisapproveAlternativeRequest disApproveRequest,
+			Context context) {
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler of Disapproval ");
 
@@ -52,15 +77,20 @@ public class DisapproveAlternativeHandler
 				disApproveRequest.getUser());
 
 		try {
+			if (isApprover(disapprover)) {
+				if (addDisapprover(disapprover)) {
 
-			if (addDisapprover(disapprover)) {
-
-				LinkedList<Disapprover> disapprovers = getDisapprovers(disapprover.getChoiceUuid(), disapprover.getAlternativeIndex());
-				response = new DisapproveAlternativeResponse(disapprover.toString(disapprovers), 200);
+					LinkedList<Disapprover> disapprovers = getDisapprovers(disapprover.getChoiceUuid(),
+							disapprover.getAlternativeIndex());
+					response = new DisapproveAlternativeResponse(disapprover.toString(disapprovers), 200);
+				}
+			} else {
+				response = new DisapproveAlternativeResponse("User is on approver List", 400);
 			}
 
 		} catch (Exception e) {
-			response = new DisapproveAlternativeResponse("Unable to add disapprover " + "(" + e.getMessage() + ")", 400);
+			response = new DisapproveAlternativeResponse("Unable to add disapprover " + "(" + e.getMessage() + ")",
+					400);
 			e.printStackTrace();
 		}
 

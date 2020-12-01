@@ -7,9 +7,11 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 import edu.wpi.cs.cs3733io.db.ApprovalDAO;
+import edu.wpi.cs.cs3733io.db.DisapprovalDAO;
 import edu.wpi.cs.cs3733io.http.ApproveAlternativeRequest;
 import edu.wpi.cs.cs3733io.http.ApproveAlternativeResponse;
 import edu.wpi.cs.cs3733io.model.Approver;
+import edu.wpi.cs.cs3733io.model.Disapprover;
 
 public class ApproveAlternativeHandler
 		implements RequestHandler<ApproveAlternativeRequest, ApproveAlternativeResponse> {
@@ -36,6 +38,30 @@ public class ApproveAlternativeHandler
 		return approveDAO.getApprovers(choiceUuid, alternativeIndex);
 	}
 
+	boolean isDisapprover(Approver approver) {
+		if (logger != null) {
+			logger.log("in isDisapprover");
+		}
+
+		DisapprovalDAO disapproveDAO = new DisapprovalDAO();
+
+		try {
+			Disapprover disapprover = disapproveDAO.getDisapprover(approver.getChoiceUuid(), approver.getAlternativeIndex(),
+					approver.getUserName());
+
+			if (approver.getAlternativeIndex() == disapprover.getAlternativeIndex()
+					&& approver.getChoiceUuid().equals(disapprover.getChoiceUuid())
+					&& approver.getUserName().equals(disapprover.getUserName())) {
+				return false;
+			} else
+				return true;
+
+		} catch (Exception e) {
+			return true;
+		}
+
+	}
+
 	@Override
 	public ApproveAlternativeResponse handleRequest(ApproveAlternativeRequest approveRequest, Context context) {
 
@@ -50,11 +76,15 @@ public class ApproveAlternativeHandler
 				approveRequest.getUser());
 
 		try {
+			if (isDisapprover(approver)) {
+				if (addApprover(approver)) {
 
-			if (addApprover(approver)) {
-
-				LinkedList<Approver> approvers = getApprovers(approver.getChoiceUuid(), approver.getAlternativeIndex());
-				response = new ApproveAlternativeResponse(approver.toString(approvers), 200);
+					LinkedList<Approver> approvers = getApprovers(approver.getChoiceUuid(),
+							approver.getAlternativeIndex());
+					response = new ApproveAlternativeResponse(approver.toString(approvers), 200);
+				}
+			} else {
+				response = new ApproveAlternativeResponse("User is on disapprove List", 400);
 			}
 
 		} catch (Exception e) {

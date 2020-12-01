@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.LinkedList;
 import edu.wpi.cs.cs3733io.model.Approver;
+import edu.wpi.cs.cs3733io.model.Disapprover;
 
 public class ApprovalDAO {
 
@@ -48,6 +49,31 @@ public class ApprovalDAO {
 			throw new Exception("Failed to remove approver: " + e.getMessage());
 		}
 	}
+	
+	public Approver getApprover(String choiceUuid, int alternativeIndex, String userName) throws Exception {
+		try {
+			Approver approver = null;
+			PreparedStatement ps = conn
+					.prepareStatement("SELECT * FROM " + tblName + " WHERE choice_uuid=? AND alternative_index=? AND user_name=?;");
+			ps.setString(1, choiceUuid);
+			ps.setInt(2, alternativeIndex);
+			ps.setString(3, userName);
+			ResultSet resultSet = ps.executeQuery();
+
+			while (resultSet.next()) {
+				approver = generateApprover(resultSet);
+			}
+
+			resultSet.close();
+			ps.close();
+
+			return approver;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("Failed in getting disapprover: " + e.getMessage());
+		}
+	}
 
 	public LinkedList<Approver> getApprovers(String choiceUuid, int alternativeIndex) throws Exception {
 
@@ -60,7 +86,7 @@ public class ApprovalDAO {
 			ResultSet resultSet = ps.executeQuery();
 
 			while (resultSet.next()) {
-				approvers.add(generateApprove(resultSet));
+				approvers.add(generateApprover(resultSet));
 			}
 
 			resultSet.close();
@@ -74,7 +100,7 @@ public class ApprovalDAO {
 		}
 	}
 
-	private Approver generateApprove(ResultSet resultSet) throws Exception {
+	private Approver generateApprover(ResultSet resultSet) throws Exception {
 		String userName = resultSet.getString("user_name");
 		String choiceId = resultSet.getString("choice_uuid");
 		int alternativeIndex = resultSet.getInt("alternative_index");
