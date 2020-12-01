@@ -50,6 +50,33 @@ public class DisapprovalDAO {
 			throw new Exception("Failed to remove disapprover: " + e.getMessage());
 		}
 	}
+	
+	public Disapprover getDisapprover(String choiceUuid, int alternativeIndex, String userName) throws Exception {
+		try {
+			Disapprover disapprover = null;
+			PreparedStatement ps = conn
+					.prepareStatement("SELECT * FROM " + tblName + " WHERE choice_uuid=? AND alternative_index=? AND user_name=?;");
+			ps.setString(1, choiceUuid);
+			ps.setInt(2, alternativeIndex);
+			ps.setString(3, userName);
+			ResultSet resultSet = ps.executeQuery();
+
+			while (resultSet.next()) {
+				disapprover = generateDisapprover(resultSet);
+			}
+
+			resultSet.close();
+			ps.close();
+
+			return disapprover;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("Failed in getting disapprover: " + e.getMessage());
+		}
+	}
+	
+	
 
 	public LinkedList<Disapprover> getDisapprovers(String choiceUuid, int alternativeIndex) throws Exception {
 
