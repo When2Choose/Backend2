@@ -2,8 +2,10 @@ package edu.wpi.cs.cs3733io.db;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.LinkedList;
 
 import edu.wpi.cs.cs3733io.model.Alternative;
+import edu.wpi.cs.cs3733io.model.Approver;
 import edu.wpi.cs.cs3733io.model.Choice;
 import edu.wpi.cs.cs3733io.model.Feedback;
 
@@ -61,6 +63,31 @@ public class FeedbackDAO {
             throw new Exception("Failed in getting feedback: " + e.getMessage());
         }
 	}
+	
+	public LinkedList<Feedback> getAlternativeFeedback(int alternativeIndex, String choiceUuid) throws Exception{
+		try {
+			LinkedList<Feedback> feedback = new LinkedList<Feedback>();
+			PreparedStatement ps = conn
+					.prepareStatement("SELECT * FROM " + tblName + " WHERE choice_uuid=? AND alternative_index=?;");
+			ps.setString(1, choiceUuid);
+			ps.setInt(2, alternativeIndex);
+			ResultSet resultSet = ps.executeQuery();
+
+			while (resultSet.next()) {
+				feedback.add(generateFeedback(resultSet));
+			}
+
+			resultSet.close();
+			ps.close();
+
+			return feedback;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("Failed in getting approvers: " + e.getMessage());
+		}
+	}
+	
 	
 	
     private Feedback generateFeedback(ResultSet resultSet) throws Exception {
