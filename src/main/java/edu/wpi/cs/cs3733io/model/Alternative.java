@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import com.google.gson.*;
 
-
 public class Alternative {
 
 	public final UUID alternativeUUID;
@@ -41,6 +40,54 @@ public class Alternative {
 	}
 
 	String toJSON() {
-		return String.format("{\"alternativeUUID\": \"%s\", \"choiceUUID\": \"%s\", \"index\": %d, \"description\": \"%s\", \"isChosen\": %d}", alternativeUUID, choiceUUID, index, name, isChosen ? 0: 1);
+		return String.format(
+				"{\"alternativeUUID\": \"%s\", \"choiceUUID\": \"%s\", \"index\": %d, \"description\": \"%s\", \"Approvers\": \"%s\", \"Disapprovers\": \"%s\" ,\"isChosen\": %d}",
+				alternativeUUID, choiceUUID, index, name, approverJSON(), dispproverJSON(),isChosen ? 0 : 1);
+	}
+
+	public void setApproverNames(LinkedList<Approver> approvers) {
+		for (Approver a : approvers) {
+			this.approvers.add(a.getUserName());
+		}
+	}
+
+	public void setDisapproverNames(LinkedList<Disapprover> disapprovers) {
+		for (Disapprover d : disapprovers) {
+			this.disapprovers.add(d.getUserName());
+		}
+	}
+
+	private String approverJSON() {
+		if (approvers == null || approvers.isEmpty()) {
+			return "";
+		}
+
+		String approverJSON = "[";
+		for (String a : this.approvers) {
+			if (approverJSON.equals("[")) {
+				approverJSON = approverJSON + "\"" + a + "\"";
+			} else {
+				approverJSON = approverJSON + ", " + "\"" + a + "\"";
+			}
+		}
+		approverJSON = approverJSON + "]";
+		return approverJSON;
+	}
+
+	private String dispproverJSON() {
+		if (disapprovers == null || disapprovers.isEmpty()) {
+			return "";
+		}
+
+		String disapproverJSON = "[";
+		for (String d : this.disapprovers) {
+			if (disapproverJSON.equals("[")) {
+				disapproverJSON = disapproverJSON + "\"" + d + "\"";
+			} else {
+				disapproverJSON = disapproverJSON + ", " + "\"" + d + "\"";
+			}
+		}
+		disapproverJSON = disapproverJSON + "]";
+		return disapproverJSON;
 	}
 }
