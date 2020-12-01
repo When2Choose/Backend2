@@ -43,7 +43,7 @@ public class Alternative {
 		disapprovers = new LinkedList<String>();
 	}
 
-	String toJSON() {
+	public String toJSON() {
 		return String.format(
 				"{\"alternativeUUID\": \"%s\", \"choiceUUID\": \"%s\", \"index\": %d, \"description\": \"%s\", \"Approvers\": %s, \"Disapprovers\": %s ,\"isChosen\": %d}",
 				alternativeUUID, choiceUUID, index, name, approverJSON(), dispproverJSON(),isChosen ? 0 : 1);

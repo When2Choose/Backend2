@@ -65,6 +65,33 @@ public class AlternativesDAO {
         }
     }
 
+    public Alternative getAlternative(String choiceUUID, String index, Context context) throws Exception {
+
+        try {
+            Alternative alternative = null;
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE choice_uuid=? AND index=?;");
+            ps.setString(1, choiceUUID);
+            ps.setString(2, index);
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                alternative = generateAlternative(resultSet);
+            }
+
+            resultSet.close();
+            ps.close();
+            if (alternative == null) {
+                throw new Exception("Alternative with index and choice uuid not found.");
+            }
+
+            return alternative;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Failed in getting alternative: " + e.getMessage());
+        }
+    }
+
     private Alternative generateAlternative(ResultSet resultSet) throws Exception {
         String alternativeUUID = resultSet.getString("alternative_uuid");
         String choiceUuid = resultSet.getString("choice_uuid");
