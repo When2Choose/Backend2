@@ -24,11 +24,11 @@ public class FeedbackDAO {
 	public boolean addFeedback(Feedback feedback) throws Exception {
 		try {
 			PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName
-					+ " (username, description, uuidChoice, uuidAlternative) VALUES (?,?,?,?)");
+					+ " (user_name, description, uuid_Choice, alternative_index) VALUES (?,?,?,?)");
 			ps.setString(1, feedback.userName);
 			ps.setString(2, feedback.description);
 			ps.setString(3, feedback.uuidChoice);
-			ps.setString(4, feedback.uuidAlternative);
+			ps.setInt(4, feedback.alternativeIndex);
 			ps.execute();
 			return true;
 
@@ -42,8 +42,10 @@ public class FeedbackDAO {
 
         try {
             Feedback feedback = null;
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE userName=?;");
-            ps.setString(1,  inputFeedback.uuidAlternative);
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE userName=? AND choice_uuid=? AND alternative_index=?;");
+            ps.setString(1,  inputFeedback.userName);
+            ps.setString(2,  inputFeedback.uuidChoice);
+            ps.setInt(3,  inputFeedback.alternativeIndex);
             ResultSet resultSet = ps.executeQuery();
             
             while (resultSet.next()) {
@@ -65,9 +67,9 @@ public class FeedbackDAO {
         String userName = resultSet.getString("userName");
         String description = resultSet.getString("description");
         String uuidChoice = resultSet.getString("uuid_choice");
-        String uuidAlternative = resultSet.getString("uuid_alternative");
+        int alternativeIndex = resultSet.getInt("uuid_alternative");
 
-        return new Feedback(userName, description, uuidChoice, uuidAlternative);
+        return new Feedback(userName, description, uuidChoice, alternativeIndex);
     }
 
 }
