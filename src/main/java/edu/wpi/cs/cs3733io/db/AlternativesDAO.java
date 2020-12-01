@@ -67,12 +67,20 @@ public class AlternativesDAO {
 
     private Alternative generateAlternative(ResultSet resultSet) throws Exception {
         String alternativeUUID = resultSet.getString("alternative_uuid");
-        String choiceUUID = resultSet.getString("choice_uuid");
-        int index = resultSet.getInt("index_number");
+        String choiceUuid = resultSet.getString("choice_uuid");
+        int alternativeIndex = resultSet.getInt("index_number");
         String description = resultSet.getString("description");
         boolean isChosen = resultSet.getBoolean("chosen");
 
-        return new Alternative(alternativeUUID, choiceUUID, index, description, isChosen);
+        Alternative alternative = new Alternative(alternativeUUID, choiceUuid, alternativeIndex, description, isChosen);
+        
+        ApprovalDAO approvalDao = new ApprovalDAO();
+        alternative.setApproverNames(approvalDao.getApprovers(choiceUuid, alternativeIndex));
+        
+        DisapprovalDAO disapprovalDao = new DisapprovalDAO();
+        alternative.setDisapproverNames(disapprovalDao.getDisapprovers(choiceUuid, alternativeIndex));
+        
+        return alternative;
     }
 
 }

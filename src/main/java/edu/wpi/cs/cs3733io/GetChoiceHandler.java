@@ -1,7 +1,5 @@
 package edu.wpi.cs.cs3733io;
 
-
-
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
@@ -51,6 +49,7 @@ public class GetChoiceHandler implements RequestHandler<GetChoiceRequest, GetCho
 		try {
 			Choice gotChoice = getChoice(choiceRequest.getUuidString());
 			alternatives = getAlternatives(choiceRequest.getUuidString(), context);
+
 			response = new GetChoiceResponse(gotChoice.toString(alternatives), 200);
 
 		} catch (Exception e) {
