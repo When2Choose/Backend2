@@ -14,6 +14,7 @@ public class Alternative {
 	public final int index;
 	LinkedList<String> approvers;
 	LinkedList<String> disapprovers;
+	LinkedList<Feedback> feedback;
 
 	public Alternative(String alternativeUUID, String choiceUUID, int index, String name, boolean isChosen) {
 		this.alternativeUUID = UUID.fromString(alternativeUUID);
@@ -41,12 +42,14 @@ public class Alternative {
 		this.isChosen = false;
 		approvers = new LinkedList<String>();
 		disapprovers = new LinkedList<String>();
+		feedback = new LinkedList<Feedback>();
 	}
 
 	String toJSON() {
 		return String.format(
-				"{\"alternativeUUID\": \"%s\", \"choiceUUID\": \"%s\", \"index\": %d, \"description\": \"%s\", \"Approvers\": %s, \"Disapprovers\": %s ,\"isChosen\": %d}",
-				alternativeUUID, choiceUUID, index, name, approverJSON(), dispproverJSON(),isChosen ? 0 : 1);
+				"{\"alternativeUUID\": \"%s\", \"choiceUUID\": \"%s\", \"index\": %d, \"description\": \"%s\", "
+						+ "\"Approvers\": %s, \"Disapprovers\": %s ,\"isChosen\": %d, \"Feedback\":" + feedbackJSON(this.feedback) + "}",
+				alternativeUUID, choiceUUID, index, name, approverJSON(), dispproverJSON(), isChosen ? 0 : 1);
 	}
 
 	public void setApproverNames(LinkedList<Approver> approvers) {
@@ -94,4 +97,29 @@ public class Alternative {
 		disapproverJSON = disapproverJSON + "]";
 		return disapproverJSON;
 	}
+
+	public void setFeedback(LinkedList<Feedback> alternativeFeedback) {
+		for (Feedback f : alternativeFeedback) {
+			this.feedback.add(f);
+		}
+	}
+
+	public String feedbackJSON(LinkedList<Feedback> allFeedback) {
+		if(allFeedback == null || allFeedback.isEmpty()) {
+			return "[]";
+		}
+		String feedback = "[";
+		for (Feedback a : allFeedback) {
+			if (feedback.equals("[")) {
+				feedback = feedback + "[\"User\":" + "\"" + a.getUserName() + "\"," + "\"description\":" + "\""
+						+ a.getDescription() + "\"]";
+			} else {
+				feedback = feedback + ", " + "[\"User\":" + "\"" + a.getUserName() + "\"," + "\"description\":" + "\""
+						+ a.getDescription() + "\" ]";
+			}
+		}
+		feedback = feedback + "]";
+		return feedback;
+	}
+
 }
