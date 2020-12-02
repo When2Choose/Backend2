@@ -10,7 +10,7 @@ import edu.wpi.cs.cs3733io.db.ChoicesDAO;
 import edu.wpi.cs.cs3733io.http.AdministratorRequest;
 import edu.wpi.cs.cs3733io.http.AdministratorResponse;
 import edu.wpi.cs.cs3733io.model.Choice;
-public class AdministratorHandler implements RequestHandler<AdministratorRequest, AdministratorResponse> {
+public class AdministratorHandler implements RequestHandler<Object, AdministratorResponse> {
 	LambdaLogger logger;
 	AdministratorResponse response;
 	
@@ -27,7 +27,7 @@ public class AdministratorHandler implements RequestHandler<AdministratorRequest
 	}
 
 	@Override
-	public AdministratorResponse handleRequest(AdministratorRequest input, Context context) {
+	public AdministratorResponse handleRequest(Object input, Context context) {
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler of Admin");
 		if (context != null) {
