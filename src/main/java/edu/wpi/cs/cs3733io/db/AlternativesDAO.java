@@ -92,7 +92,7 @@ public class AlternativesDAO {
 			ResultSet resultSet = ps.executeQuery();
 
 			while (resultSet.next()) {
-				generateAlternative(resultSet);
+				alternative = generateAlternative(resultSet);
 			}
 
 			resultSet.close();
