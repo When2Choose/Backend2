@@ -10,19 +10,19 @@ import java.util.TimeZone;
 import java.util.UUID;
 
 public class Choice {
-    public final UUID uuid;
-    public final String uuidString;
-    public final int memberCount;
-    public final String description;
+	public final UUID uuid;
+	public final String uuidString;
+	public final int memberCount;
+	public final String description;
 
-    public final String[] alternativeNames;
-    LinkedList<Alternative> alternatives;
+	public final String[] alternativeNames;
+	LinkedList<Alternative> alternatives;
 
-    boolean isCompleted;
-    String dateCreated;
-    String dateCompleted;
+	boolean isCompleted;
+	String dateCreated;
+	String dateCompleted;
 
-    //@formatter:off
+	//@formatter:off
     public String getUuidString() {
         return uuidString;
     }
@@ -65,98 +65,108 @@ public class Choice {
 	
     //@formatter:on
 
+	/**
+	 * A Choice that people can access.
+	 *
+	 * @param memberCount
+	 * @param description
+	 * @param alternativeNames
+	 */
+	public Choice(int memberCount, String description, String[] alternativeNames) {
+		uuid = UUID.randomUUID();
+		uuidString = uuid.toString();
+		this.memberCount = memberCount;
+		this.description = description;
+		this.alternativeNames = alternativeNames;
+		SimpleDateFormat sDF = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		sDF.setTimeZone(TimeZone.getTimeZone("EST"));
+		Date date = new Date();
+		this.dateCreated = sDF.format(date) + " EST";
+		this.dateCompleted = "Not Complete";
+		this.isCompleted = false;
+		alternatives = new LinkedList<>();
+	}
 
-
+	public Choice(String uuidString, int memberCount, String description, String dateCompleted, String dateCreated,
+			boolean isCompleted, String[] alternativeNames) {
+		this.uuidString = uuidString;
+		uuid = UUID.fromString(uuidString);
+		this.memberCount = memberCount;
+		this.description = description;
+		this.alternativeNames = alternativeNames;
+		this.dateCreated = dateCreated;
+		this.dateCompleted = dateCompleted;
+		this.isCompleted = isCompleted;
+	}
 
 	/**
-     * A Choice that people can access.
-     *
-     * @param memberCount
-     * @param description
-     * @param alternativeNames
-     */
-    public Choice(int memberCount, String description, String[] alternativeNames) {
-        uuid = UUID.randomUUID();
-        uuidString = uuid.toString();
-        this.memberCount = memberCount;
-        this.description = description;
-        this.alternativeNames = alternativeNames;
-        SimpleDateFormat sDF = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        sDF.setTimeZone(TimeZone.getTimeZone("EST"));
-        Date date = new Date();
-        this.dateCreated = sDF.format(date) + " EST";
-        this.dateCompleted = "Not Complete";
-        this.isCompleted = false;
-        alternatives = new LinkedList<>();
-    }
+	 * Converts a choice to a string without alternatives.
+	 * 
+	 */
+	public String toString() {
 
-    public Choice(String uuidString, int memberCount, String description, String dateCompleted, String dateCreated, boolean isCompleted, String[] alternativeNames) {
-        this.uuidString = uuidString;
-        uuid = UUID.fromString(uuidString);
-        this.memberCount = memberCount;
-        this.description = description;
-        this.alternativeNames = alternativeNames;
-        this.dateCreated = dateCreated;
-        this.dateCompleted = dateCompleted;
-        this.isCompleted = isCompleted;
-    }
+		return "{" + "\"ID\" : \"" + uuidString + "\"," + "\"MemberCount\" :" + memberCount + "," + "\"DateCreated\" :"
+				+ "\"" + dateCreated + "\"," + "\"IsCompleted\" :" + "\"" + Boolean.toString(isCompleted) + "\","
+				+ "\"DateCompleted\" :" + "\"" + dateCompleted + "\"," + "\"Description\" :\"" + description + "\"}";
 
-    /**
-     * Converts a choice to a string including all fields.
-     */
-    public String toString(LinkedList<Alternative> alternatives) {
-
-        String alts = "[";
-        for (Alternative alternative : alternatives) {
-            if (alts.equals("[")) {
-                alts = alts + alternative.toJSON();
-            } else {
-                alts = alts + ", " + alternative.toJSON();
-            }
-        }
-        alts = alts + "]";
-
-        return "{" + "\"ID\" : \"" + uuidString + "\"," + "\"MemberCount\" :"
-                + memberCount + "," + " \"Alternatives\" :" + alts + "," + "\"DateCompleted\" :"
-                + "\"" + dateCompleted + "\"," + "\"Description\" :\"" + description + "\"}";
-
-    }
-    
-	String toJSON() {
-		return String.format("{\"ID\": \"%s\", \"DateCreated\": \"%s\", \"isCompleted\": %s}", uuidString, dateCreated, isCompleted);
 	}
-	
-    public String toStringForGeneratingReport(List<Choice> choices) {
+
+	/**
+	 * Converts a choice to a string including all fields.
+	 */
+	public String toString(LinkedList<Alternative> alternatives) {
+
+		String alts = "[";
+		for (Alternative alternative : alternatives) {
+			if (alts.equals("[")) {
+				alts = alts + alternative.toJSON();
+			} else {
+				alts = alts + ", " + alternative.toJSON();
+			}
+		}
+		alts = alts + "]";
+
+		return "{" + "\"ID\" : \"" + uuidString + "\"," + "\"MemberCount\" :" + memberCount + ","
+				+ " \"Alternatives\" :" + alts + "," + "\"DateCompleted\" :" + "\"" + dateCompleted + "\","
+				+ "\"Description\" :\"" + description + "\"}";
+
+	}
+
+	String toJSON() {
+		return String.format("{\"ID\": \"%s\", \"DateCreated\": \"%s\", \"isCompleted\": %s}", uuidString, dateCreated,
+				isCompleted);
+	}
+
+	public String toStringForGeneratingReport(List<Choice> choices) {
 		String choicesJSON = "[";
-		for(Choice aChoice: choices)
-	      {
-            if (choicesJSON.equals("[")) {
-            	choicesJSON = choicesJSON + aChoice.toJSON();
-            } else {
-            	choicesJSON = choicesJSON + ", " + aChoice.toJSON();
-            }
-	      }
+		for (Choice aChoice : choices) {
+			if (choicesJSON.equals("[")) {
+				choicesJSON = choicesJSON + aChoice.toJSON();
+			} else {
+				choicesJSON = choicesJSON + ", " + aChoice.toJSON();
+			}
+		}
 		choicesJSON += "]";
-		
-        return "{" + " \"Choices\" :" + choicesJSON + "\"}";
-    }
 
-    /**
-     * Creates a list of alternatives that correspond to
-     */
-    public void createAlternatives() {
-        for (int i = 0; i < 5; i++) {
-            alternatives.add(new Alternative(alternativeNames[i], i, this.uuidString));
-        }
-    }
+		return "{" + " \"Choices\" :" + choicesJSON + "\"}";
+	}
 
-    /**
-     * Complete the choice.
-     *
-     * @param date
-     */
-    public void competed(String date) {
-        dateCompleted = date;
-        isCompleted = true;
-    }
+	/**
+	 * Creates a list of alternatives that correspond to
+	 */
+	public void createAlternatives() {
+		for (int i = 0; i < 5; i++) {
+			alternatives.add(new Alternative(alternativeNames[i], i, this.uuidString));
+		}
+	}
+
+	/**
+	 * Complete the choice.
+	 *
+	 * @param date
+	 */
+	public void competed(String date) {
+		dateCompleted = date;
+		isCompleted = true;
+	}
 }

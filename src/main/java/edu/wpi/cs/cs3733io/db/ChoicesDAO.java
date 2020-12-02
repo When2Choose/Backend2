@@ -27,42 +27,43 @@ public class ChoicesDAO {
 
 	public Choice getChoice(String uuidString) throws Exception {
 
-        try {
-            Choice choice = null;
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE uuid=?;");
-            ps.setString(1,  uuidString);
-            ResultSet resultSet = ps.executeQuery();
-            
-            while (resultSet.next()) {
-            	choice = generateChoice(resultSet);
-            }
-            resultSet.close();
-            ps.close();
-            
-            return choice;
+		try {
+			Choice choice = null;
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE uuid=?;");
+			ps.setString(1, uuidString);
+			ResultSet resultSet = ps.executeQuery();
 
-        } catch (Exception e) {
-        	e.printStackTrace();
-            throw new Exception("Failed in getting choice: " + e.getMessage());
-        }
+			while (resultSet.next()) {
+				choice = generateChoice(resultSet);
+			}
+			resultSet.close();
+			ps.close();
+
+			return choice;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("Failed in getting choice: " + e.getMessage());
+		}
 	}
 
 	public boolean updateChoice(Choice choice) throws Exception {
 		try {
-			String query = "UPDATE " + tblName + " SET value=? WHERE uuid=?;";
+			String query = "UPDATE " + tblName
+					+ " SET description=?, complete=?, date_completed=?, member_count=?, date_created=? WHERE uuid=?;";
 			PreparedStatement ps = conn.prepareStatement(query);
-			ps.setString(1, choice.getUuidString());
-			ps.setString(2, choice.getDescription());
-			ps.setBoolean(3, choice.getIsCompleted());
-			ps.setString(4, choice.getDateCompleted());
-			ps.setInt(5, choice.memberCount);
-			ps.setString(6, choice.getDateCreated());
+			ps.setString(1, choice.getDescription());
+			ps.setBoolean(2, choice.getIsCompleted());
+			ps.setString(3, choice.getDateCompleted());
+			ps.setInt(4, choice.memberCount);
+			ps.setString(5, choice.getDateCreated());
+			ps.setString(6, choice.getUuidString());
 			int numAffected = ps.executeUpdate();
 			ps.close();
 
 			return (numAffected == 1);
 		} catch (Exception e) {
-			throw new Exception("Failed to update report: " + e.getMessage());
+			throw new Exception("Failed to update choice: " + e.getMessage());
 		}
 	}
 
@@ -93,7 +94,8 @@ public class ChoicesDAO {
 //				return false;
 //			}
 
-			PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName + " (uuid, description, complete, date_completed, member_count, date_created) VALUES (?,?,?,?,?,?)");
+			PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName
+					+ " (uuid, description, complete, date_completed, member_count, date_created) VALUES (?,?,?,?,?,?)");
 			ps.setString(1, choice.getUuidString());
 			ps.setString(2, choice.getDescription());
 			ps.setBoolean(3, choice.getIsCompleted());
@@ -107,8 +109,6 @@ public class ChoicesDAO {
 			throw new Exception("Failed to insert choice: " + e.getMessage());
 		}
 	}
-
-
 
 	public List<Choice> getAllChoices() throws Exception {
 
