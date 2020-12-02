@@ -103,11 +103,12 @@ public class Choice {
 	 * Converts a choice to a string without alternatives.
 	 * 
 	 */
-	public String toString() {
+	public String toString(Alternative alternative) {
 
 		return "{" + "\"ID\" : \"" + uuidString + "\"," + "\"MemberCount\" :" + memberCount + "," + "\"DateCreated\" :"
 				+ "\"" + dateCreated + "\"," + "\"IsCompleted\" :" + "\"" + Boolean.toString(isCompleted) + "\","
-				+ "\"DateCompleted\" :" + "\"" + dateCompleted + "\"," + "\"Description\" :\"" + description + "\"}";
+				+ "\"DateCompleted\" :" + "\"" + dateCompleted + "\"," + "\"Alternative\" :" + alternative.toJSON()
+				+ "," + "\"Description\" :\"" + description + "\"}";
 
 	}
 

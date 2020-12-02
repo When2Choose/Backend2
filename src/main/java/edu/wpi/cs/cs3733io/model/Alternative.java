@@ -112,11 +112,11 @@ public class Alternative {
 		String feedback = "[";
 		for (Feedback a : allFeedback) {
 			if (feedback.equals("[")) {
-				feedback = feedback + "[\"User\":" + "\"" + a.getUserName() + "\"," + "\"description\":" + "\""
-						+ a.getDescription() + "\"]";
+				feedback = feedback + "{\"User\":" + "\"" + a.getUserName() + "\"," + "\"description\":" + "\""
+						+ a.getDescription() + "\"}";
 			} else {
-				feedback = feedback + ", " + "[\"User\":" + "\"" + a.getUserName() + "\"," + "\"description\":" + "\""
-						+ a.getDescription() + "\" ]";
+				feedback = feedback + ", " + "{\"User\":" + "\"" + a.getUserName() + "\"," + "\"description\":" + "\""
+						+ a.getDescription() + "\" }";
 			}
 		}
 		feedback = feedback + "]";

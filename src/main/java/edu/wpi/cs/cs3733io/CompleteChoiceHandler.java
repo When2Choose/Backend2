@@ -8,6 +8,7 @@ import edu.wpi.cs.cs3733io.db.AlternativesDAO;
 import edu.wpi.cs.cs3733io.db.ChoicesDAO;
 import edu.wpi.cs.cs3733io.http.CompleteChoiceRequest;
 import edu.wpi.cs.cs3733io.http.CompleteChoiceResponse;
+import edu.wpi.cs.cs3733io.model.Alternative;
 import edu.wpi.cs.cs3733io.model.Choice;
 
 public class CompleteChoiceHandler implements RequestHandler<CompleteChoiceRequest, CompleteChoiceResponse> {
@@ -34,7 +35,7 @@ public class CompleteChoiceHandler implements RequestHandler<CompleteChoiceReque
 		return true;
 	}
 	
-	boolean choseAlternative(int alternativeIndex, Choice choice) throws Exception {
+	Alternative choseAlternative(int alternativeIndex, Choice choice) throws Exception {
 		if (logger != null) {
 			logger.log("in chose alternative for complete choice");
 		}
@@ -42,9 +43,11 @@ public class CompleteChoiceHandler implements RequestHandler<CompleteChoiceReque
 		AlternativesDAO dao = new AlternativesDAO();
 
 		dao.setChoseAlternative(alternativeIndex, choice.getUuidString());
+		Alternative alternative = dao.getAlternative(alternativeIndex, choice.getUuidString());
 
-		return true;
+		return alternative;
 	}
+	
 
 	@Override
 	public CompleteChoiceResponse handleRequest(CompleteChoiceRequest completeRequest, Context context) {
@@ -59,9 +62,10 @@ public class CompleteChoiceHandler implements RequestHandler<CompleteChoiceReque
 			Choice choice = getChoice(completeRequest.getChoiceId());
 			choice.setIsCompleted(true);
 			choice.setDateCompleted(completeRequest.getDateString());
+			Alternative alternative = choseAlternative(completeRequest.getAlternativeInex(), choice);
 
 			if (completeChoice(choice)) {
-				response = new CompleteChoiceResponse(choice.toString(), 200);
+				response = new CompleteChoiceResponse(choice.toString(alternative), 200);
 			}
 
 		} catch (Exception e) {
@@ -70,5 +74,7 @@ public class CompleteChoiceHandler implements RequestHandler<CompleteChoiceReque
 		}
 		return response;
 	}
+
+
 
 }

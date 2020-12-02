@@ -82,6 +82,29 @@ public class AlternativesDAO {
 			throw new Exception("Failed to update alternative: " + e.getMessage());
 		}
 	}
+	
+	public Alternative getAlternative(int index, String uuidChoice) throws Exception {
+		try {
+			Alternative alternative = null;
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE choice_uuid=? AND index_number=?;");
+			ps.setString(1, uuidChoice);
+			ps.setInt(2, index);
+			ResultSet resultSet = ps.executeQuery();
+
+			while (resultSet.next()) {
+				generateAlternative(resultSet);
+			}
+
+			resultSet.close();
+			ps.close();
+
+			return alternative;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("Failed in getting alternative: " + e.getMessage());
+		}
+	}
 
 	public Alternative generateAlternative(ResultSet resultSet) throws Exception {
 		String alternativeUUID = resultSet.getString("alternative_uuid");
