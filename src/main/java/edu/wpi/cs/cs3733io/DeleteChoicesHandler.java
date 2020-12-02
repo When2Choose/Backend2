@@ -12,7 +12,7 @@ public class DeleteChoicesHandler implements RequestHandler<DeleteChoicesRequest
 	DeleteChoicesResponse response;
 
 	@Override
-	public DeleteChoicesResponse handleRequest(DeleteChoicesRequest input, Context context) {	
+	public DeleteChoicesResponse handleRequest(DeleteChoicesRequest deleteRequest, Context context) {	
 		return response;
 	}
 
