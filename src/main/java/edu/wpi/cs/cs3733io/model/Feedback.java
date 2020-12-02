@@ -38,6 +38,13 @@ public class Feedback {
 	}
 
 	public String toString(LinkedList<Feedback> allFeedback) {
+
+		return "{" + "\"Feedback\" : " + feedbackJSON(allFeedback) + "," + "\"ChoiceId\"  : " + "\"" + uuidChoice
+				+ "\"," + "\"AlternativeIndex\" : " + "\"" + Integer.toString(alternativeIndex) + "\"}";
+
+	}
+
+	public String feedbackJSON(LinkedList<Feedback> allFeedback) {
 		String feedback = "[";
 		for (Feedback a : allFeedback) {
 			if (feedback.equals("[")) {
@@ -49,10 +56,7 @@ public class Feedback {
 			}
 		}
 		feedback = feedback + "]";
-
-		return "{" + "\"Feedback\" : " + feedback + "," + "\"ChoiceId\"  : " + "\"" + uuidChoice + "\","
-				+ "\"AlternativeIndex\" : " + "\"" + Integer.toString(alternativeIndex) + "\"}";
-
+		return feedback;
 	}
 
 }

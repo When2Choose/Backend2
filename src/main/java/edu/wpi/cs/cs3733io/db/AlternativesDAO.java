@@ -80,6 +80,9 @@ public class AlternativesDAO {
         DisapprovalDAO disapprovalDao = new DisapprovalDAO();
         alternative.setDisapproverNames(disapprovalDao.getDisapprovers(choiceUuid, alternativeIndex));
         
+        FeedbackDAO feedbackDAO = new FeedbackDAO();
+        alternative.setFeedback(feedbackDAO.getAlternativeFeedback(alternativeIndex, choiceUuid));
+        
         return alternative;
     }
 

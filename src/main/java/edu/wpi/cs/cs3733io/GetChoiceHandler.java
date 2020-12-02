@@ -6,10 +6,12 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 import edu.wpi.cs.cs3733io.db.AlternativesDAO;
 import edu.wpi.cs.cs3733io.db.ChoicesDAO;
+import edu.wpi.cs.cs3733io.db.FeedbackDAO;
 import edu.wpi.cs.cs3733io.http.GetChoiceRequest;
 import edu.wpi.cs.cs3733io.http.GetChoiceResponse;
 import edu.wpi.cs.cs3733io.model.Alternative;
 import edu.wpi.cs.cs3733io.model.Choice;
+import edu.wpi.cs.cs3733io.model.Feedback;
 
 import java.util.LinkedList;
 
@@ -27,12 +29,14 @@ public class GetChoiceHandler implements RequestHandler<GetChoiceRequest, GetCho
 		return dao.getChoice(uuidString);
 	}
 
-	private LinkedList<Alternative> getAlternatives(String choiceUUID, Context context) throws Exception {
+	public LinkedList<Alternative> getAlternatives(String choiceUUID, Context context) throws Exception {
 		logger.log("Getting alternatives");
 		AlternativesDAO alternativesDAO = new AlternativesDAO();
 
 		return alternativesDAO.getAlternatives(choiceUUID, context);
 	}
+	
+	
 
 	@Override
 	public GetChoiceResponse handleRequest(GetChoiceRequest choiceRequest, Context context) {
@@ -49,7 +53,6 @@ public class GetChoiceHandler implements RequestHandler<GetChoiceRequest, GetCho
 		try {
 			Choice gotChoice = getChoice(choiceRequest.getUuidString());
 			alternatives = getAlternatives(choiceRequest.getUuidString(), context);
-
 			response = new GetChoiceResponse(gotChoice.toString(alternatives), 200);
 
 		} catch (Exception e) {
