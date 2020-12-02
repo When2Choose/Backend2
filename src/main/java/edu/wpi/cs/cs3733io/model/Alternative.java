@@ -24,6 +24,7 @@ public class Alternative {
 		this.isChosen = isChosen;
 		approvers = new LinkedList<String>();
 		disapprovers = new LinkedList<String>();
+		feedback = new LinkedList<Feedback>();
 	}
 
 	//@formatter:off 

@@ -34,14 +34,14 @@ public class CompleteChoiceHandler implements RequestHandler<CompleteChoiceReque
 		return true;
 	}
 	
-	boolean choseAlternative(int alternativeIndex, Choice choice) {
+	boolean choseAlternative(int alternativeIndex, Choice choice) throws Exception {
 		if (logger != null) {
 			logger.log("in chose alternative for complete choice");
 		}
 		
 		AlternativesDAO dao = new AlternativesDAO();
 
-		//dao.updateAlternative(choice);
+		dao.setChoseAlternative(alternativeIndex, choice.getUuidString());
 
 		return true;
 	}
