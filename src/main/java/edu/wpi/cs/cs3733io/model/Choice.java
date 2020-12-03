@@ -81,7 +81,7 @@ public class Choice {
 		SimpleDateFormat sDF = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		sDF.setTimeZone(TimeZone.getTimeZone("EST"));
 		Date date = new Date();
-		this.dateCreated = sDF.format(date) + " EST";
+		this.dateCreated = sDF.format(date);
 		this.dateCompleted = "Not Complete";
 		this.isCompleted = false;
 		alternatives = new LinkedList<>();
@@ -106,7 +106,7 @@ public class Choice {
 	public String toString(Alternative alternative) {
 
 		return "{" + "\"ID\" : \"" + uuidString + "\"," + "\"MemberCount\" :" + memberCount + "," + "\"DateCreated\" :"
-				+ "\"" + dateCreated + "\"," + "\"IsCompleted\" :" + "\"" + Boolean.toString(isCompleted) + "\","
+				+ "\"" + dateCreated + "\"," + "\"IsCompleted\" :" + "\"" + Boolean.toString(true) + "\","
 				+ "\"DateCompleted\" :" + "\"" + dateCompleted + "\"," + "\"Alternative\" :" + alternative.toJSON()
 				+ "," + "\"Description\" :\"" + description + "\"}";
 

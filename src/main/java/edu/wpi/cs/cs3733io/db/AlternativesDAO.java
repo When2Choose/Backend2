@@ -33,7 +33,7 @@ public class AlternativesDAO {
 			ps.setString(2, alternative.choiceUUID);
 			ps.setInt(3, alternative.index);
 			ps.setString(4, alternative.name);
-			ps.setBoolean(5, alternative.isChosen);
+			ps.setBoolean(5, alternative.getIsChosen());
 			ps.execute();
 			return true;
 
@@ -67,8 +67,7 @@ public class AlternativesDAO {
 
 	public boolean setChoseAlternative(int alternativeIndex, String choiceUuid) throws Exception {
 		try {
-			String query = "UPDATE " + tblName
-					+ " SET chosen=? WHERE index_number=? AND choice_uuid=?;";
+			String query = "UPDATE " + tblName + " SET chosen=? WHERE index_number=? AND choice_uuid=?;";
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setBoolean(1, true);
 			ps.setInt(2, alternativeIndex);
@@ -82,11 +81,12 @@ public class AlternativesDAO {
 			throw new Exception("Failed to update alternative: " + e.getMessage());
 		}
 	}
-	
+
 	public Alternative getAlternative(int index, String uuidChoice) throws Exception {
 		try {
 			Alternative alternative = null;
-			PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE choice_uuid=? AND index_number=?;");
+			PreparedStatement ps = conn
+					.prepareStatement("SELECT * FROM " + tblName + " WHERE choice_uuid=? AND index_number=?;");
 			ps.setString(1, uuidChoice);
 			ps.setInt(2, index);
 			ResultSet resultSet = ps.executeQuery();

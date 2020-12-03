@@ -81,6 +81,7 @@ public class ChoicesDAO {
 		}
 	}
 
+
 	public boolean addChoice(Choice choice) throws Exception {
 		try {
 //			PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE uuid = ?;");
@@ -110,9 +111,9 @@ public class ChoicesDAO {
 		}
 	}
 
-	public List<Choice> getAllChoices() throws Exception {
+	public LinkedList<Choice> getAllChoices() throws Exception {
 
-		List<Choice> allChoices = new ArrayList<>();
+		LinkedList<Choice> allChoices = new LinkedList<>();
 		try {
 			Statement statement = conn.createStatement();
 			String query = "SELECT * FROM " + tblName + ";";

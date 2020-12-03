@@ -34,20 +34,19 @@ public class CompleteChoiceHandler implements RequestHandler<CompleteChoiceReque
 
 		return true;
 	}
-	
+
 	Alternative choseAlternative(int alternativeIndex, Choice choice) throws Exception {
 		if (logger != null) {
 			logger.log("in chose alternative for complete choice");
 		}
-		
+
 		AlternativesDAO dao = new AlternativesDAO();
 
 		dao.setChoseAlternative(alternativeIndex, choice.getUuidString());
 		Alternative alternative = dao.getAlternative(alternativeIndex, choice.getUuidString());
-
+		alternative.setIsChosen(true);
 		return alternative;
 	}
-	
 
 	@Override
 	public CompleteChoiceResponse handleRequest(CompleteChoiceRequest completeRequest, Context context) {
@@ -74,7 +73,5 @@ public class CompleteChoiceHandler implements RequestHandler<CompleteChoiceReque
 		}
 		return response;
 	}
-
-
 
 }
