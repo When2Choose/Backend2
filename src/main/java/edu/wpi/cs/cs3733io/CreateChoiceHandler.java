@@ -1,8 +1,5 @@
 package edu.wpi.cs.cs3733io;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
@@ -46,18 +43,17 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 		if (context != null) {
 			context.getLogger();
 		}
-		
+
 		Choice choice = new Choice(choiceRequest.getMemberCount(), choiceRequest.getDescription(),
 				choiceRequest.getAlternatives());
-		
+
 		try {
 			if (createChoice(choice)) {
 				response = new CreateChoiceResponse(choice.toString(choice.getAlternatives()), 200);
 			}
 
 		} catch (Exception e) {
-			response = new CreateChoiceResponse(
-					"Unable to create choice " + "(" + e.getMessage() + ")", 400);
+			response = new CreateChoiceResponse("Unable to create choice " + "(" + e.getMessage() + ")", 400);
 			e.printStackTrace();
 		}
 

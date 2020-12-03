@@ -10,7 +10,7 @@ public class Alternative {
 	public final UUID alternativeUUID;
 	public final String choiceUUID;
 	public final String name;
-	public boolean isChosen;
+	boolean isChosen;
 	public final int index;
 	LinkedList<String> approvers;
 	LinkedList<String> disapprovers;
@@ -27,13 +27,29 @@ public class Alternative {
 		feedback = new LinkedList<Feedback>();
 	}
 
-	//@formatter:off 
-	public LinkedList<String> getApprovers() { return approvers; }
-	public void setApprovers(LinkedList<String> approvers) { this.approvers = approvers; } 
-	
-	public LinkedList<String> getDisapprovers() { return disapprovers; }
-	public void setDisapprovers(LinkedList<String> disapprovers) { this.approvers = disapprovers; } 
-	//@formatter:on 
+	public LinkedList<String> getApprovers() {
+		return approvers;
+	}
+
+	public void setApprovers(LinkedList<String> approvers) {
+		this.approvers = approvers;
+	}
+
+	public LinkedList<String> getDisapprovers() {
+		return disapprovers;
+	}
+
+	public void setDisapprovers(LinkedList<String> disapprovers) {
+		this.approvers = disapprovers;
+	}
+
+	public boolean getIsChosen() {
+		return isChosen;
+	}
+
+	public void setIsChosen(boolean isChosen) {
+		this.isChosen = isChosen;
+	}
 
 	public Alternative(String name, int index, String choiceUuid) {
 		this.alternativeUUID = UUID.randomUUID();
@@ -49,8 +65,9 @@ public class Alternative {
 	String toJSON() {
 		return String.format(
 				"{\"alternativeUUID\": \"%s\", \"choiceUUID\": \"%s\", \"index\": %d, \"description\": \"%s\", "
-						+ "\"Approvers\": %s, \"Disapprovers\": %s ,\"isChosen\": %d, \"Feedback\":" + feedbackJSON(this.feedback) + "}",
-				alternativeUUID, choiceUUID, index, name, approverJSON(), dispproverJSON(), isChosen ? 0 : 1);
+						+ "\"Approvers\": %s, \"Disapprovers\": %s ,\"isChosen\": %d, \"Feedback\":"
+						+ feedbackJSON(this.feedback) + "}",
+				alternativeUUID, choiceUUID, index, name, approverJSON(), dispproverJSON(), isChosen ? 1 : 0);
 	}
 
 	public void setApproverNames(LinkedList<Approver> approvers) {
@@ -106,7 +123,7 @@ public class Alternative {
 	}
 
 	public String feedbackJSON(LinkedList<Feedback> allFeedback) {
-		if(allFeedback == null || allFeedback.isEmpty()) {
+		if (allFeedback == null || allFeedback.isEmpty()) {
 			return "[]";
 		}
 		String feedback = "[";
