@@ -32,7 +32,7 @@ public class Alternative {
 	public void setApprovers(LinkedList<String> approvers) { this.approvers = approvers; } 
 	
 	public LinkedList<String> getDisapprovers() { return disapprovers; }
-	public void setDisapprovers(LinkedList<String> disapprovers) { this.approvers = disapprovers; } 
+	public void setDisapprovers(LinkedList<String> disapprovers) { this.disapprovers = disapprovers; } 
 	//@formatter:on 
 
 	public Alternative(String name, int index, String choiceUuid) {
