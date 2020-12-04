@@ -9,13 +9,19 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import edu.wpi.cs.cs3733io.db.FeedbackDAO;
 import edu.wpi.cs.cs3733io.http.AddFeedbackRequest;
 import edu.wpi.cs.cs3733io.http.AllResponse;
-import edu.wpi.cs.cs3733io.http.AllResponse;
 import edu.wpi.cs.cs3733io.model.Feedback;
 
 public class AddFeedbackHandler implements RequestHandler<AddFeedbackRequest, AllResponse> {
 	LambdaLogger logger;
 	AllResponse response;
 
+	/**
+	 * Adds feedback to database.
+	 * 
+	 * @param feedback: Feedback.
+	 * @return True if successful.
+	 * @throws Exception
+	 */
 	boolean addFeedback(Feedback feedback) throws Exception {
 		if (logger != null) {
 			logger.log("in addApprove");
@@ -26,6 +32,15 @@ public class AddFeedbackHandler implements RequestHandler<AddFeedbackRequest, Al
 		return feedbackDAO.addFeedback(feedback);
 	}
 
+	/**
+	 * Generates a list of feedback for a given Choice UUID and Alternative Index
+	 * from the database.
+	 * 
+	 * @param choiceUuid:      Choice UUID as string.
+	 * @param alternativeIndex Alternative Index as an integer.
+	 * @return
+	 * @throws Exception
+	 */
 	LinkedList<Feedback> getFeedback(String choiceUuid, int alternativeIndex) throws Exception {
 		if (logger != null) {
 			logger.log("in getApprove");
@@ -36,6 +51,9 @@ public class AddFeedbackHandler implements RequestHandler<AddFeedbackRequest, Al
 		return feedbackDAO.getAlternativeFeedback(alternativeIndex, choiceUuid);
 	}
 
+	/**
+	 * Generates a response for adding Feedback.
+	 */
 	@Override
 	public AllResponse handleRequest(AddFeedbackRequest feedbackRequest, Context context) {
 		logger = context.getLogger();

@@ -15,6 +15,13 @@ public class CompleteChoiceHandler implements RequestHandler<CompleteChoiceReque
 	LambdaLogger logger;
 	AllResponse response;
 
+	/**
+	 * Gets a choice from the database.
+	 * 
+	 * @param uuidString String Choice UUID.
+	 * @return Returns the choice from the database.
+	 * @throws Exception
+	 */
 	Choice getChoice(String uuidString) throws Exception {
 		if (logger != null) {
 			logger.log("in get choice for complete choice");
@@ -24,6 +31,13 @@ public class CompleteChoiceHandler implements RequestHandler<CompleteChoiceReque
 		return dao.getChoice(uuidString);
 	}
 
+	/**
+	 * Completes a choice in the database.
+	 * 
+	 * @param choice Choice.
+	 * @return Returns true if the choice was completed, false otherwise.
+	 * @throws Exception
+	 */
 	boolean completeChoice(Choice choice) throws Exception {
 		if (logger != null) {
 			logger.log("in complete choice for complete choice");
@@ -35,6 +49,14 @@ public class CompleteChoiceHandler implements RequestHandler<CompleteChoiceReque
 		return true;
 	}
 
+	/**
+	 * Chooses an alternative to complete the choice.
+	 * 
+	 * @param alternativeIndex Integer
+	 * @param choice           Choice
+	 * @return Returns the alternative that is completing the choice.
+	 * @throws Exception
+	 */
 	Alternative choseAlternative(int alternativeIndex, Choice choice) throws Exception {
 		if (logger != null) {
 			logger.log("in chose alternative for complete choice");
@@ -48,6 +70,9 @@ public class CompleteChoiceHandler implements RequestHandler<CompleteChoiceReque
 		return alternative;
 	}
 
+	/**
+	 * Generates a response for completing a choice.
+	 */
 	@Override
 	public AllResponse handleRequest(CompleteChoiceRequest completeRequest, Context context) {
 		logger = context.getLogger();
