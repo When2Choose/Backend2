@@ -7,13 +7,13 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import edu.wpi.cs.cs3733io.db.AlternativesDAO;
 import edu.wpi.cs.cs3733io.db.ChoicesDAO;
 import edu.wpi.cs.cs3733io.http.CompleteChoiceRequest;
-import edu.wpi.cs.cs3733io.http.CompleteChoiceResponse;
+import edu.wpi.cs.cs3733io.http.AllResponse;
 import edu.wpi.cs.cs3733io.model.Alternative;
 import edu.wpi.cs.cs3733io.model.Choice;
 
-public class CompleteChoiceHandler implements RequestHandler<CompleteChoiceRequest, CompleteChoiceResponse> {
+public class CompleteChoiceHandler implements RequestHandler<CompleteChoiceRequest, AllResponse> {
 	LambdaLogger logger;
-	CompleteChoiceResponse response;
+	AllResponse response;
 
 	Choice getChoice(String uuidString) throws Exception {
 		if (logger != null) {
@@ -49,7 +49,7 @@ public class CompleteChoiceHandler implements RequestHandler<CompleteChoiceReque
 	}
 
 	@Override
-	public CompleteChoiceResponse handleRequest(CompleteChoiceRequest completeRequest, Context context) {
+	public AllResponse handleRequest(CompleteChoiceRequest completeRequest, Context context) {
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler of Complete Choice ");
 
@@ -64,11 +64,11 @@ public class CompleteChoiceHandler implements RequestHandler<CompleteChoiceReque
 			Alternative alternative = choseAlternative(completeRequest.getAlternativeInex(), choice);
 
 			if (completeChoice(choice)) {
-				response = new CompleteChoiceResponse(choice.toString(alternative), 200);
+				response = new AllResponse(choice.toString(alternative), 200);
 			}
 
 		} catch (Exception e) {
-			response = new CompleteChoiceResponse("Unable to complete choice " + "(" + e.getMessage() + ")", 400);
+			response = new AllResponse("Unable to complete choice " + "(" + e.getMessage() + ")", 400);
 			e.printStackTrace();
 		}
 		return response;
