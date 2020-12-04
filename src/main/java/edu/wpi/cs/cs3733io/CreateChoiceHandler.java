@@ -7,13 +7,13 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import edu.wpi.cs.cs3733io.db.AlternativesDAO;
 import edu.wpi.cs.cs3733io.db.ChoicesDAO;
 import edu.wpi.cs.cs3733io.http.CreateChoiceRequest;
-import edu.wpi.cs.cs3733io.http.CreateChoiceResponse;
+import edu.wpi.cs.cs3733io.http.AllResponse;
 import edu.wpi.cs.cs3733io.model.Alternative;
 import edu.wpi.cs.cs3733io.model.Choice;
 
-public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, CreateChoiceResponse> {
+public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, AllResponse> {
 	LambdaLogger logger;
-	CreateChoiceResponse response;
+	AllResponse response;
 
 	boolean createChoice(Choice choice) throws Exception {
 		if (logger != null) {
@@ -34,7 +34,7 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 	}
 
 	@Override
-	public CreateChoiceResponse handleRequest(CreateChoiceRequest choiceRequest, Context context) {
+	public AllResponse handleRequest(CreateChoiceRequest choiceRequest, Context context) {
 
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler of Create Choice");
@@ -49,11 +49,11 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 
 		try {
 			if (createChoice(choice)) {
-				response = new CreateChoiceResponse(choice.toString(choice.getAlternatives()), 200);
+				response = new AllResponse(choice.toString(choice.getAlternatives()), 200);
 			}
 
 		} catch (Exception e) {
-			response = new CreateChoiceResponse("Unable to create choice " + "(" + e.getMessage() + ")", 400);
+			response = new AllResponse("Unable to create choice " + "(" + e.getMessage() + ")", 400);
 			e.printStackTrace();
 		}
 

@@ -6,17 +6,15 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
-import edu.wpi.cs.cs3733io.db.ApprovalDAO;
 import edu.wpi.cs.cs3733io.db.FeedbackDAO;
 import edu.wpi.cs.cs3733io.http.AddFeedbackRequest;
-import edu.wpi.cs.cs3733io.http.AddFeedbackResponse;
-import edu.wpi.cs.cs3733io.http.ApproveAlternativeResponse;
-import edu.wpi.cs.cs3733io.model.Approver;
+import edu.wpi.cs.cs3733io.http.AllResponse;
+import edu.wpi.cs.cs3733io.http.AllResponse;
 import edu.wpi.cs.cs3733io.model.Feedback;
 
-public class AddFeedbackHandler implements RequestHandler<AddFeedbackRequest, AddFeedbackResponse> {
+public class AddFeedbackHandler implements RequestHandler<AddFeedbackRequest, AllResponse> {
 	LambdaLogger logger;
-	AddFeedbackResponse response;
+	AllResponse response;
 
 	boolean addFeedback(Feedback feedback) throws Exception {
 		if (logger != null) {
@@ -34,12 +32,12 @@ public class AddFeedbackHandler implements RequestHandler<AddFeedbackRequest, Ad
 		}
 
 		FeedbackDAO feedbackDAO = new FeedbackDAO();
-		
+
 		return feedbackDAO.getAlternativeFeedback(alternativeIndex, choiceUuid);
 	}
-	
+
 	@Override
-	public AddFeedbackResponse handleRequest(AddFeedbackRequest feedbackRequest, Context context) {
+	public AllResponse handleRequest(AddFeedbackRequest feedbackRequest, Context context) {
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler of feedback ");
 
@@ -52,14 +50,14 @@ public class AddFeedbackHandler implements RequestHandler<AddFeedbackRequest, Ad
 
 		try {
 
-			if(addFeedback(feedback)) {
-				LinkedList<Feedback> allFeedback = getFeedback(feedback.getUuidChoice(), feedback.getAlternativeIndex());
-				response = new AddFeedbackResponse(feedback.toString(allFeedback), 200);
+			if (addFeedback(feedback)) {
+				LinkedList<Feedback> allFeedback = getFeedback(feedback.getUuidChoice(),
+						feedback.getAlternativeIndex());
+				response = new AllResponse(feedback.toString(allFeedback), 200);
 			}
-			
-			
+
 		} catch (Exception e) {
-			response = new AddFeedbackResponse("Unable to add feedback " + "(" + e.getMessage() + ")", 400);
+			response = new AllResponse("Unable to add feedback " + "(" + e.getMessage() + ")", 400);
 			e.printStackTrace();
 		}
 

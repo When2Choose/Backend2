@@ -9,14 +9,14 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import edu.wpi.cs.cs3733io.db.ApprovalDAO;
 import edu.wpi.cs.cs3733io.db.DisapprovalDAO;
 import edu.wpi.cs.cs3733io.http.ApproveAlternativeRequest;
-import edu.wpi.cs.cs3733io.http.ApproveAlternativeResponse;
+import edu.wpi.cs.cs3733io.http.AllResponse;
 import edu.wpi.cs.cs3733io.model.Approver;
 import edu.wpi.cs.cs3733io.model.Disapprover;
 
 public class ApproveAlternativeHandler
-		implements RequestHandler<ApproveAlternativeRequest, ApproveAlternativeResponse> {
+		implements RequestHandler<ApproveAlternativeRequest, AllResponse> {
 	LambdaLogger logger;
-	ApproveAlternativeResponse response;
+	AllResponse response;
 
 	boolean addApprover(Approver approver) throws Exception {
 		if (logger != null) {
@@ -85,7 +85,7 @@ public class ApproveAlternativeHandler
     }
 
 	@Override
-	public ApproveAlternativeResponse handleRequest(ApproveAlternativeRequest approveRequest, Context context) {
+	public AllResponse handleRequest(ApproveAlternativeRequest approveRequest, Context context) {
 
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler of Approval ");
@@ -103,19 +103,19 @@ public class ApproveAlternativeHandler
 
 					LinkedList<Approver> approvers = getApprovers(approver.getChoiceUuid(),
 							approver.getAlternativeIndex());
-					response = new ApproveAlternativeResponse(approver.toString(approvers), 200);
+					response = new AllResponse(approver.toString(approvers), 200);
 				}
 			} else {
 			    if (isDisapprover(approver)) {
-                    response = new ApproveAlternativeResponse("User is on disapprove List", 400);
+                    response = new AllResponse("User is on disapprove List", 400);
                 } else {
-                    response = new ApproveAlternativeResponse("User is on approve List", 400);
+                    response = new AllResponse("User is on approve List", 400);
                 }
 
 			}
 
 		} catch (Exception e) {
-			response = new ApproveAlternativeResponse("Unable to add approver " + "(" + e.getMessage() + ")", 400);
+			response = new AllResponse("Unable to add approver " + "(" + e.getMessage() + ")", 400);
 			e.printStackTrace();
 		}
 

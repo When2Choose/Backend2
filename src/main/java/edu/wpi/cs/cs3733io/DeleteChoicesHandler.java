@@ -12,12 +12,12 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 import edu.wpi.cs.cs3733io.db.ChoicesDAO;
 import edu.wpi.cs.cs3733io.http.DeleteChoicesRequest;
-import edu.wpi.cs.cs3733io.http.DeleteChoicesResponse;
+import edu.wpi.cs.cs3733io.http.AllResponse;
 import edu.wpi.cs.cs3733io.model.Choice;
 
-public class DeleteChoicesHandler implements RequestHandler<DeleteChoicesRequest, DeleteChoicesResponse> {
+public class DeleteChoicesHandler implements RequestHandler<DeleteChoicesRequest, AllResponse> {
 	LambdaLogger logger;
-	DeleteChoicesResponse response;
+	AllResponse response;
 
 	boolean deleteChoices(int days, LinkedList<Choice> allChoices) throws Exception {
 		if (logger != null) {
@@ -49,7 +49,7 @@ public class DeleteChoicesHandler implements RequestHandler<DeleteChoicesRequest
 	}
 
 	@Override
-	public DeleteChoicesResponse handleRequest(DeleteChoicesRequest deleteRequest, Context context) {
+	public AllResponse handleRequest(DeleteChoicesRequest deleteRequest, Context context) {
 		if (context != null) {
 			context.getLogger();
 		}
@@ -62,11 +62,11 @@ public class DeleteChoicesHandler implements RequestHandler<DeleteChoicesRequest
 		try {
 			LinkedList<Choice> allChoices = allChoices();
 			if (deleteChoices(days, allChoices)) {
-				response = new DeleteChoicesResponse(deleteRequest.successMessage(), 200);
+				response = new AllResponse(deleteRequest.successMessage(), 200);
 			}
 
 		} catch (Exception e) {
-			response = new DeleteChoicesResponse("Unable to delete choices " + "(" + e.getMessage() + ")", 400);
+			response = new AllResponse("Unable to delete choices " + "(" + e.getMessage() + ")", 400);
 			e.printStackTrace();
 		}
 

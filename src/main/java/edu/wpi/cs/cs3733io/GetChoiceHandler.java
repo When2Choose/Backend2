@@ -8,16 +8,16 @@ import edu.wpi.cs.cs3733io.db.AlternativesDAO;
 import edu.wpi.cs.cs3733io.db.ChoicesDAO;
 import edu.wpi.cs.cs3733io.db.FeedbackDAO;
 import edu.wpi.cs.cs3733io.http.GetChoiceRequest;
-import edu.wpi.cs.cs3733io.http.GetChoiceResponse;
+import edu.wpi.cs.cs3733io.http.AllResponse;
 import edu.wpi.cs.cs3733io.model.Alternative;
 import edu.wpi.cs.cs3733io.model.Choice;
 import edu.wpi.cs.cs3733io.model.Feedback;
 
 import java.util.LinkedList;
 
-public class GetChoiceHandler implements RequestHandler<GetChoiceRequest, GetChoiceResponse> {
+public class GetChoiceHandler implements RequestHandler<GetChoiceRequest, AllResponse> {
 	LambdaLogger logger;
-	GetChoiceResponse response;
+	AllResponse response;
 	LinkedList<Alternative> alternatives;
 
 	Choice getChoice(String uuidString) throws Exception {
@@ -39,7 +39,7 @@ public class GetChoiceHandler implements RequestHandler<GetChoiceRequest, GetCho
 	
 
 	@Override
-	public GetChoiceResponse handleRequest(GetChoiceRequest choiceRequest, Context context) {
+	public AllResponse handleRequest(GetChoiceRequest choiceRequest, Context context) {
 		if (context != null) {
 			context.getLogger();
 		}
@@ -53,10 +53,10 @@ public class GetChoiceHandler implements RequestHandler<GetChoiceRequest, GetCho
 		try {
 			Choice gotChoice = getChoice(choiceRequest.getUuidString());
 			alternatives = getAlternatives(choiceRequest.getUuidString(), context);
-			response = new GetChoiceResponse(gotChoice.toString(alternatives), 200);
+			response = new AllResponse(gotChoice.toString(alternatives), 200);
 
 		} catch (Exception e) {
-			response = new GetChoiceResponse("Unable to get choice " + "(" + e.getMessage() + ")", 400);
+			response = new AllResponse("Unable to get choice " + "(" + e.getMessage() + ")", 400);
 			e.printStackTrace();
 		}
 
