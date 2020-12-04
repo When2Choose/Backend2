@@ -10,10 +10,16 @@ import edu.wpi.cs.cs3733io.db.ChoicesDAO;
 import edu.wpi.cs.cs3733io.http.AdministratorRequest;
 import edu.wpi.cs.cs3733io.http.AllResponse;
 import edu.wpi.cs.cs3733io.model.Choice;
+
 public class AdministratorHandler implements RequestHandler<AdministratorRequest, AllResponse> {
 	LambdaLogger logger;
 	AllResponse response;
-	
+
+	/**
+	 * Returns a list of all the Choices in the database.
+	 * 
+	 * @return
+	 */
 	List<Choice> getChoices() {
 		if (logger != null) {
 			logger.log("in loginUser FOR A PASSWORD ");
@@ -26,6 +32,9 @@ public class AdministratorHandler implements RequestHandler<AdministratorRequest
 		}
 	}
 
+	/**
+	 * Generates a response for the Administrator Generating a Report.
+	 */
 	@Override
 	public AllResponse handleRequest(AdministratorRequest input, Context context) {
 		logger = context.getLogger();
@@ -39,7 +48,7 @@ public class AdministratorHandler implements RequestHandler<AdministratorRequest
 			List<Choice> choices = getChoices();
 			Choice nullChoice = new Choice(-1, null, null);
 			response = new AllResponse(nullChoice.toStringForGeneratingReport(choices), 200);
-		}			
+		}
 		return response;
 
 	}
