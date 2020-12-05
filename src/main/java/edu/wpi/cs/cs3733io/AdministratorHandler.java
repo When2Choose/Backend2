@@ -46,8 +46,7 @@ public class AdministratorHandler implements RequestHandler<AdministratorRequest
 			response = new AllResponse("No choices got", 400);
 		} else {
 			List<Choice> choices = getChoices();
-			Choice nullChoice = new Choice(-1, null, null);
-			response = new AllResponse(nullChoice.toStringForGeneratingReport(choices), 200);
+			response = new AllResponse(Choice.toStringForGeneratingReport(choices), 200);
 		}
 		return response;
 

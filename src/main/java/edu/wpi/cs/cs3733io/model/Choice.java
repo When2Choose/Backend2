@@ -134,22 +134,22 @@ public class Choice {
 	}
 
 	String toJSON() {
-		return String.format("{\"ID\": \"%s\", \"DateCreated\": \"%s\", \"isCompleted\": %s}", uuidString, dateCreated,
-				isCompleted);
+		return String.format("{\"ID\": \"%s\", \"DateCreated\": \"%s\", \"isCompleted\": %s, \"description\": \"%s\"}", uuidString, dateCreated,
+				isCompleted, description);
 	}
 
-	public String toStringForGeneratingReport(List<Choice> choices) {
+	public static String toStringForGeneratingReport(List<Choice> choices) {
 		String choicesJSON = "[";
-		for (Choice aChoice : choices) {
+		for (Choice choice : choices) {
 			if (choicesJSON.equals("[")) {
-				choicesJSON = choicesJSON + aChoice.toJSON();
+				choicesJSON = choicesJSON + choice.toJSON();
 			} else {
-				choicesJSON = choicesJSON + ", " + aChoice.toJSON();
+				choicesJSON = choicesJSON + ", " + choice.toJSON();
 			}
 		}
 		choicesJSON += "]";
 
-		return "{" + " \"Choices\" :" + choicesJSON + "\"}";
+		return "{" + " \"Choices\" :" + choicesJSON + "}";
 	}
 
 	/**
