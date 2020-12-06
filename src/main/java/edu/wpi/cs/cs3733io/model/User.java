@@ -35,7 +35,7 @@ public class User {
 	public String toString(boolean isComplete) {
 
 		return "{ \"ID\": " + "\"" + choiceId + "\"," + "\"name\": \"" + name + "\"," + "\"password\": \"" + password
-				+ "\"," + "\" IsComplete: \" :" + "\"" + Boolean.toString(isComplete) + "\"" + "}";
+				+ "\"," + "\"complete\": " + isComplete + "}";
 
 	}
 
