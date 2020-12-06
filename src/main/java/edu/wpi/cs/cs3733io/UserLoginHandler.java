@@ -8,11 +8,13 @@ import edu.wpi.cs.cs3733io.db.ChoicesDAO;
 import edu.wpi.cs.cs3733io.db.UsersDAO;
 import edu.wpi.cs.cs3733io.http.UserLoginRequest;
 import edu.wpi.cs.cs3733io.http.AllResponse;
+import edu.wpi.cs.cs3733io.model.Choice;
 import edu.wpi.cs.cs3733io.model.User;
 
 public class UserLoginHandler implements RequestHandler<UserLoginRequest, AllResponse> {
 	LambdaLogger logger;
 	AllResponse response;
+	Choice loginChoice;
 	boolean flag = false;
 
 	boolean addUser(User user) {
@@ -54,6 +56,7 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, AllRes
 	private boolean choiceIDValid(String choiceID) {
 		ChoicesDAO choicesDAO = new ChoicesDAO();
 		try {
+			loginChoice = choicesDAO.getChoice(choiceID);
 			return choicesDAO.getChoice(choiceID) != null;
 		} catch (Exception e) {
 			return false;
@@ -84,14 +87,14 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, AllRes
 			// Choice ID exists
 			if (userExists(user)) {
 				// Time to log in user
-				response = new AllResponse(user.toString(), 200);
+				response = new AllResponse(user.toString(loginChoice.getIsCompleted()), 200);
 			} else {
 				// Create a new user, if possible
 				if (getNumberOfUsers(userRequest.getChoiceId()) < getMaxMembers(userRequest.getChoiceId())) {
 					boolean addNewUserSuccess = addUser(user);
 					if (addNewUserSuccess) {
 						// successfully added new user to table
-						response = new AllResponse(user.toString(), 200);
+						response = new AllResponse(user.toString(loginChoice.getIsCompleted()), 200);
 					} else {
 						// failure in SQL, probably
 						response = new AllResponse("Error while creating new user. Check logs.", 400);
