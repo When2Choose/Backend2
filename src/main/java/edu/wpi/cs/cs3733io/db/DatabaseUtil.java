@@ -1,3 +1,7 @@
+/**
+ * This class was taken from Professor.
+ */
+
 package edu.wpi.cs.cs3733io.db;
 
 import java.sql.Connection;
@@ -33,7 +37,6 @@ public class DatabaseUtil {
 		// this is resistant to any SQL-injection attack.
 		String schemaName = dbName;
 
-		
 		String dbUsername = System.getenv("dbUsername");
 		if (dbUsername == null) {
 			System.err.println("Environment variable dbUsername is not set!");
@@ -51,8 +54,8 @@ public class DatabaseUtil {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			conn = DriverManager.getConnection(
-					jdbcTag + rdsMySqlDatabaseUrl + ":" + rdsMySqlDatabasePort + "/" + schemaName + multiQueries, dbUsername,
-					dbPassword);
+					jdbcTag + rdsMySqlDatabaseUrl + ":" + rdsMySqlDatabasePort + "/" + schemaName + multiQueries,
+					dbUsername, dbPassword);
 			return conn;
 		} catch (Exception ex) {
 			System.err.println(

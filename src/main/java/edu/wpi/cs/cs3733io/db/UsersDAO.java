@@ -25,6 +25,14 @@ public class UsersDAO {
 		}
 	}
 
+	/**
+	 * Gets a user from the database.
+	 * 
+	 * @param inputUser User.
+	 * @return Returns a user from the database.
+	 * @throws Exception
+	 */
+
 	public User getUser(User inputUser) throws Exception {
 
 		try {
@@ -50,6 +58,13 @@ public class UsersDAO {
 		}
 	}
 
+	/**
+	 * Updates a User.
+	 * 
+	 * @param user User.
+	 * @return Returns true if User updated, false otherwise.
+	 * @throws Exception
+	 */
 	public boolean updateUser(User user) throws Exception {
 		try {
 			String query = "UPDATE " + tblName + " SET value=? WHERE (name = ?) AND (choiceId = ?);";
@@ -66,6 +81,13 @@ public class UsersDAO {
 		}
 	}
 
+	/**
+	 * Deletes a User from the database.
+	 * 
+	 * @param user User.
+	 * @return Returns true if deleted, false otherwise.
+	 * @throws Exception
+	 */
 	public boolean deleteUser(User user) throws Exception {
 		try {
 			PreparedStatement ps = conn
@@ -82,6 +104,13 @@ public class UsersDAO {
 		}
 	}
 
+	/**
+	 * Adds a User from the database.
+	 * 
+	 * @param user User.
+	 * @return Returns true if added, false otherwise.
+	 * @throws Exception
+	 */
 	public boolean addUser(User user) throws Exception {
 		try {
 
@@ -98,6 +127,12 @@ public class UsersDAO {
 		}
 	}
 
+	/**
+	 * Gets all the Users from the database.
+	 * 
+	 * @return Returns a List of all the Users.
+	 * @throws Exception
+	 */
 	public List<User> getAllUsers() throws Exception {
 
 		List<User> users = new ArrayList<>();
@@ -118,6 +153,14 @@ public class UsersDAO {
 			throw new Exception("Failed in getting users: " + e.getMessage());
 		}
 	}
+
+	/**
+	 * Gets the number of Users for a Choice.
+	 * 
+	 * @param choiceId String.
+	 * @return Returns an Integer of the number of Users.
+	 * @throws Exception
+	 */
 
 	public int getNumberOfUsers(String choiceId) throws Exception {
 
@@ -140,6 +183,13 @@ public class UsersDAO {
 		}
 	}
 
+	/**
+	 * Generates a User.
+	 * 
+	 * @param resultSet Resultset.
+	 * @return Returns a User from the resultset.
+	 * @throws Exception
+	 */
 	private User generateUser(ResultSet resultSet) throws Exception {
 		String name = resultSet.getString("name");
 		String password = resultSet.getString("password");

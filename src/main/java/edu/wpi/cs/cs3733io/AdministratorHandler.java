@@ -17,9 +17,9 @@ public class AdministratorHandler implements RequestHandler<AdministratorRequest
 	AllResponse response;
 
 	/**
-	 * Returns a list of all the Choices in the database.
+	 * Generates a List of all the Choices in the database.
 	 * 
-	 * @return
+	 * @return Returns a List of Choices.
 	 */
 	List<Choice> getChoices() {
 		if (logger != null) {
