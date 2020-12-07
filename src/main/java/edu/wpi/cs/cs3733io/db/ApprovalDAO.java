@@ -11,7 +11,10 @@ public class ApprovalDAO {
 	java.sql.Connection conn;
 
 	final String tblName = "approvals"; // Exact capitalization
-
+	
+	/**
+	 * Connect to the Approvals tables on the RDS.
+	 */
 	public ApprovalDAO() {
 		try {
 			conn = DatabaseUtil.connect();

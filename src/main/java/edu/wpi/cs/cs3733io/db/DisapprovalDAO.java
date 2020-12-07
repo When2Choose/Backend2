@@ -15,6 +15,9 @@ public class DisapprovalDAO {
 
 	final String tblName = "disapprovals"; // Exact capitalization
 
+	/**
+	 * Connect to the Disapprovals tables on the RDS.
+	 */
 	public DisapprovalDAO() {
 		try {
 			conn = DatabaseUtil.connect();

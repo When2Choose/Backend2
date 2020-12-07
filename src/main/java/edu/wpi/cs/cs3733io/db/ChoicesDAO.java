@@ -17,6 +17,9 @@ public class ChoicesDAO {
 
 	final String tblName = "choices"; // Exact capitalization
 
+	/**
+	 * Connect to the Choice tables on the RDS.
+	 */
 	public ChoicesDAO() {
 		try {
 			conn = DatabaseUtil.connect();
