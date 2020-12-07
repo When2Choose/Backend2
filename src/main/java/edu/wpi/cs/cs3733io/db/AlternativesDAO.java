@@ -83,6 +83,14 @@ public class AlternativesDAO {
 		}
 	}
 
+	/**
+	 * Sets an Alternative to be chosen.
+	 * 
+	 * @param alternativeIndex Integer.
+	 * @param choiceUuid       String.
+	 * @return Returns true if set to chosen, false otherwise.
+	 * @throws Exception
+	 */
 	public boolean setChoseAlternative(int alternativeIndex, String choiceUuid) throws Exception {
 		try {
 			String query = "UPDATE " + tblName + " SET chosen=? WHERE index_number=? AND choice_uuid=?;";
@@ -100,6 +108,14 @@ public class AlternativesDAO {
 		}
 	}
 
+	/**
+	 * Gets an alterantive.
+	 * 
+	 * @param index      Integer.
+	 * @param uuidChoice String.
+	 * @return Returns the Alternative that maches that Choice and Index.
+	 * @throws Exception
+	 */
 	public Alternative getAlternative(int index, String uuidChoice) throws Exception {
 		try {
 			Alternative alternative = null;
@@ -124,6 +140,13 @@ public class AlternativesDAO {
 		}
 	}
 
+	/**
+	 * Generates a Result from database information.
+	 * 
+	 * @param resultSet Resultset.
+	 * @return Returns an Alternative from the database information.
+	 * @throws Exception
+	 */
 	public Alternative generateAlternative(ResultSet resultSet) throws Exception {
 		String alternativeUUID = resultSet.getString("alternative_uuid");
 		String choiceUuid = resultSet.getString("choice_uuid");
@@ -133,12 +156,15 @@ public class AlternativesDAO {
 
 		Alternative alternative = new Alternative(alternativeUUID, choiceUuid, alternativeIndex, description, isChosen);
 
+		// Get approvers
 		ApprovalDAO approvalDao = new ApprovalDAO();
 		alternative.setApproverNames(approvalDao.getApprovers(choiceUuid, alternativeIndex));
 
+		// Get disapprovers
 		DisapprovalDAO disapprovalDao = new DisapprovalDAO();
 		alternative.setDisapproverNames(disapprovalDao.getDisapprovers(choiceUuid, alternativeIndex));
 
+		// Get feedback
 		FeedbackDAO feedbackDAO = new FeedbackDAO();
 		alternative.setFeedback(feedbackDAO.getAlternativeFeedback(alternativeIndex, choiceUuid));
 

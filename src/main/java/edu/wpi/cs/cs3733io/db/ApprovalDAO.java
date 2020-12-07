@@ -11,7 +11,7 @@ public class ApprovalDAO {
 	java.sql.Connection conn;
 
 	final String tblName = "approvals"; // Exact capitalization
-	
+
 	/**
 	 * Connect to the Approvals tables on the RDS.
 	 */
@@ -23,6 +23,13 @@ public class ApprovalDAO {
 		}
 	}
 
+	/**
+	 * Add an approver to the database.
+	 * 
+	 * @param approver Approver.
+	 * @return Returns true if Approver was added, false otherwise.
+	 * @throws Exception
+	 */
 	public boolean addApprover(Approver approver) throws Exception {
 		try {
 			PreparedStatement ps = conn.prepareStatement(
@@ -38,6 +45,13 @@ public class ApprovalDAO {
 		}
 	}
 
+	/**
+	 * Remove an Approver from the database.
+	 * 
+	 * @param approver Approver.
+	 * @return Returns true if Approver was removed, false otherwise.
+	 * @throws Exception
+	 */
 	public boolean removeApprove(Approver approver) throws Exception {
 		try {
 			PreparedStatement ps = conn.prepareStatement(
@@ -52,12 +66,21 @@ public class ApprovalDAO {
 			throw new Exception("Failed to remove approver: " + e.getMessage());
 		}
 	}
-	
+
+	/**
+	 * Gets an approver with the matching Choice, Alternative Index, and Username.
+	 * 
+	 * @param choiceUuid       String.
+	 * @param alternativeIndex Integer.
+	 * @param userName         String.
+	 * @return Returns an Approver from the database.
+	 * @throws Exception
+	 */
 	public Approver getApprover(String choiceUuid, int alternativeIndex, String userName) throws Exception {
 		try {
 			Approver approver = null;
-			PreparedStatement ps = conn
-					.prepareStatement("SELECT * FROM " + tblName + " WHERE choice_uuid=? AND alternative_index=? AND user_name=?;");
+			PreparedStatement ps = conn.prepareStatement(
+					"SELECT * FROM " + tblName + " WHERE choice_uuid=? AND alternative_index=? AND user_name=?;");
 			ps.setString(1, choiceUuid);
 			ps.setInt(2, alternativeIndex);
 			ps.setString(3, userName);
@@ -78,6 +101,14 @@ public class ApprovalDAO {
 		}
 	}
 
+	/**
+	 * Gets the Approvers for a Choice Alterantive.
+	 * 
+	 * @param choiceUuid       String.
+	 * @param alternativeIndex Integer.
+	 * @return Returns a LinkedList of Approvers from the database.
+	 * @throws Exception
+	 */
 	public LinkedList<Approver> getApprovers(String choiceUuid, int alternativeIndex) throws Exception {
 
 		try {
@@ -103,6 +134,13 @@ public class ApprovalDAO {
 		}
 	}
 
+	/**
+	 * Generates an Approver from database information.
+	 * 
+	 * @param resultSet Resultset.
+	 * @return Returns an Approver from the Resultset.
+	 * @throws Exception
+	 */
 	private Approver generateApprover(ResultSet resultSet) throws Exception {
 		String userName = resultSet.getString("user_name");
 		String choiceId = resultSet.getString("choice_uuid");
