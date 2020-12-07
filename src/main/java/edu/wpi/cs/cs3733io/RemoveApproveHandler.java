@@ -15,6 +15,13 @@ public class RemoveApproveHandler implements RequestHandler<RemoveApproveRequest
 	LambdaLogger logger;
 	AllResponse response;
 
+	/**
+	 * Removes an Approver from the database.
+	 * 
+	 * @param approver Approver.
+	 * @return Returns true if removed, false otherwise.
+	 * @throws Exception
+	 */
 	boolean removeApprover(Approver approver) throws Exception {
 		if (logger != null) {
 			logger.log("in removeApprove");
@@ -24,7 +31,15 @@ public class RemoveApproveHandler implements RequestHandler<RemoveApproveRequest
 
 		return approveDAO.removeApprove(approver);
 	}
-	
+
+	/**
+	 * Gets all the approvers for a Choice Alternative.
+	 * 
+	 * @param choiceUuid       String.
+	 * @param alternativeIndex Integer.
+	 * @return Returns a LinkedList of Approvers.
+	 * @throws Exception
+	 */
 	LinkedList<Approver> getApprovers(String choiceUuid, int alternativeIndex) throws Exception {
 		if (logger != null) {
 			logger.log("in getApprove");
@@ -34,10 +49,12 @@ public class RemoveApproveHandler implements RequestHandler<RemoveApproveRequest
 
 		return approveDAO.getApprovers(choiceUuid, alternativeIndex);
 	}
-	
-	
+
+	/**
+	 * Generates a response for removing an Approver.
+	 */
 	@Override
-	public AllResponse handleRequest(RemoveApproveRequest removeRequest, Context context) {	
+	public AllResponse handleRequest(RemoveApproveRequest removeRequest, Context context) {
 
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler of Approval ");
@@ -65,6 +82,5 @@ public class RemoveApproveHandler implements RequestHandler<RemoveApproveRequest
 		return response;
 
 	}
-
 
 }

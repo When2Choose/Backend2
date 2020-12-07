@@ -22,7 +22,6 @@ public class Choice {
 	String dateCreated;
 	String dateCompleted;
 
-	//@formatter:off
     public String getUuidString() {
         return uuidString;
     }

@@ -1,13 +1,13 @@
 package edu.wpi.cs.cs3733io.http;
 
 public class DeleteChoicesRequest {
-	int days;
+	double days;
 
-	public int getDays() {
+	public double getDays() {
 		return days;
 	}
 
-	public void setDays(int days) {
+	public void setDays(double days) {
 		this.days = days;
 	}
 
@@ -15,7 +15,7 @@ public class DeleteChoicesRequest {
 
 	}
 
-	public DeleteChoicesRequest(int days) {
+	public DeleteChoicesRequest(double days) {
 		this.days = days;
 	}
 

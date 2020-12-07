@@ -19,7 +19,15 @@ public class DeleteChoicesHandler implements RequestHandler<DeleteChoicesRequest
 	LambdaLogger logger;
 	AllResponse response;
 
-	boolean deleteChoices(int days, LinkedList<Choice> allChoices) throws Exception {
+	/**
+	 * Deletes all choices more than days old in the database.
+	 * 
+	 * @param dayd       Integer.
+	 * @param allChoices LinkedList<Choice>
+	 * @return Returns true if the choices were deleted, false otherwise.
+	 * @throws Exception
+	 */
+	boolean deleteChoices(double days, LinkedList<Choice> allChoices) throws Exception {
 		if (logger != null) {
 			logger.log("in createChoice");
 		}
@@ -31,14 +39,21 @@ public class DeleteChoicesHandler implements RequestHandler<DeleteChoicesRequest
 			long diffInMillies = Math.abs(today.getTime() - creation.getTime());
 			long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
 
-			if (diff >= days) {
+			if ((double) diff >= days) {
 				choicesDAO.deleteChoice(c);
+				logger.log(Long.toString(diff));
 			}
 		}
 
 		return true;
 	}
 
+	/**
+	 * Gets all the choices in the database.
+	 * 
+	 * @return Returns a LinkedList of all the choices in the database.
+	 * @throws Exception
+	 */
 	LinkedList<Choice> allChoices() throws Exception {
 		if (logger != null) {
 			logger.log("in createChoice");
@@ -48,6 +63,9 @@ public class DeleteChoicesHandler implements RequestHandler<DeleteChoicesRequest
 		return choicesDAO.getAllChoices();
 	}
 
+	/**
+	 * Generates a response for deleting a choice.
+	 */
 	@Override
 	public AllResponse handleRequest(DeleteChoicesRequest deleteRequest, Context context) {
 		if (context != null) {
@@ -57,7 +75,7 @@ public class DeleteChoicesHandler implements RequestHandler<DeleteChoicesRequest
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler of get choice");
 
-		int days = deleteRequest.getDays();
+		double days = deleteRequest.getDays();
 
 		try {
 			LinkedList<Choice> allChoices = allChoices();
