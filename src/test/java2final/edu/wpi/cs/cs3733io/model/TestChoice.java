@@ -88,7 +88,7 @@ public class TestChoice {
 	
 	@Test
 	public void testCompleted() {
-		choice2.completed("2020/12/06 13:54:22");
+		choice2.complete("2020/12/06 13:54:22");
 		assertTrue(choice2.getIsCompleted());
 	}
 
