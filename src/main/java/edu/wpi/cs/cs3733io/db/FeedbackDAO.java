@@ -26,11 +26,12 @@ public class FeedbackDAO {
 	public boolean addFeedback(Feedback feedback) throws Exception {
 		try {
 			PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName
-					+ " (user_name, description, choice_uuid, alternative_index) VALUES (?,?,?,?)");
+					+ " (user_name, description, choice_uuid, alternative_index, date_created) VALUES (?,?,?,?,?)");
 			ps.setString(1, feedback.userName);
 			ps.setString(2, feedback.description);
 			ps.setString(3, feedback.uuidChoice);
 			ps.setInt(4, feedback.alternativeIndex);
+			ps.setString(5, feedback.dateCreated);
 			ps.execute();
 			return true;
 
@@ -95,8 +96,9 @@ public class FeedbackDAO {
         String description = resultSet.getString("description");
         String uuidChoice = resultSet.getString("choice_uuid");
         int alternativeIndex = resultSet.getInt("alternative_index");
+        String dateCreated = resultSet.getNString("date_created");
 
-        return new Feedback(userName, description, uuidChoice, alternativeIndex);
+        return new Feedback(userName, description, uuidChoice, alternativeIndex, dateCreated);
     }
 
 }
