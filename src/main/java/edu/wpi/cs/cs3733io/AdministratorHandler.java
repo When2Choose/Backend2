@@ -38,6 +38,7 @@ public class AdministratorHandler implements RequestHandler<AdministratorRequest
 	 */
 	@Override
 	public AllResponse handleRequest(AdministratorRequest input, Context context) {
+
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler of Admin");
 		if (context != null) {

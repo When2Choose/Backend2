@@ -28,6 +28,7 @@ public class Alternative {
 	}
 
 
+
 	public LinkedList<String> getApprovers() {
 		return approvers;
 	}
