@@ -166,7 +166,7 @@ public class Choice {
 	 *
 	 * @param date
 	 */
-	public void competed(String date) {
+	public void completed(String date) {
 		dateCompleted = date;
 		isCompleted = true;
 	}
