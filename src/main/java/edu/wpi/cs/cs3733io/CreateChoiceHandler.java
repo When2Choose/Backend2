@@ -15,6 +15,13 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 	LambdaLogger logger;
 	AllResponse response;
 
+	/**
+	 * Adds a choice to the database.
+	 * 
+	 * @param choice Choice
+	 * @return Returns true if added, false otherwise.
+	 * @throws Exception
+	 */
 	boolean createChoice(Choice choice) throws Exception {
 		if (logger != null) {
 			logger.log("in createChoice");
@@ -33,6 +40,9 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 		return dao.addChoice(choice) && success;
 	}
 
+	/**
+	 * Generates a response for creating a choice.
+	 */
 	@Override
 	public AllResponse handleRequest(CreateChoiceRequest choiceRequest, Context context) {
 

@@ -20,6 +20,13 @@ public class GetChoiceHandler implements RequestHandler<GetChoiceRequest, AllRes
 	AllResponse response;
 	LinkedList<Alternative> alternatives;
 
+	/**
+	 * Gets choice for a certain UUID.
+	 * 
+	 * @param uuidString String.
+	 * @return Returns a Choice.
+	 * @throws Exception
+	 */
 	Choice getChoice(String uuidString) throws Exception {
 		if (logger != null) {
 			logger.log("in createChoice");
@@ -29,15 +36,24 @@ public class GetChoiceHandler implements RequestHandler<GetChoiceRequest, AllRes
 		return dao.getChoice(uuidString);
 	}
 
+	/**
+	 * Gets all the alternatives for a choice.
+	 * 
+	 * @param choiceUUID String
+	 * @param context    Context
+	 * @return Returns a LinkedList of Alternatives for a choice.
+	 * @throws Exception
+	 */
 	public LinkedList<Alternative> getAlternatives(String choiceUUID, Context context) throws Exception {
 		logger.log("Getting alternatives");
 		AlternativesDAO alternativesDAO = new AlternativesDAO();
 
 		return alternativesDAO.getAlternatives(choiceUUID, context);
 	}
-	
-	
 
+	/**
+	 * Generates a response for getting a Choice.
+	 */
 	@Override
 	public AllResponse handleRequest(GetChoiceRequest choiceRequest, Context context) {
 		if (context != null) {

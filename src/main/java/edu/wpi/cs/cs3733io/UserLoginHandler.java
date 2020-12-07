@@ -17,6 +17,12 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, AllRes
 	Choice loginChoice;
 	boolean flag = false;
 
+	/**
+	 * Adds a user to the database.
+	 * 
+	 * @param user User.
+	 * @return Returns true if added, false otherwise.
+	 */
 	boolean addUser(User user) {
 		if (logger != null) {
 			logger.log("in loginUser FOR A PASSWORD ");
@@ -29,6 +35,12 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, AllRes
 		}
 	}
 
+	/**
+	 * Gets the number of user for a Choice.
+	 * 
+	 * @param uuid String
+	 * @return Integer. Number of users for a choice. -1 if error.
+	 */
 	int getNumberOfUsers(String uuid) {
 		if (logger != null) {
 			logger.log("in getNumberOfUsers");
@@ -41,6 +53,12 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, AllRes
 		}
 	}
 
+	/**
+	 * Returns the max number of users for a Choice.
+	 * 
+	 * @param choiceID String.
+	 * @return Integer. Max number of users for a choice. -1 if error.
+	 */
 	int getMaxMembers(String choiceID) {
 		if (logger != null) {
 			logger.log("in getMaxMembers");
@@ -53,6 +71,12 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, AllRes
 		}
 	}
 
+	/**
+	 * Determines if a Choice UUID is in the database.
+	 * 
+	 * @param choiceID String.
+	 * @return Returns true if the Choice is in the database, false otherwise.
+	 */
 	private boolean choiceIDValid(String choiceID) {
 		ChoicesDAO choicesDAO = new ChoicesDAO();
 		try {
@@ -63,6 +87,12 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, AllRes
 		}
 	}
 
+	/**
+	 * Determines if a user exists already.
+	 * 
+	 * @param user User.
+	 * @return Returns true if the user exists, false otherwise.
+	 */
 	boolean userExists(User user) {
 		UsersDAO usersDAO = new UsersDAO();
 		try {
@@ -72,6 +102,9 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, AllRes
 		}
 	}
 
+	/**
+	 * Generates a response for adding a User.
+	 */
 	@Override
 	public AllResponse handleRequest(UserLoginRequest userRequest, Context context) {
 		logger = context.getLogger();
@@ -106,8 +139,7 @@ public class UserLoginHandler implements RequestHandler<UserLoginRequest, AllRes
 			}
 		} else {
 			// Invalid choice ID
-			response = new AllResponse("Choice ID: " + userRequest.getChoiceId() + " does not exist",
-					400);
+			response = new AllResponse("Choice ID: " + userRequest.getChoiceId() + " does not exist", 400);
 		}
 		return response;
 	}

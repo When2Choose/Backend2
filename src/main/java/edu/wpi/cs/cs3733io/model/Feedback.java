@@ -38,10 +38,8 @@ public class Feedback {
 	}
 
 	public String toString(LinkedList<Feedback> allFeedback) {
-
 		return "{" + "\"Feedback\" : " + feedbackJSON(allFeedback) + "," + "\"ChoiceId\"  : " + "\"" + uuidChoice
 				+ "\"," + "\"AlternativeIndex\" : " + "\"" + Integer.toString(alternativeIndex) + "\"}";
-
 	}
 
 	public String feedbackJSON(LinkedList<Feedback> allFeedback) {
