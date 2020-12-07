@@ -15,6 +15,9 @@ public class FeedbackDAO {
 
 	final String tblName = "feedback"; // Exact capitalization
 
+	/**
+	 * Connect to the Feedback tables on the RDS.
+	 */
 	public FeedbackDAO() {
 		try {
 			conn = DatabaseUtil.connect();
@@ -26,11 +29,12 @@ public class FeedbackDAO {
 	public boolean addFeedback(Feedback feedback) throws Exception {
 		try {
 			PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName
-					+ " (user_name, description, choice_uuid, alternative_index) VALUES (?,?,?,?)");
+					+ " (user_name, description, choice_uuid, alternative_index, date_created) VALUES (?,?,?,?,?)");
 			ps.setString(1, feedback.userName);
 			ps.setString(2, feedback.description);
 			ps.setString(3, feedback.uuidChoice);
 			ps.setInt(4, feedback.alternativeIndex);
+			ps.setString(5, feedback.dateCreated);
 			ps.execute();
 			return true;
 

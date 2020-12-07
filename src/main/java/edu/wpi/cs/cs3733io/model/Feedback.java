@@ -9,7 +9,8 @@ public class Feedback {
 	public final String userName;
 	public final String description;
 	public final String uuidChoice;
-	public final int alternativeIndex;public final String dateCreated;
+	public final int alternativeIndex;
+	public final String dateCreated;
 
 	public Feedback(String userName, String description, String uuidChoice, int uuidAlternative) {
 		this.userName = userName;
@@ -21,12 +22,12 @@ public class Feedback {
 		Date date = new Date();
 		this.dateCreated = sDF.format(date);
 	}
-
+	
 	public Feedback(String userName, String description, String uuidChoice, int uuidAlternative, String date) {
 		this.userName = userName;
 		this.description = description;
 		this.uuidChoice = uuidChoice;
-		this.alternativeIndex = uuidAlternative;
+		this.alternativeIndex = uuidAlternative;	
 		this.dateCreated = date;
 	}
 
@@ -62,16 +63,19 @@ public class Feedback {
 	}
 
 	public String feedbackJSON(LinkedList<Feedback> allFeedback) {
-		String json = "[";
-		for (Feedback feedback : allFeedback) {
-			if (json.equals("[")) {
-				json = json + feedback.toString();
+		String feedback = "[";
+		for (Feedback a : allFeedback) {
+			if (feedback.equals("[")) {
+				feedback = feedback + "{\"User\":" + "\"" + a.getUserName() + "\"," + "\"description\":" + "\""
+						+ a.getDescription() + "\"," + "\"dateCreated\":" + "\"" + a.getDateCreated() + "\"}";
 			} else {
-				json = json + ", " + feedback.toString();
+				feedback = feedback + ", " + "{\"User\":" + "\"" + a.getUserName() + "\"," + "\"description\":" + "\""
+						+ a.getDescription() + "\"," + "\"dateCreated\":" + "\"" + a.getDateCreated() + "\" }";
+>>>>>>> master
 			}
 		}
 		json = json + "]";
 		return json;
 	}
-
+	
 }

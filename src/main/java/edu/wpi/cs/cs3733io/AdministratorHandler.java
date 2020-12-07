@@ -12,6 +12,7 @@ import edu.wpi.cs.cs3733io.http.AllResponse;
 import edu.wpi.cs.cs3733io.model.Choice;
 
 public class AdministratorHandler implements RequestHandler<AdministratorRequest, AllResponse> {
+
 	LambdaLogger logger;
 	AllResponse response;
 

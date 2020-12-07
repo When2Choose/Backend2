@@ -17,6 +17,9 @@ public class AlternativesDAO {
 
 	final String tblName = "alternatives"; // Exact capitalization
 
+	/**
+	 * Connect to the Alternatives tables on the RDS.
+	 */
 	public AlternativesDAO() {
 		try {
 			conn = DatabaseUtil.connect();
