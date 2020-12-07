@@ -40,7 +40,7 @@ public class Alternative {
 	}
 
 	public void setDisapprovers(LinkedList<String> disapprovers) {
-		this.disapprovers = disapprovers;
+		this.approvers = disapprovers;
 	}
 
 	public boolean getIsChosen() {
