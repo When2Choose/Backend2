@@ -4,9 +4,9 @@ import edu.wpi.cs.cs3733io.model.Alternative;
 
 public class DisapproveAlternativeRequest {
 
-	String choiceId;
+	String choiceId; // Choice UUID
 	String user;
-	int alternative;
+	int alternative; // Alternative Index
 
 	public String getChoiceId() {
 		return choiceId;
@@ -36,13 +36,22 @@ public class DisapproveAlternativeRequest {
 
 	}
 
+	/**
+	 * Disapprove Alternative Request.
+	 * 
+	 * @param choiceId    String.
+	 * @param user        String.
+	 * @param alternative Integer.
+	 */
 	public DisapproveAlternativeRequest(String choiceId, String user, int alternative) {
 		this.choiceId = choiceId;
 		this.alternative = alternative;
 		this.user = user;
 	}
 
-
+	/**
+	 * Converts Disapprover Alternative Request to JSON String Format.
+	 */
 	public String toString() {
 		return choiceId + " " + user + " " + Integer.toString(alternative);
 	}

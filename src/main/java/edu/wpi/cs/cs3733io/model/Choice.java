@@ -22,54 +22,52 @@ public class Choice {
 	String dateCreated;
 	String dateCompleted;
 
-    public String getUuidString() {
-        return uuidString;
-    }
+	public String getUuidString() {
+		return uuidString;
+	}
 
-    public int getMemberCount() {
-        return memberCount;
-    }
+	public int getMemberCount() {
+		return memberCount;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public LinkedList<Alternative> getAlternatives() {
-        return alternatives;
-    }
+	public LinkedList<Alternative> getAlternatives() {
+		return alternatives;
+	}
 
-    public boolean getIsCompleted() {
-        return isCompleted;
-    }
+	public boolean getIsCompleted() {
+		return isCompleted;
+	}
 
-    public void setIsCompleted(boolean flag) {
-        this.isCompleted = flag;
-    }
+	public void setIsCompleted(boolean flag) {
+		this.isCompleted = flag;
+	}
 
-    public String getDateCompleted() {
-        return dateCompleted;
-    }
+	public String getDateCompleted() {
+		return dateCompleted;
+	}
 
-    public void setDateCompleted(String dateCompleted) {
-        this.dateCompleted = dateCompleted;
-    }
-    
-    public String getDateCreated() {
+	public void setDateCompleted(String dateCompleted) {
+		this.dateCompleted = dateCompleted;
+	}
+
+	public String getDateCreated() {
 		return dateCreated;
 	}
 
 	public void setDateCreated(String dateCreated) {
 		this.dateCreated = dateCreated;
 	}
-	
-    //@formatter:on
 
 	/**
-	 * A Choice that people can access.
+	 * Choice.
 	 *
-	 * @param memberCount
-	 * @param description
-	 * @param alternativeNames
+	 * @param memberCount      Integer.
+	 * @param description      String.
+	 * @param alternativeNames Array.
 	 */
 	public Choice(int memberCount, String description, String[] alternativeNames) {
 		uuid = UUID.randomUUID();
@@ -86,6 +84,17 @@ public class Choice {
 		alternatives = new LinkedList<>();
 	}
 
+	/**
+	 * Choice.
+	 * 
+	 * @param uuidString       String.
+	 * @param memberCount      Integer.
+	 * @param description      String.
+	 * @param dateCompleted    String.
+	 * @param dateCreated      String.
+	 * @param isCompleted      Boolean.
+	 * @param alternativeNames Array.
+	 */
 	public Choice(String uuidString, int memberCount, String description, String dateCompleted, String dateCreated,
 			boolean isCompleted, String[] alternativeNames) {
 		this.uuidString = uuidString;
@@ -132,11 +141,22 @@ public class Choice {
 
 	}
 
+	/**
+	 * Converts Choice to JSON String Format.
+	 * 
+	 * @return String in JSON Format
+	 */
 	String toJSON() {
-		return String.format("{\"ID\": \"%s\", \"DateCreated\": \"%s\", \"isCompleted\": %s, \"description\": \"%s\"}", uuidString, dateCreated,
-				isCompleted, description);
+		return String.format("{\"ID\": \"%s\", \"DateCreated\": \"%s\", \"isCompleted\": %s, \"description\": \"%s\"}",
+				uuidString, dateCreated, isCompleted, description);
 	}
 
+	/**
+	 * Converts a Choice to a String for Generating Administrator Report.
+	 * 
+	 * @param choices List<Choice>
+	 * @return Returns a String .
+	 */
 	public static String toStringForGeneratingReport(List<Choice> choices) {
 		String choicesJSON = "[";
 		for (Choice choice : choices) {
@@ -152,7 +172,7 @@ public class Choice {
 	}
 
 	/**
-	 * Creates a list of alternatives that correspond to
+	 * Creates a list of alternatives.
 	 */
 	public void createAlternatives() {
 		for (int i = 0; i < 5; i++) {

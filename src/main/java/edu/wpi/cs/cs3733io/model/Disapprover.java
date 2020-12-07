@@ -24,12 +24,22 @@ public class Disapprover {
 		return alternativeIndex;
 	}
 
+	/**
+	 * Disapprover.
+	 * 
+	 * @param alternativeIndex Integer.
+	 * @param choiceId         String.
+	 * @param userName         String.
+	 */
 	public Disapprover(int alternativeIndex, String choiceId, String userName) {
 		this.alternativeIndex = alternativeIndex;
 		this.choiceUuid = choiceId;
 		this.userName = userName;
 	}
 
+	/**
+	 * Converts Disapprover to JSON String Format.
+	 */
 	public String toString() {
 
 		return "{" + "\"Username\" : " + "\"" + userName + "\"" + "\"ChoiceId\"  : " + "\"" + choiceUuid + "\""
@@ -37,6 +47,11 @@ public class Disapprover {
 
 	}
 
+	/**
+	 * Converts Disapprover with List of names to JSON String Format.
+	 * 
+	 * @param disapproverNames LinkedList<Disapprover>.
+	 */
 	public String toString(LinkedList<Disapprover> disapproverNames) {
 
 		String disapprovers = "[";
@@ -49,9 +64,9 @@ public class Disapprover {
 		}
 		disapprovers = disapprovers + "]";
 
-		return "{" + "\"Disapprovers\" : " + "\"" + disapprovers + ",\"" + "\"ChoiceId\"  : " + "\"" + choiceUuid + ",\""
-				+ "\"AlternativeIndex\" : " + "\"" + Integer.toString(alternativeIndex) + ",\"" + "\"NumberOfDisapprovers\"  : "
-				+ "\"" + Integer.toString(disapproverNames.size()) + "\"" + "}";
+		return "{" + "\"Disapprovers\" : " + "\"" + disapprovers + ",\"" + "\"ChoiceId\"  : " + "\"" + choiceUuid
+				+ ",\"" + "\"AlternativeIndex\" : " + "\"" + Integer.toString(alternativeIndex) + ",\""
+				+ "\"NumberOfDisapprovers\"  : " + "\"" + Integer.toString(disapproverNames.size()) + "\"" + "}";
 
 	}
 }
