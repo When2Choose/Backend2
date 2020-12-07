@@ -26,9 +26,6 @@ public class Alternative {
 		disapprovers = new LinkedList<String>();
 		feedback = new LinkedList<Feedback>();
 	}
-
-
-
 	public LinkedList<String> getApprovers() {
 		return approvers;
 	}
