@@ -27,7 +27,7 @@ public class Alternative {
 		feedback = new LinkedList<Feedback>();
 	}
 
-<<<<<<< HEAD
+
 	public LinkedList<String> getApprovers() {
 		return approvers;
 	}
@@ -51,15 +51,7 @@ public class Alternative {
 	public void setIsChosen(boolean isChosen) {
 		this.isChosen = isChosen;
 	}
-=======
-	//@formatter:off 
-	public LinkedList<String> getApprovers() { return approvers; }
-	public void setApprovers(LinkedList<String> approvers) { this.approvers = approvers; } 
-	
-	public LinkedList<String> getDisapprovers() { return disapprovers; }
-	public void setDisapprovers(LinkedList<String> disapprovers) { this.disapprovers = disapprovers; } 
-	//@formatter:on 
->>>>>>> a6cb6c5 (model at 90 percent plus coverage)
+
 
 	public Alternative(String name, int index, String choiceUuid) {
 		this.alternativeUUID = UUID.randomUUID();
