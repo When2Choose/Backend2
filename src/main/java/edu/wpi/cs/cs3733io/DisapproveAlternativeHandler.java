@@ -8,16 +8,16 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 import edu.wpi.cs.cs3733io.db.ApprovalDAO;
 import edu.wpi.cs.cs3733io.db.DisapprovalDAO;
-import edu.wpi.cs.cs3733io.http.ApproveAlternativeResponse;
+import edu.wpi.cs.cs3733io.http.AllResponse;
 import edu.wpi.cs.cs3733io.http.DisapproveAlternativeRequest;
-import edu.wpi.cs.cs3733io.http.DisapproveAlternativeResponse;
+import edu.wpi.cs.cs3733io.http.AllResponse;
 import edu.wpi.cs.cs3733io.model.Approver;
 import edu.wpi.cs.cs3733io.model.Disapprover;
 
 public class DisapproveAlternativeHandler
-		implements RequestHandler<DisapproveAlternativeRequest, DisapproveAlternativeResponse> {
+		implements RequestHandler<DisapproveAlternativeRequest, AllResponse> {
 	LambdaLogger logger;
-	DisapproveAlternativeResponse response;
+	AllResponse response;
 
 	boolean addDisapprover(Disapprover disapprover) throws Exception {
 		if (logger != null) {
@@ -86,7 +86,7 @@ public class DisapproveAlternativeHandler
 	}
 
 	@Override
-	public DisapproveAlternativeResponse handleRequest(DisapproveAlternativeRequest disApproveRequest,
+	public AllResponse handleRequest(DisapproveAlternativeRequest disApproveRequest,
 			Context context) {
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler of Disapproval ");
@@ -104,14 +104,14 @@ public class DisapproveAlternativeHandler
 
 					LinkedList<Disapprover> disapprovers = getDisapprovers(disapprover.getChoiceUuid(),
 							disapprover.getAlternativeIndex());
-					response = new DisapproveAlternativeResponse(disapprover.toString(disapprovers), 200);
+					response = new AllResponse(disapprover.toString(disapprovers), 200);
 				}
 			} else {
-				response = new DisapproveAlternativeResponse("User is on approver List", 400);
+				response = new AllResponse("User is on approver List", 400);
 			}
 
 		} catch (Exception e) {
-			response = new DisapproveAlternativeResponse("Unable to add disapprover " + "(" + e.getMessage() + ")",
+			response = new AllResponse("Unable to add disapprover " + "(" + e.getMessage() + ")",
 					400);
 			e.printStackTrace();
 		}

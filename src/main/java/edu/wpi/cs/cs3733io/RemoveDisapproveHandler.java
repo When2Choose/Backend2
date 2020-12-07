@@ -7,14 +7,13 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 import edu.wpi.cs.cs3733io.db.DisapprovalDAO;
-import edu.wpi.cs.cs3733io.http.DisapproveAlternativeResponse;
 import edu.wpi.cs.cs3733io.http.RemoveDisapproveRequest;
-import edu.wpi.cs.cs3733io.http.RemoveDisapproveResponse;
+import edu.wpi.cs.cs3733io.http.AllResponse;
 import edu.wpi.cs.cs3733io.model.Disapprover;
 
-public class RemoveDisapproveHandler implements RequestHandler<RemoveDisapproveRequest, RemoveDisapproveResponse> {
+public class RemoveDisapproveHandler implements RequestHandler<RemoveDisapproveRequest, AllResponse> {
 	LambdaLogger logger;
-	RemoveDisapproveResponse response;
+	AllResponse response;
 
 	boolean removeDisapprover(Disapprover disapprover) throws Exception {
 		if (logger != null) {
@@ -37,7 +36,7 @@ public class RemoveDisapproveHandler implements RequestHandler<RemoveDisapproveR
 	}
 
 	@Override
-	public RemoveDisapproveResponse handleRequest(RemoveDisapproveRequest removeRequest, Context context) {
+	public AllResponse handleRequest(RemoveDisapproveRequest removeRequest, Context context) {
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler of Disapproval ");
 
@@ -54,11 +53,11 @@ public class RemoveDisapproveHandler implements RequestHandler<RemoveDisapproveR
 
 				LinkedList<Disapprover> disapprovers = getDisapprovers(disapprover.getChoiceUuid(),
 						disapprover.getAlternativeIndex());
-				response = new RemoveDisapproveResponse(disapprover.toString(disapprovers), 200);
+				response = new AllResponse(disapprover.toString(disapprovers), 200);
 			}
 
 		} catch (Exception e) {
-			response = new RemoveDisapproveResponse("Unable to remove disapprover " + "(" + e.getMessage() + ")",
+			response = new AllResponse("Unable to remove disapprover " + "(" + e.getMessage() + ")",
 					400);
 			e.printStackTrace();
 		}

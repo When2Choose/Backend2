@@ -81,7 +81,7 @@ public class Choice {
 		SimpleDateFormat sDF = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		sDF.setTimeZone(TimeZone.getTimeZone("EST"));
 		Date date = new Date();
-		this.dateCreated = sDF.format(date) + " EST";
+		this.dateCreated = sDF.format(date);
 		this.dateCompleted = "Not Complete";
 		this.isCompleted = false;
 		alternatives = new LinkedList<>();
@@ -106,7 +106,7 @@ public class Choice {
 	public String toString(Alternative alternative) {
 
 		return "{" + "\"ID\" : \"" + uuidString + "\"," + "\"MemberCount\" :" + memberCount + "," + "\"DateCreated\" :"
-				+ "\"" + dateCreated + "\"," + "\"IsCompleted\" :" + "\"" + Boolean.toString(isCompleted) + "\","
+				+ "\"" + dateCreated + "\"," + "\"IsCompleted\" :" + "\"" + Boolean.toString(true) + "\","
 				+ "\"DateCompleted\" :" + "\"" + dateCompleted + "\"," + "\"Alternative\" :" + alternative.toJSON()
 				+ "," + "\"Description\" :\"" + description + "\"}";
 
@@ -134,22 +134,22 @@ public class Choice {
 	}
 
 	String toJSON() {
-		return String.format("{\"ID\": \"%s\", \"DateCreated\": \"%s\", \"isCompleted\": %s}", uuidString, dateCreated,
-				isCompleted);
+		return String.format("{\"ID\": \"%s\", \"DateCreated\": \"%s\", \"isCompleted\": %s, \"description\": \"%s\"}", uuidString, dateCreated,
+				isCompleted, description);
 	}
 
-	public String toStringForGeneratingReport(List<Choice> choices) {
+	public static String toStringForGeneratingReport(List<Choice> choices) {
 		String choicesJSON = "[";
-		for (Choice aChoice : choices) {
+		for (Choice choice : choices) {
 			if (choicesJSON.equals("[")) {
-				choicesJSON = choicesJSON + aChoice.toJSON();
+				choicesJSON = choicesJSON + choice.toJSON();
 			} else {
-				choicesJSON = choicesJSON + ", " + aChoice.toJSON();
+				choicesJSON = choicesJSON + ", " + choice.toJSON();
 			}
 		}
 		choicesJSON += "]";
 
-		return "{" + " \"Choices\" :" + choicesJSON + "\"}";
+		return "{" + " \"Choices\" :" + choicesJSON + "}";
 	}
 
 	/**

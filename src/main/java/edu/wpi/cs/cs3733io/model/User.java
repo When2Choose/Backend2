@@ -28,8 +28,15 @@ public class User {
 	}
 
 	public String toString() {
-		return "{ \"ID\": " + "\"" + choiceId + "\"," + "\"name\": \"" + name + "\"," + "\"password\": \""
-				+ password + "\"" + "}";
+		return "{ \"ID\": " + "\"" + choiceId + "\"," + "\"name\": \"" + name + "\"," + "\"password\": \"" + password
+				+ "\"" + "}";
+	}
+
+	public String toString(boolean isComplete) {
+
+		return "{ \"ID\": " + "\"" + choiceId + "\"," + "\"name\": \"" + name + "\"," + "\"password\": \"" + password
+				+ "\"," + "\"complete\": " + isComplete + "}";
+
 	}
 
 }

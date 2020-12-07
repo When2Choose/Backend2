@@ -8,12 +8,19 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 import edu.wpi.cs.cs3733io.db.ChoicesDAO;
 import edu.wpi.cs.cs3733io.http.AdministratorRequest;
-import edu.wpi.cs.cs3733io.http.AdministratorResponse;
+import edu.wpi.cs.cs3733io.http.AllResponse;
 import edu.wpi.cs.cs3733io.model.Choice;
-public class AdministratorHandler implements RequestHandler<Object, AdministratorResponse> {
+
+public class AdministratorHandler implements RequestHandler<AdministratorRequest, AllResponse> {
+
 	LambdaLogger logger;
-	AdministratorResponse response;
-	
+	AllResponse response;
+
+	/**
+	 * Returns a list of all the Choices in the database.
+	 * 
+	 * @return
+	 */
 	List<Choice> getChoices() {
 		if (logger != null) {
 			logger.log("in loginUser FOR A PASSWORD ");
@@ -26,20 +33,22 @@ public class AdministratorHandler implements RequestHandler<Object, Administrato
 		}
 	}
 
+	/**
+	 * Generates a response for the Administrator Generating a Report.
+	 */
 	@Override
-	public AdministratorResponse handleRequest(Object input, Context context) {
+	public AllResponse handleRequest(AdministratorRequest input, Context context) {
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler of Admin");
 		if (context != null) {
 			context.getLogger();
 		}
 		if (getChoices() == null) {
-			response = new AdministratorResponse("No choices got", 400);
+			response = new AllResponse("No choices got", 400);
 		} else {
 			List<Choice> choices = getChoices();
-			Choice nullChoice = new Choice(-1, null, null);
-			response = new AdministratorResponse(nullChoice.toStringForGeneratingReport(choices), 200);
-		}			
+			response = new AllResponse(Choice.toStringForGeneratingReport(choices), 200);
+		}
 		return response;
 
 	}

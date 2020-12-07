@@ -1,4 +1,4 @@
-package edu.wpi.cs.cs3733io.demo;
+package edu.wpi.cs.cs3733io.test.demo;
 
 import java.io.IOException;
 import java.io.InputStream;

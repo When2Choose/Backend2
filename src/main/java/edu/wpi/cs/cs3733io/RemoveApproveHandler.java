@@ -7,14 +7,13 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 import edu.wpi.cs.cs3733io.db.ApprovalDAO;
-import edu.wpi.cs.cs3733io.http.ApproveAlternativeResponse;
 import edu.wpi.cs.cs3733io.http.RemoveApproveRequest;
-import edu.wpi.cs.cs3733io.http.RemoveApproveResponse;
+import edu.wpi.cs.cs3733io.http.AllResponse;
 import edu.wpi.cs.cs3733io.model.Approver;
 
-public class RemoveApproveHandler implements RequestHandler<RemoveApproveRequest, RemoveApproveResponse> {
+public class RemoveApproveHandler implements RequestHandler<RemoveApproveRequest, AllResponse> {
 	LambdaLogger logger;
-	RemoveApproveResponse response;
+	AllResponse response;
 
 	boolean removeApprover(Approver approver) throws Exception {
 		if (logger != null) {
@@ -38,7 +37,7 @@ public class RemoveApproveHandler implements RequestHandler<RemoveApproveRequest
 	
 	
 	@Override
-	public RemoveApproveResponse handleRequest(RemoveApproveRequest removeRequest, Context context) {	
+	public AllResponse handleRequest(RemoveApproveRequest removeRequest, Context context) {	
 
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler of Approval ");
@@ -55,11 +54,11 @@ public class RemoveApproveHandler implements RequestHandler<RemoveApproveRequest
 			if (removeApprover(approver)) {
 
 				LinkedList<Approver> approvers = getApprovers(approver.getChoiceUuid(), approver.getAlternativeIndex());
-				response = new RemoveApproveResponse(approver.toString(approvers), 200);
+				response = new AllResponse(approver.toString(approvers), 200);
 			}
 
 		} catch (Exception e) {
-			response = new RemoveApproveResponse("Unable to remove approver " + "(" + e.getMessage() + ")", 400);
+			response = new AllResponse("Unable to remove approver " + "(" + e.getMessage() + ")", 400);
 			e.printStackTrace();
 		}
 
