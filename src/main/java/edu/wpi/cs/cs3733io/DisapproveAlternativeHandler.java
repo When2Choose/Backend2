@@ -14,11 +14,17 @@ import edu.wpi.cs.cs3733io.http.AllResponse;
 import edu.wpi.cs.cs3733io.model.Approver;
 import edu.wpi.cs.cs3733io.model.Disapprover;
 
-public class DisapproveAlternativeHandler
-		implements RequestHandler<DisapproveAlternativeRequest, AllResponse> {
+public class DisapproveAlternativeHandler implements RequestHandler<DisapproveAlternativeRequest, AllResponse> {
 	LambdaLogger logger;
 	AllResponse response;
 
+	/**
+	 * Adds a disapprover to the database.
+	 * 
+	 * @param disapprover
+	 * @return
+	 * @throws Exception
+	 */
 	boolean addDisapprover(Disapprover disapprover) throws Exception {
 		if (logger != null) {
 			logger.log("in addDispprove");
@@ -29,6 +35,14 @@ public class DisapproveAlternativeHandler
 		return disapprovalDAO.addDisapprover(disapprover);
 	}
 
+	/**
+	 * Gets all the disapproves for a Choice Alternative.
+	 * 
+	 * @param choiceUuid       String.
+	 * @param alternativeIndex Integer.
+	 * @return Returns a LinkedList of Disapprovers.
+	 * @throws Exception
+	 */
 	LinkedList<Disapprover> getDisapprovers(String choiceUuid, int alternativeIndex) throws Exception {
 		if (logger != null) {
 			logger.log("in getDispprove");
@@ -39,6 +53,13 @@ public class DisapproveAlternativeHandler
 		return disapprovalDAO.getDisapprovers(choiceUuid, alternativeIndex);
 	}
 
+	/**
+	 * Determinss if a disapprover is already on the disapprover list.
+	 * 
+	 * @param disapprover Disapprover.
+	 * @return Returns true if the dsiapprover is alrady on the disapprover list,
+	 *         false otherwise.
+	 */
 	boolean isDisapprover(Disapprover disapprover) {
 		if (logger != null) {
 			logger.log("in isDisapprover");
@@ -47,8 +68,8 @@ public class DisapproveAlternativeHandler
 		DisapprovalDAO disapproveDAO = new DisapprovalDAO();
 
 		try {
-			Disapprover possibleDisapprover = disapproveDAO.getDisapprover(disapprover.getChoiceUuid(), disapprover.getAlternativeIndex(),
-					disapprover.getUserName(), logger);
+			Disapprover possibleDisapprover = disapproveDAO.getDisapprover(disapprover.getChoiceUuid(),
+					disapprover.getAlternativeIndex(), disapprover.getUserName(), logger);
 
 			if (possibleDisapprover == null) {
 				return false;
@@ -63,6 +84,12 @@ public class DisapproveAlternativeHandler
 		}
 	}
 
+	/**
+	 * Determines if a disapprover is on the approver list.
+	 * 
+	 * @param disapprover Disapprover
+	 * @return Returns true if on approver list, false otherwise.
+	 */
 	boolean isApprover(Disapprover disapprover) {
 		if (logger != null) {
 			logger.log("in isDisapprover");
@@ -71,8 +98,8 @@ public class DisapproveAlternativeHandler
 		ApprovalDAO approvalDAO = new ApprovalDAO();
 
 		try {
-			Approver possibleApprover = approvalDAO.getApprover(disapprover.getChoiceUuid(), disapprover.getAlternativeIndex(),
-					disapprover.getUserName());
+			Approver possibleApprover = approvalDAO.getApprover(disapprover.getChoiceUuid(),
+					disapprover.getAlternativeIndex(), disapprover.getUserName());
 			if (possibleApprover == null)
 				return false;
 
@@ -85,9 +112,11 @@ public class DisapproveAlternativeHandler
 		}
 	}
 
+	/**
+	 * Generates a response for disapproving a Choice.
+	 */
 	@Override
-	public AllResponse handleRequest(DisapproveAlternativeRequest disApproveRequest,
-			Context context) {
+	public AllResponse handleRequest(DisapproveAlternativeRequest disApproveRequest, Context context) {
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler of Disapproval ");
 
@@ -111,8 +140,7 @@ public class DisapproveAlternativeHandler
 			}
 
 		} catch (Exception e) {
-			response = new AllResponse("Unable to add disapprover " + "(" + e.getMessage() + ")",
-					400);
+			response = new AllResponse("Unable to add disapprover " + "(" + e.getMessage() + ")", 400);
 			e.printStackTrace();
 		}
 

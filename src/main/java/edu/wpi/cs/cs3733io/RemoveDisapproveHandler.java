@@ -15,6 +15,13 @@ public class RemoveDisapproveHandler implements RequestHandler<RemoveDisapproveR
 	LambdaLogger logger;
 	AllResponse response;
 
+	/**
+	 * Removes a disapprover from the database.
+	 * 
+	 * @param disapprover
+	 * @return
+	 * @throws Exception
+	 */
 	boolean removeDisapprover(Disapprover disapprover) throws Exception {
 		if (logger != null) {
 			logger.log("in removeDispprove");
@@ -25,6 +32,14 @@ public class RemoveDisapproveHandler implements RequestHandler<RemoveDisapproveR
 		return disapprovalDAO.removeDisapprover(disapprover);
 	}
 
+	/**
+	 * Gets all the disapprovers for a Choice Alternative from the database.
+	 * 
+	 * @param choiceUuid
+	 * @param alternativeIndex
+	 * @return
+	 * @throws Exception
+	 */
 	LinkedList<Disapprover> getDisapprovers(String choiceUuid, int alternativeIndex) throws Exception {
 		if (logger != null) {
 			logger.log("in getDispprove");
@@ -35,6 +50,9 @@ public class RemoveDisapproveHandler implements RequestHandler<RemoveDisapproveR
 		return disapprovalDAO.getDisapprovers(choiceUuid, alternativeIndex);
 	}
 
+	/**
+	 * Generates a response for removing a Disapprover.
+	 */
 	@Override
 	public AllResponse handleRequest(RemoveDisapproveRequest removeRequest, Context context) {
 		logger = context.getLogger();
@@ -57,8 +75,7 @@ public class RemoveDisapproveHandler implements RequestHandler<RemoveDisapproveR
 			}
 
 		} catch (Exception e) {
-			response = new AllResponse("Unable to remove disapprover " + "(" + e.getMessage() + ")",
-					400);
+			response = new AllResponse("Unable to remove disapprover " + "(" + e.getMessage() + ")", 400);
 			e.printStackTrace();
 		}
 
