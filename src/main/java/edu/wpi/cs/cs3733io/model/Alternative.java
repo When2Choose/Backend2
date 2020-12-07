@@ -26,7 +26,6 @@ public class Alternative {
 		disapprovers = new LinkedList<String>();
 		feedback = new LinkedList<Feedback>();
 	}
-
 	public LinkedList<String> getApprovers() {
 		return approvers;
 	}
@@ -50,6 +49,7 @@ public class Alternative {
 	public void setIsChosen(boolean isChosen) {
 		this.isChosen = isChosen;
 	}
+
 
 	public Alternative(String name, int index, String choiceUuid) {
 		this.alternativeUUID = UUID.randomUUID();
