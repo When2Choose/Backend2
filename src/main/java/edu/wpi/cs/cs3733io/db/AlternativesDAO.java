@@ -28,6 +28,13 @@ public class AlternativesDAO {
 		}
 	}
 
+	/**
+	 * Determines if an alternative was added to the database.
+	 * 
+	 * @param alternative Alternative.
+	 * @return Returns true if the alternative was added, false otherwise.
+	 * @throws Exception
+	 */
 	public boolean addAlternative(Alternative alternative) throws Exception {
 		try {
 			PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName
@@ -45,6 +52,14 @@ public class AlternativesDAO {
 		}
 	}
 
+	/**
+	 * Determines the alternatives for a Choice.
+	 * 
+	 * @param choiceUUID String.
+	 * @param context    Context.
+	 * @return Returns a Linked List of Alternatives for a Choice.
+	 * @throws Exception
+	 */
 	public LinkedList<Alternative> getAlternatives(String choiceUUID, Context context) throws Exception {
 
 		try {
