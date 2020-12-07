@@ -4,10 +4,10 @@ import java.util.Date;
 
 public class CompleteChoiceRequest {
 
-	public final String dateString;
-	public final Date date;
-	String choiceId;
-	int alternativeIndex;
+	public final String dateString; // Create Date
+	public final Date date; // Creation Date
+	String choiceId; // Choice UUID
+	int alternativeIndex; // Alternative Index
 
 	public String getDateString() {
 		return dateString;
@@ -33,11 +33,20 @@ public class CompleteChoiceRequest {
 		this.alternativeIndex = a;
 	}
 
+	/**
+	 * Complete Choice Request, Sets date and dateString.
+	 */
 	public CompleteChoiceRequest() {
 		date = new Date();
 		dateString = date.toString();
 	}
 
+	/**
+	 * Complete Choice Request, Sets date and dateString.
+	 * 
+	 * @param choiceId         String.
+	 * @param alternativeIndex Integer.
+	 */
 	public CompleteChoiceRequest(String choiceId, int alternativeIndex) {
 		this.choiceId = choiceId;
 		this.alternativeIndex = alternativeIndex;

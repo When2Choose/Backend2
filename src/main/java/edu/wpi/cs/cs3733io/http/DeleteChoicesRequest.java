@@ -15,10 +15,18 @@ public class DeleteChoicesRequest {
 
 	}
 
+	/**
+	 * Delete Choice Request.
+	 * 
+	 * @param days Double.
+	 */
 	public DeleteChoicesRequest(double days) {
 		this.days = days;
 	}
 
+	/**
+	 * @return Returns "Successful".
+	 */
 	public String successMessage() {
 		return "Successful";
 	}

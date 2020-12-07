@@ -7,6 +7,14 @@ public class AddFeedbackRequest {
 	String choiceId;
 	int alternativeIndex;
 
+	/**
+	 * Add Feedback Request.
+	 * 
+	 * @param user             String.
+	 * @param feedbackText     String.
+	 * @param choiceId         String.
+	 * @param alternativeIndex Integer.
+	 */
 	public AddFeedbackRequest(String user, String feedbackText, String choiceId, int alternativeIndex) {
 		this.user = user;
 		this.feedbackText = feedbackText;
@@ -50,6 +58,9 @@ public class AddFeedbackRequest {
 		this.alternativeIndex = alternativeIndex;
 	}
 
+	/**
+	 * Converts Feedback to JSON String Format.
+	 */
 	public String toString() {
 		return "{" + "\"username: \"" + "\"" + user + "\"" + "\"decsription: \"" + "\"" + feedbackText + "\""
 				+ "\"uuidChoice: \"" + "\"" + choiceId + "\"" + "\"uuidAlternative: \"" + "\""

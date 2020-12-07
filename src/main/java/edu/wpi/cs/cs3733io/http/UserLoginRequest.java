@@ -1,13 +1,10 @@
 package edu.wpi.cs.cs3733io.http;
 
 public class UserLoginRequest {
-	String name;
-	String choiceId;
+	String name; // User name
+	String choiceId; // Choice UUID
 	String password;
 
-	
-
-	//@formatter:off 
 	public String getName() {
 		return name;
 	}
@@ -32,21 +29,25 @@ public class UserLoginRequest {
 		this.password = password;
 	}
 
+	/**
+	 * User Login Request
+	 * 
+	 * @param name     String.
+	 * @param choiceId String.
+	 * @param password String.
+	 */
 	public UserLoginRequest(String name, String choiceId, String password) {
 		this.name = name;
 		this.choiceId = choiceId;
 		this.password = password;
 	}
-	
-	//@formatter:on
 
-
-
+	/**
+	 * Converts Login User Request to JSON String Format.
+	 */
 	public String toString() {
 		return " User is: (name: " + name + ") (choiceId: " + choiceId + ") (password:" + password + ") ";
 	}
-
-
 
 	public UserLoginRequest() {
 	}
