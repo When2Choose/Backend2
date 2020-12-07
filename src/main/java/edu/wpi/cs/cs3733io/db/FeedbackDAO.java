@@ -15,6 +15,9 @@ public class FeedbackDAO {
 
 	final String tblName = "feedback"; // Exact capitalization
 
+	/**
+	 * Connect to the Feedback tables on the RDS.
+	 */
 	public FeedbackDAO() {
 		try {
 			conn = DatabaseUtil.connect();

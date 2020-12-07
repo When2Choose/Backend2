@@ -11,22 +11,26 @@ import edu.wpi.cs.cs3733io.model.User;
 public class UsersDAO {
 
 	java.sql.Connection conn;
-	
-	final String tblName = "users";   // Exact capitalization
 
-    public UsersDAO() {
-    	try  {
-    		conn = DatabaseUtil.connect();
-    	} catch (Exception e) {
-    		conn = null;
-    	}
-    }
-    
+	final String tblName = "users"; // Exact capitalization
+
+	/**
+	 * Connect to the User tables on the RDS.
+	 */
+	public UsersDAO() {
+		try {
+			conn = DatabaseUtil.connect();
+		} catch (Exception e) {
+			conn = null;
+		}
+	}
+
 	public User getUser(User inputUser) throws Exception {
 
 		try {
 			User user = null;
-			PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE (name = ?) AND (choiceId = ?) AND (password = ?);");
+			PreparedStatement ps = conn.prepareStatement(
+					"SELECT * FROM " + tblName + " WHERE (name = ?) AND (choiceId = ?) AND (password = ?);");
 			ps.setString(1, inputUser.getName());
 			ps.setString(2, inputUser.getChoiceId());
 			ps.setString(3, inputUser.getPassword());
@@ -45,7 +49,7 @@ public class UsersDAO {
 			throw new Exception("Failed in getting user: " + e.getMessage());
 		}
 	}
-	
+
 	public boolean updateUser(User user) throws Exception {
 		try {
 			String query = "UPDATE " + tblName + " SET value=? WHERE (name = ?) AND (choiceId = ?);";
@@ -61,10 +65,11 @@ public class UsersDAO {
 			throw new Exception("Failed to update user: " + e.getMessage());
 		}
 	}
-	
+
 	public boolean deleteUser(User user) throws Exception {
 		try {
-			PreparedStatement ps = conn.prepareStatement("DELETE FROM " + tblName + " WHERE (name = ?) AND (choiceId = ?);");
+			PreparedStatement ps = conn
+					.prepareStatement("DELETE FROM " + tblName + " WHERE (name = ?) AND (choiceId = ?);");
 			ps.setString(1, user.getName());
 			ps.setString(2, user.getChoiceId());
 			int numAffected = ps.executeUpdate();
@@ -76,11 +81,12 @@ public class UsersDAO {
 			throw new Exception("Failed to delete user: " + e.getMessage());
 		}
 	}
-	
+
 	public boolean addUser(User user) throws Exception {
 		try {
-			
-			PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName + " (name, password, choiceId) VALUES (?,?,?)");
+
+			PreparedStatement ps = conn
+					.prepareStatement("INSERT INTO " + tblName + " (name, password, choiceId) VALUES (?,?,?)");
 			ps.setString(1, user.getName());
 			ps.setString(2, user.getPassword());
 			ps.setString(3, user.getChoiceId());
@@ -91,7 +97,7 @@ public class UsersDAO {
 			throw new Exception("Failed to insert user: " + e.getMessage());
 		}
 	}
-	
+
 	public List<User> getAllUsers() throws Exception {
 
 		List<User> users = new ArrayList<>();
@@ -112,7 +118,7 @@ public class UsersDAO {
 			throw new Exception("Failed in getting users: " + e.getMessage());
 		}
 	}
-	
+
 	public int getNumberOfUsers(String choiceId) throws Exception {
 
 		List<User> users = new ArrayList<>();
@@ -133,7 +139,7 @@ public class UsersDAO {
 			throw new Exception("Failed in getting users: " + e.getMessage());
 		}
 	}
-	
+
 	private User generateUser(ResultSet resultSet) throws Exception {
 		String name = resultSet.getString("name");
 		String password = resultSet.getString("password");
@@ -141,5 +147,5 @@ public class UsersDAO {
 
 		return new User(name, password, choiceId);
 	}
-    
+
 }
