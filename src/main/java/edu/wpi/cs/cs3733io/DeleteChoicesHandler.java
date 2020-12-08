@@ -1,6 +1,7 @@
 package edu.wpi.cs.cs3733io;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.LinkedList;
@@ -37,12 +38,13 @@ public class DeleteChoicesHandler implements RequestHandler<DeleteChoicesRequest
 			Date creation = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse(c.getDateCreated());
 
 			long diffInMillies = Math.abs(today.getTime() - creation.getTime());
-			long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-
-			if ((double) diff >= days) {
+			long diff = TimeUnit.SECONDS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+			
+			if (diff >= days*24*60*60) {
 				choicesDAO.deleteChoice(c);
-				logger.log(Double.toString(diff));
+				
 			}
+			logger.log(Long.toString(diff));
 		}
 
 		return true;
