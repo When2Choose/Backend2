@@ -26,17 +26,17 @@ public class TestAlternative {
 		assertTrue(alt1.getIsChosen());
 	}
 	
-	@Test
-	public void testFeedbackJSON() {
-		LinkedList<Feedback> feedback = new LinkedList<>();
-		assertTrue(alt1.feedbackJSON(feedback) instanceof String);
-		LinkedList<Feedback> feedback2 = new LinkedList<>();
-		Feedback f = new Feedback("user1", "description", "03a6902e-3b28-46c8-a30f-5018994a67a0", 1);
-		feedback2.add(f);
-		assertTrue(alt1.feedbackJSON(feedback2) instanceof String);
-		alt1.setFeedback(feedback2);
-		assertTrue(alt1.feedbackJSON(feedback2) instanceof String);
-	}
+//	@Test
+//	public void testFeedbackJSON() {
+//		LinkedList<Feedback> feedback = new LinkedList<>();
+//		assertTrue(alt1.feedbackJSON(feedback) instanceof String);
+//		LinkedList<Feedback> feedback2 = new LinkedList<>();
+//		Feedback f = new Feedback("user1", "description", "03a6902e-3b28-46c8-a30f-5018994a67a0", 1);
+//		feedback2.add(f);
+//		assertTrue(alt1.feedbackJSON(feedback2) instanceof String);
+//		alt1.setFeedback(feedback2);
+//		assertTrue(alt1.feedbackJSON(feedback2) instanceof String);
+//	}
 	
 	@Test
 	public void testToJSON() {

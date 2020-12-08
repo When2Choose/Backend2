@@ -31,6 +31,7 @@ public class Feedback {
 		this.dateCreated = sDF.format(date);
 	}
 
+
 	/**
 	 * Feedback.
 	 * 
@@ -73,9 +74,9 @@ public class Feedback {
 	 * 
 	 */
 	public String toString() {
-		return "{" + "\"username: \"" + "\"" + userName + "\"" + "\"decsription: \"" + "\"" + description + "\""
-				+ "\"uuidChoice: \"" + "\"" + uuidChoice + "\"" + "\"uuidAlternative: \"" + "\""
-				+ Integer.toString(alternativeIndex) + "\"dateCreated: \"" + "\"" + dateCreated + "\"" + "}";
+		return "{" + "\"username\":" + "\"" + userName + "\"," + "\"description\":" + "\"" + description + "\","
+				+ "\"uuidChoice\" :" + "\"" + uuidChoice + "\"," + "\"uuidAlternative\":" + "\"" + alternativeIndex
+				+ "\", \"dateCreated\": \"" + dateCreated + "\"}";
 	}
 
 	/**
@@ -86,28 +87,27 @@ public class Feedback {
 	 */
 	public String toString(LinkedList<Feedback> allFeedback) {
 		return "{" + "\"Feedback\" : " + feedbackJSON(allFeedback) + "," + "\"ChoiceId\"  : " + "\"" + uuidChoice
-				+ "\"," + "\"AlternativeIndex\" : " + "\"" + Integer.toString(alternativeIndex) + "\"}";
+				+ "\"," + "\"AlternativeIndex\" : \"" + alternativeIndex + "\", \"dateCreated\": \"" + dateCreated
+				+ "\"}";
 	}
 
-	/**
+  /**
 	 * Converts Feedback with List of Feedback to JSON Format.
 	 * 
 	 * @param allFeedback LinkedList<Feedback>
 	 * @return String of feedbackJSON.
 	 */
-	public String feedbackJSON(LinkedList<Feedback> allFeedback) {
-		String feedback = "[";
-		for (Feedback a : allFeedback) {
-			if (feedback.equals("[")) {
-				feedback = feedback + "{\"User\":" + "\"" + a.getUserName() + "\"," + "\"description\":" + "\""
-						+ a.getDescription() + "\"," + "\"dateCreated\":" + "\"" + a.getDateCreated() + "\"}";
+	public static String feedbackJSON(LinkedList<Feedback> allFeedback) {
+		String json = "[";
+		for (Feedback feedback : allFeedback) {
+			if (json.equals("[")) {
+				json = json + feedback.toString();
 			} else {
-				feedback = feedback + ", " + "{\"User\":" + "\"" + a.getUserName() + "\"," + "\"description\":" + "\""
-						+ a.getDescription() + "\"," + "\"dateCreated\":" + "\"" + a.getDateCreated() + "\" }";
+				json = json + ", " + feedback.toString();
 			}
 		}
-		feedback = feedback + "]";
-		return feedback;
+		json = json + "]";
+		return json;
 	}
 
 }
