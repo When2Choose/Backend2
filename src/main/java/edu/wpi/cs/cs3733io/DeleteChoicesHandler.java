@@ -39,9 +39,9 @@ public class DeleteChoicesHandler implements RequestHandler<DeleteChoicesRequest
 			Date creation = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse(c.getDateCreated());
 
 			long diffInMillies = Math.abs(time - creation.getTime());
-			long diff = TimeUnit.SECONDS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+			long diff = TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
 
-			if (diff >= days * 24 * 60 * 60) {
+			if ((diff-18000) >= (days * 24 * 60)) {
 				choicesDAO.deleteChoice(c);
 
 			}
