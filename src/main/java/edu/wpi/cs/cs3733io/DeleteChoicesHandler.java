@@ -41,7 +41,7 @@ public class DeleteChoicesHandler implements RequestHandler<DeleteChoicesRequest
 
 			if ((double) diff >= days) {
 				choicesDAO.deleteChoice(c);
-				logger.log(Long.toString(diff));
+				logger.log(Double.toString(diff));
 			}
 		}
 

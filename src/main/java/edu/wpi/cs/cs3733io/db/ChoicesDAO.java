@@ -28,6 +28,13 @@ public class ChoicesDAO {
 		}
 	}
 
+	/**
+	 * Gets a choice.
+	 * 
+	 * @param uuidString String.
+	 * @return Returns a Choice with the given UUID.
+	 * @throws Exception
+	 */
 	public Choice getChoice(String uuidString) throws Exception {
 
 		try {
@@ -50,6 +57,13 @@ public class ChoicesDAO {
 		}
 	}
 
+	/**
+	 * Updates an existing choice.
+	 * 
+	 * @param choice Choice.
+	 * @return Returns true if update in the database happened, false otherwise.
+	 * @throws Exception
+	 */
 	public boolean updateChoice(Choice choice) throws Exception {
 		try {
 			String query = "UPDATE " + tblName
@@ -70,6 +84,13 @@ public class ChoicesDAO {
 		}
 	}
 
+	/**
+	 * Deletes a choice from the database.
+	 * 
+	 * @param choice Choice.
+	 * @return Returns true if Choice was deleted, false otherwise.
+	 * @throws Exception
+	 */
 	public boolean deleteChoice(Choice choice) throws Exception {
 		try {
 			PreparedStatement ps = conn.prepareStatement("DELETE FROM " + tblName + " WHERE uuid = ?;");
@@ -84,19 +105,15 @@ public class ChoicesDAO {
 		}
 	}
 
-
+	/**
+	 * Adds a choice to the database.
+	 * 
+	 * @param choice Choice.
+	 * @return Returns true if choice was added, false otherwise.
+	 * @throws Exception
+	 */
 	public boolean addChoice(Choice choice) throws Exception {
 		try {
-//			PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE uuid = ?;");
-//			ps.setString(1, choice.getUuidString());
-//			ResultSet resultSet = ps.executeQuery();
-//
-//			// already present?
-//			while (resultSet.next()) {
-//			//	Choice c = generateChoice(resultSet);
-//				resultSet.close();
-//				return false;
-//			}
 
 			PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName
 					+ " (uuid, description, complete, date_completed, member_count, date_created) VALUES (?,?,?,?,?,?)");
@@ -114,6 +131,12 @@ public class ChoicesDAO {
 		}
 	}
 
+	/**
+	 * Gets all the Choices from the database.
+	 * 
+	 * @return Returns a LinkedList of Choices from the database.
+	 * @throws Exception
+	 */
 	public LinkedList<Choice> getAllChoices() throws Exception {
 
 		LinkedList<Choice> allChoices = new LinkedList<>();
@@ -135,6 +158,13 @@ public class ChoicesDAO {
 		}
 	}
 
+	/**
+	 * Generates a Choice.
+	 * 
+	 * @param resultSet Resultset.
+	 * @return Returns a Choice from the Resultset.
+	 * @throws Exception
+	 */
 	private Choice generateChoice(ResultSet resultSet) throws Exception {
 		int memberCount = resultSet.getInt("member_count");
 		boolean isCompleted = resultSet.getBoolean("complete");

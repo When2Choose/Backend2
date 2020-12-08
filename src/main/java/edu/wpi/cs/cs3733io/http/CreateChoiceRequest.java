@@ -5,51 +5,57 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class CreateChoiceRequest {
-    int memberCount;
-    String description;
+	int memberCount;
+	String description;
 
-    String[] alternatives;
+	String[] alternatives;
 
+	public int getMemberCount() {
+		return memberCount;
+	}
 
-    //@formatter:off
-    public int getMemberCount() {
-        return memberCount;
-    }
+	public void setMemberCount(int mcnt) {
+		this.memberCount = mcnt;
+	}
 
-    public void setMemberCount(int mcnt) {
-        this.memberCount = mcnt;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public String[] getAlternatives() {
+		return alternatives;
+	}
 
-    public String[] getAlternatives() {
-        return alternatives;
-    }
+	public void setAlternatives(String[] alternatives) {
+		this.alternatives = alternatives;
+	}
 
-    public void setAlternatives(String[] alternatives) {
-        this.alternatives = alternatives;
-    }
+	/**
+	 * Converts Choice to JSON String Format.
+	 */
+	public String toString() {
+		return "Creating Choice with (Member Count: " + memberCount + ") (Description: " + description
+				+ "Alternatives: ";
+	}
 
-    //@formatter:on
+	/**
+	 * Create Choice Request.
+	 * 
+	 * @param memberCount  Integer.
+	 * @param description  String.
+	 * @param alternatives Array.
+	 */
+	public CreateChoiceRequest(int memberCount, String description, String[] alternatives) {
+		this.memberCount = memberCount;
+		this.description = description;
+		this.alternatives = alternatives;
+	}
 
-    public String toString() {
-        return "Creating Choice with (Member Count: " + memberCount + ") (Description: " + description
-                + "Alternatives: ";
-    }
-
-    public CreateChoiceRequest(int memberCount, String description, String[] alternatives) {
-        this.memberCount = memberCount;
-        this.description = description;
-        this.alternatives = alternatives;
-    }
-
-    public CreateChoiceRequest() {
-    }
+	public CreateChoiceRequest() {
+	}
 
 }

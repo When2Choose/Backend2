@@ -26,6 +26,13 @@ public class FeedbackDAO {
 		}
 	}
 
+	/**
+	 * Add Feedback to the database.
+	 * 
+	 * @param feedback Feedback.
+	 * @return Returns true if the Feedback was added, false otherwise.
+	 * @throws Exception
+	 */
 	public boolean addFeedback(Feedback feedback) throws Exception {
 		try {
 			PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName
@@ -42,33 +49,48 @@ public class FeedbackDAO {
 			throw new Exception("Failed to insert feedback: " + e.getMessage());
 		}
 	}
-	
-	
+
+	/**
+	 * Gets Feedback from the database.
+	 * 
+	 * @param inputFeedback Feedback.
+	 * @return Returns Feedback that matches the inputFeedback.
+	 * @throws Exception
+	 */
 	public Feedback getFeedback(Feedback inputFeedback) throws Exception {
 
-        try {
-            Feedback feedback = null;
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE user_name=? AND choice_uuid=? AND alternative_index=?;");
-            ps.setString(1,  inputFeedback.userName);
-            ps.setString(2,  inputFeedback.uuidChoice);
-            ps.setInt(3,  inputFeedback.alternativeIndex);
-            ResultSet resultSet = ps.executeQuery();
-            
-            while (resultSet.next()) {
-            	feedback = generateFeedback(resultSet);
-            }
-            resultSet.close();
-            ps.close();
-            
-            return feedback;
+		try {
+			Feedback feedback = null;
+			PreparedStatement ps = conn.prepareStatement(
+					"SELECT * FROM " + tblName + " WHERE user_name=? AND choice_uuid=? AND alternative_index=?;");
+			ps.setString(1, inputFeedback.userName);
+			ps.setString(2, inputFeedback.uuidChoice);
+			ps.setInt(3, inputFeedback.alternativeIndex);
+			ResultSet resultSet = ps.executeQuery();
 
-        } catch (Exception e) {
-        	e.printStackTrace();
-            throw new Exception("Failed in getting feedback: " + e.getMessage());
-        }
+			while (resultSet.next()) {
+				feedback = generateFeedback(resultSet);
+			}
+			resultSet.close();
+			ps.close();
+
+			return feedback;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("Failed in getting feedback: " + e.getMessage());
+		}
 	}
-	
-	public LinkedList<Feedback> getAlternativeFeedback(int alternativeIndex, String choiceUuid) throws Exception{
+
+	/**
+	 * Gets the Feedback for a certain Choice Alternative.
+	 * 
+	 * @param alternativeIndex Integer.
+	 * @param choiceUuid       String.
+	 * @return Returns a LinkedList of Feedback for that Choice Alternative.
+	 * @throws Exception
+	 */
+	public LinkedList<Feedback> getAlternativeFeedback(int alternativeIndex, String choiceUuid) throws Exception {
 		try {
 			LinkedList<Feedback> feedback = new LinkedList<Feedback>();
 			PreparedStatement ps = conn
@@ -91,17 +113,22 @@ public class FeedbackDAO {
 			throw new Exception("Failed in getting approvers: " + e.getMessage());
 		}
 	}
-	
-	
-	
-    private Feedback generateFeedback(ResultSet resultSet) throws Exception {
-        String userName = resultSet.getString("user_name");
-        String description = resultSet.getString("description");
-        String uuidChoice = resultSet.getString("choice_uuid");
-        int alternativeIndex = resultSet.getInt("alternative_index");
-        String dateCreated = resultSet.getString("date_created");
 
-        return new Feedback(userName, description, uuidChoice, alternativeIndex, dateCreated);
-    }
+	/**
+	 * Generates Feedback.
+	 * 
+	 * @param resultSet Resultset.
+	 * @return Returns Feedback generated from the Resultset.
+	 * @throws Exception
+	 */
+	private Feedback generateFeedback(ResultSet resultSet) throws Exception {
+		String userName = resultSet.getString("user_name");
+		String description = resultSet.getString("description");
+		String uuidChoice = resultSet.getString("choice_uuid");
+		int alternativeIndex = resultSet.getInt("alternative_index");
+		String dateCreated = resultSet.getString("date_created");
+
+		return new Feedback(userName, description, uuidChoice, alternativeIndex, dateCreated);
+	}
 
 }

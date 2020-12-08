@@ -11,15 +11,15 @@ import edu.wpi.cs.cs3733io.http.AdministratorRequest;
 import edu.wpi.cs.cs3733io.http.AllResponse;
 import edu.wpi.cs.cs3733io.model.Choice;
 
-public class AdministratorHandler implements RequestHandler<AdministratorRequest, AllResponse> {
+public class AdministratorHandler implements RequestHandler<Object, AllResponse> {
 
 	LambdaLogger logger;
 	AllResponse response;
 
 	/**
-	 * Returns a list of all the Choices in the database.
+	 * Generates a List of all the Choices in the database.
 	 * 
-	 * @return
+	 * @return Returns a List of Choices.
 	 */
 	List<Choice> getChoices() {
 		if (logger != null) {
@@ -37,7 +37,7 @@ public class AdministratorHandler implements RequestHandler<AdministratorRequest
 	 * Generates a response for the Administrator Generating a Report.
 	 */
 	@Override
-	public AllResponse handleRequest(AdministratorRequest input, Context context) {
+	public AllResponse handleRequest(Object input, Context context) {
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler of Admin");
 		if (context != null) {

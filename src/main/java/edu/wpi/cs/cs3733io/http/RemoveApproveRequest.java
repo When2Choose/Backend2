@@ -2,9 +2,9 @@ package edu.wpi.cs.cs3733io.http;
 
 public class RemoveApproveRequest {
 
-	String choiceId;
+	String choiceId; // Choice UUID
 	String user;
-	int alternative;
+	int alternative; // Alternative Index
 
 	public String getChoiceId() {
 		return choiceId;
@@ -34,13 +34,22 @@ public class RemoveApproveRequest {
 
 	}
 
+	/**
+	 * Remove Approve Request
+	 * 
+	 * @param choiceId    String.
+	 * @param user        String.
+	 * @param alternative Integer.
+	 */
 	public RemoveApproveRequest(String choiceId, String user, int alternative) {
 		this.choiceId = choiceId;
 		this.alternative = alternative;
 		this.user = user;
 	}
 
-
+	/**
+	 * Converts Remove Approver Request to JSON String Format.
+	 */
 	public String toString() {
 		return choiceId + " " + user + " " + Integer.toString(alternative);
 	}
