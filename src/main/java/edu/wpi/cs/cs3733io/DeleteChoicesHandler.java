@@ -34,15 +34,16 @@ public class DeleteChoicesHandler implements RequestHandler<DeleteChoicesRequest
 		}
 		ChoicesDAO choicesDAO = new ChoicesDAO();
 		Date today = new Date();
+		long time = today.getTime();
 		for (Choice c : allChoices) {
 			Date creation = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse(c.getDateCreated());
 
-			long diffInMillies = Math.abs(today.getTime() - creation.getTime());
+			long diffInMillies = Math.abs(time - creation.getTime());
 			long diff = TimeUnit.SECONDS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-			
-			if (diff >= days*24*60*60) {
+
+			if (diff >= days * 24 * 60 * 60) {
 				choicesDAO.deleteChoice(c);
-				
+
 			}
 			logger.log(Long.toString(diff));
 		}
