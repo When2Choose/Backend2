@@ -62,15 +62,13 @@ public class Feedback {
 				+ "\"," + "\"AlternativeIndex\" : \"" + alternativeIndex + "\", \"dateCreated\": \"" + dateCreated +"\"}";
 	}
 
-	public String feedbackJSON(LinkedList<Feedback> allFeedback) {
+	public static String feedbackJSON(LinkedList<Feedback> allFeedback) {
 		String json = "[";
 		for (Feedback feedback : allFeedback) {
 			if (json.equals("[")) {
-				json = json + "{\"User\":" + "\"" + feedback.getUserName() + "\"," + "\"description\":" + "\""
-						+ feedback.getDescription() + "\"," + "\"dateCreated\":" + "\"" + feedback.getDateCreated() + "\"}";
+				json = json + feedback.toString();
 			} else {
-				json = json + ", " + "{\"User\":" + "\"" + feedback.getUserName() + "\"," + "\"description\":" + "\""
-						+ feedback.getDescription() + "\"," + "\"dateCreated\":" + "\"" + feedback.getDateCreated() + "\" }";
+				json = json + ", " + feedback.toString();
 			}
 		}
 		json = json + "]";

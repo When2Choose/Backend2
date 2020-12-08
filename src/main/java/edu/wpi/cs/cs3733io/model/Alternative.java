@@ -26,6 +26,7 @@ public class Alternative {
 		disapprovers = new LinkedList<String>();
 		feedback = new LinkedList<Feedback>();
 	}
+
 	public LinkedList<String> getApprovers() {
 		return approvers;
 	}
@@ -50,7 +51,6 @@ public class Alternative {
 		this.isChosen = isChosen;
 	}
 
-
 	public Alternative(String name, int index, String choiceUuid) {
 		this.alternativeUUID = UUID.randomUUID();
 		this.choiceUUID = choiceUuid;
@@ -66,7 +66,7 @@ public class Alternative {
 		return String.format(
 				"{\"alternativeUUID\": \"%s\", \"choiceUUID\": \"%s\", \"index\": %d, \"description\": \"%s\", "
 						+ "\"Approvers\": %s, \"Disapprovers\": %s ,\"isChosen\": %d, \"Feedback\":"
-						+ feedbackJSON(this.feedback) + "}",
+						+ Feedback.feedbackJSON(this.feedback) + "}",
 				alternativeUUID, choiceUUID, index, name, approverJSON(), dispproverJSON(), isChosen ? 1 : 0);
 	}
 
@@ -120,24 +120,6 @@ public class Alternative {
 		for (Feedback f : alternativeFeedback) {
 			this.feedback.add(f);
 		}
-	}
-
-	public String feedbackJSON(LinkedList<Feedback> allFeedback) {
-		if (allFeedback == null || allFeedback.isEmpty()) {
-			return "[]";
-		}
-		String feedback = "[";
-		for (Feedback a : allFeedback) {
-			if (feedback.equals("[")) {
-				feedback = feedback + "{\"User\":" + "\"" + a.getUserName() + "\"," + "\"description\":" + "\""
-						+ a.getDescription() + "\"}";
-			} else {
-				feedback = feedback + ", " + "{\"User\":" + "\"" + a.getUserName() + "\"," + "\"description\":" + "\""
-						+ a.getDescription() + "\" }";
-			}
-		}
-		feedback = feedback + "]";
-		return feedback;
 	}
 
 }
