@@ -63,15 +63,14 @@ public class Feedback {
 	}
 
 	public String feedbackJSON(LinkedList<Feedback> allFeedback) {
-		String feedback = "[";
-		for (Feedback a : allFeedback) {
-			if (feedback.equals("[")) {
-				feedback = feedback + "{\"User\":" + "\"" + a.getUserName() + "\"," + "\"description\":" + "\""
-						+ a.getDescription() + "\"," + "\"dateCreated\":" + "\"" + a.getDateCreated() + "\"}";
+		String json = "[";
+		for (Feedback feedback : allFeedback) {
+			if (json.equals("[")) {
+				json = json + "{\"User\":" + "\"" + feedback.getUserName() + "\"," + "\"description\":" + "\""
+						+ feedback.getDescription() + "\"," + "\"dateCreated\":" + "\"" + feedback.getDateCreated() + "\"}";
 			} else {
-				feedback = feedback + ", " + "{\"User\":" + "\"" + a.getUserName() + "\"," + "\"description\":" + "\""
-						+ a.getDescription() + "\"," + "\"dateCreated\":" + "\"" + a.getDateCreated() + "\" }";
->>>>>>> master
+				json = json + ", " + "{\"User\":" + "\"" + feedback.getUserName() + "\"," + "\"description\":" + "\""
+						+ feedback.getDescription() + "\"," + "\"dateCreated\":" + "\"" + feedback.getDateCreated() + "\" }";
 			}
 		}
 		json = json + "]";
