@@ -22,12 +22,12 @@ public class Feedback {
 		Date date = new Date();
 		this.dateCreated = sDF.format(date);
 	}
-	
+
 	public Feedback(String userName, String description, String uuidChoice, int uuidAlternative, String date) {
 		this.userName = userName;
 		this.description = description;
 		this.uuidChoice = uuidChoice;
-		this.alternativeIndex = uuidAlternative;	
+		this.alternativeIndex = uuidAlternative;
 		this.dateCreated = date;
 	}
 
@@ -52,14 +52,15 @@ public class Feedback {
 	}
 
 	public String toString() {
-		return "{" + "\"username: \"" + "\"" + userName + "\"" + "\"description: \"" + "\"" + description + "\""
-				+ "\"uuidChoice: \"" + "\"" + uuidChoice + "\"" + "\"uuidAlternative: \"" + "\""
-				+ alternativeIndex + "\", \"dateCreated\": \"" + dateCreated  +"\"}";
+		return "{" + "\"username\":" + "\"" + userName + "\"," + "\"description\":" + "\"" + description + "\","
+				+ "\"uuidChoice\" :" + "\"" + uuidChoice + "\"," + "\"uuidAlternative\":" + "\"" + alternativeIndex
+				+ "\", \"dateCreated\": \"" + dateCreated + "\"}";
 	}
 
 	public String toString(LinkedList<Feedback> allFeedback) {
 		return "{" + "\"Feedback\" : " + feedbackJSON(allFeedback) + "," + "\"ChoiceId\"  : " + "\"" + uuidChoice
-				+ "\"," + "\"AlternativeIndex\" : \"" + alternativeIndex + "\", \"dateCreated\": \"" + dateCreated +"\"}";
+				+ "\"," + "\"AlternativeIndex\" : \"" + alternativeIndex + "\", \"dateCreated\": \"" + dateCreated
+				+ "\"}";
 	}
 
 	public static String feedbackJSON(LinkedList<Feedback> allFeedback) {
@@ -74,5 +75,5 @@ public class Feedback {
 		json = json + "]";
 		return json;
 	}
-	
+
 }
