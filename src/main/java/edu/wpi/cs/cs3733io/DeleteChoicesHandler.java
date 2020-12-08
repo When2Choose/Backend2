@@ -33,7 +33,7 @@ public class DeleteChoicesHandler implements RequestHandler<DeleteChoicesRequest
 			logger.log("in createChoice");
 		}
 		ChoicesDAO choicesDAO = new ChoicesDAO();
-		Date today = new Date();
+		Date today = java.util.Calendar.getInstance().getTime();
 		long time = today.getTime();
 		for (Choice c : allChoices) {
 			Date creation = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse(c.getDateCreated());
