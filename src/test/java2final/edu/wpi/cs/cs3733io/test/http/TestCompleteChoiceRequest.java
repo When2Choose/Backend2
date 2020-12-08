@@ -20,6 +20,8 @@ public class TestCompleteChoiceRequest {
 		assertEquals(request.getAlternativeInex(), 1);
 		assertEquals(request1.getChoiceId(), "03a6902e-3b28-46c8-a30f-5018994a67a5");
 		assertEquals(request1.getAlternativeInex(), 2);
+		assertTrue(request.getDate() instanceof Date);
+		assertTrue(request.getDateString() instanceof String);
 	}
 
 }

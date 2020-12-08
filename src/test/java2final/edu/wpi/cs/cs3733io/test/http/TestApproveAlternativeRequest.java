@@ -17,6 +17,7 @@ public class TestApproveAlternativeRequest {
 		assertEquals(request.getChoiceId(), "03a6902e-3b28-46c8-a30f-5018994a67a0");
 		assertEquals(request.getUser(), "user1");
 		assertEquals(request.getAlternative(), 1);
+		request = new ApproveAlternativeRequest();
 	}
 	
 	@Test

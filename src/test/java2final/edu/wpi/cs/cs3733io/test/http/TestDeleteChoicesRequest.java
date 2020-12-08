@@ -14,5 +14,6 @@ public class TestDeleteChoicesRequest {
 		request.setDays(5.0);
 		assertTrue(request.getDays() == 5.0);
 		assertEquals(request.successMessage(), "Successful");
+		request = new DeleteChoicesRequest();
 	}
 }

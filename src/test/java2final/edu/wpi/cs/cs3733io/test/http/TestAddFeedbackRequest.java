@@ -19,6 +19,7 @@ public class TestAddFeedbackRequest {
 		assertEquals(request.getFeedbackText(), "feedback text");
 		assertEquals(request.getChoiceId(), "03a6902e-3b28-46c8-a30f-5018994a67a0");
 		assertEquals(request.getAlternativeIndex(), 1);
+		request = new AddFeedbackRequest();
 	}
 	
 	@Test

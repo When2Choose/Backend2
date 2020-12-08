@@ -20,6 +20,7 @@ public class TestCreateChoiceRequest {
 		for (int i = 0; i < 5; i++) {
 			assertEquals(request.getAlternatives()[i], alts[i]);
 		}
+		request = new CreateChoiceRequest();
 	}
 	
 	@Test
