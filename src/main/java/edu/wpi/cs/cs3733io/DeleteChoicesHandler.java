@@ -37,15 +37,20 @@ public class DeleteChoicesHandler implements RequestHandler<DeleteChoicesRequest
 		long time = today.getTime();
 		for (Choice c : allChoices) {
 			Date creation = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse(c.getDateCreated());
+			logger.log("creat" + creation.toString());
+			logger.log("current" + Long.toString(time));
 
 			long diffInMillies = Math.abs(time - creation.getTime());
-			long diff = TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
+			double diff = TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
 
-			if ((diff-18000) >= (days * 24 * 60)) {
+			logger.log("diifm" + Long.toString(diffInMillies));
+			logger.log("days" + Double.toString(days * 24 * 60));
+
+			if (diff >= (days * 24 * 60)) {
 				choicesDAO.deleteChoice(c);
 
 			}
-			logger.log(Long.toString(diff));
+			logger.log(Double.toString(diff));
 		}
 
 		return true;
