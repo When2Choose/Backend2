@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import com.amazonaws.services.lambda.runtime.Context;
@@ -36,21 +37,25 @@ public class DeleteChoicesHandler implements RequestHandler<DeleteChoicesRequest
 		Date today = java.util.Calendar.getInstance().getTime();
 		long time = today.getTime();
 		for (Choice c : allChoices) {
-			Date creation = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse(c.getDateCreated());
-			logger.log("creat" + creation.toString());
-			logger.log("current" + Long.toString(time));
+			SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			simpleDate.setTimeZone(TimeZone.getTimeZone("EST"));
+			Date creation = simpleDate.parse(c.getDateCreated());
+
+			logger.log("Creation Date" + creation.toString());
+			logger.log("Current Time" + Long.toString(time));
+			logger.log("Creation Time" + Long.toString(creation.getTime()));
 
 			long diffInMillies = Math.abs(time - creation.getTime());
-			double diff = TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
+			long diff = TimeUnit.SECONDS.convert(diffInMillies, TimeUnit.MILLISECONDS);
 
-			logger.log("diifm" + Long.toString(diffInMillies));
-			logger.log("days" + Double.toString(days * 24 * 60));
+			logger.log("Different in Days Milliseconds" + Long.toString(diffInMillies));
+			logger.log("Days Seconds" + Double.toString(days * 24 * 60 * 60));
 
-			if (diff >= (days * 24 * 60)) {
+			if (diff >= (long) (days * 24 * 60 * 60)) {
 				choicesDAO.deleteChoice(c);
 
 			}
-			logger.log(Double.toString(diff));
+			logger.log(" Difference in seconds " + Long.toString(diff));
 		}
 
 		return true;
