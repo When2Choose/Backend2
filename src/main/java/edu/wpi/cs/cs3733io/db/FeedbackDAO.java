@@ -126,7 +126,7 @@ public class FeedbackDAO {
 		String description = resultSet.getString("description");
 		String uuidChoice = resultSet.getString("choice_uuid");
 		int alternativeIndex = resultSet.getInt("alternative_index");
-		String dateCreated = resultSet.getNString("date_created");
+		String dateCreated = resultSet.getString("date_created");
 
 		return new Feedback(userName, description, uuidChoice, alternativeIndex, dateCreated);
 	}

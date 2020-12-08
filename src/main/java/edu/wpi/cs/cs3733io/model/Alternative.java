@@ -76,7 +76,7 @@ public class Alternative {
 		return String.format(
 				"{\"alternativeUUID\": \"%s\", \"choiceUUID\": \"%s\", \"index\": %d, \"description\": \"%s\", "
 						+ "\"Approvers\": %s, \"Disapprovers\": %s ,\"isChosen\": %d, \"Feedback\":"
-						+ feedbackJSON(this.feedback) + "}",
+						+ Feedback.feedbackJSON(this.feedback) + "}",
 				alternativeUUID, choiceUUID, index, name, approverJSON(), dispproverJSON(), isChosen ? 1 : 0);
 	}
 
@@ -153,6 +153,7 @@ public class Alternative {
 		}
 	}
 
+
 	/**
 	 * Converts Alternative with List of Feedback to JSON String Format.
 	 * 
@@ -175,5 +176,4 @@ public class Alternative {
 		feedback = feedback + "]";
 		return feedback;
 	}
-
 }

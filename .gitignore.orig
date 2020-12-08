@@ -1,0 +1,8 @@
+/target/
+<<<<<<< HEAD
+/.idea/
+/.settings/
+=======
+/.settings/
+/.idea/
+>>>>>>> master
