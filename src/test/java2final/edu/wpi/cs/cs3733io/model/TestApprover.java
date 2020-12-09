@@ -2,7 +2,6 @@ package edu.wpi.cs.cs3733io.model;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 import org.junit.Before;
