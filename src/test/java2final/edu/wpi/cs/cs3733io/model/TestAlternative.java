@@ -2,7 +2,6 @@ package edu.wpi.cs.cs3733io.model;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 import org.junit.Before;
@@ -26,17 +25,16 @@ public class TestAlternative {
 		assertTrue(alt1.getIsChosen());
 	}
 	
-//	@Test
-//	public void testFeedbackJSON() {
-//		LinkedList<Feedback> feedback = new LinkedList<>();
-//		assertTrue(alt1.feedbackJSON(feedback) instanceof String);
-//		LinkedList<Feedback> feedback2 = new LinkedList<>();
-//		Feedback f = new Feedback("user1", "description", "03a6902e-3b28-46c8-a30f-5018994a67a0", 1);
-//		feedback2.add(f);
-//		assertTrue(alt1.feedbackJSON(feedback2) instanceof String);
-//		alt1.setFeedback(feedback2);
-//		assertTrue(alt1.feedbackJSON(feedback2) instanceof String);
-//	}
+	@Test
+	public void testFeedbackJSON() {
+		LinkedList<Feedback> feedback = new LinkedList<>();
+		assertTrue(alt1.feedbackJSON(feedback) instanceof String);
+		Feedback f = new Feedback("user1", "description", "03a6902e-3b28-46c8-a30f-5018994a67a0", 1);
+		feedback.add(f);
+		assertTrue(alt1.feedbackJSON(feedback) instanceof String);
+		alt1.setFeedback(feedback);
+		assertTrue(alt1.feedbackJSON(feedback) instanceof String);
+	}
 	
 	@Test
 	public void testToJSON() {

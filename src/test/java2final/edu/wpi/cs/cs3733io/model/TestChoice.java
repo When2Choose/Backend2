@@ -83,13 +83,20 @@ public class TestChoice {
 	@Test
 	public void testToStringForGeneratingReport() {
 		ArrayList<Choice> choices = new ArrayList<>();
-		assertTrue(choice1.toStringForGeneratingReport(choices) instanceof String);
+		String[] alternativeNames1 = {"Alt1", "Alt2", "Alt3", "Alt4", "Alt5"};
+		choice1 = new Choice("03a6902e-3b28-46c8-a30f-5018994a67a0", 10, "Test Description", "2020/12/06 13:54:22", "2020/12/06 13:54:21", true, alternativeNames1);
+		assertTrue(Choice.toStringForGeneratingReport(choices) instanceof String);
+		choices.add(choice1);
+		assertTrue(Choice.toStringForGeneratingReport(choices) instanceof String);
 	}
 	
 	@Test
 	public void testCompleted() {
 		choice2.setIsCompleted(true);
 		assertTrue(choice2.getIsCompleted());
+		choice2.competed("2020/12/06 13:54:22");
+		assertEquals(choice2.getDateCompleted(), "2020/12/06 13:54:22");
+		choice2.createAlternatives();
 	}
 
 }
