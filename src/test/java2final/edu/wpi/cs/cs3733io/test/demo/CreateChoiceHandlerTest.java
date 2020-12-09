@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import static org.junit.Assert.*;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -21,7 +19,7 @@ import edu.wpi.cs.cs3733io.http.DeleteChoicesRequest;
 /**
  * A simple test harness for locally invoking your Lambda function handler.
  */
-public class CreateChoiceHandlerTest extends LambdaTest{
+public class CreateChoiceHandlerTest extends LambdaTest {
 	
 	void testSuccessInput(String incoming) throws IOException {
     	CreateChoiceHandler handler = new CreateChoiceHandler();
@@ -40,7 +38,7 @@ public class CreateChoiceHandlerTest extends LambdaTest{
     }
 	
 	@Test
-	public void testShoudlBeOk() {
+	public void testShouldBeOk() {
 		String[] alts = {"alt1", "alt2", "alt3", "alt4", "alt5"};
 		CreateChoiceRequest ccr = new CreateChoiceRequest(10, "choice description", alts);
 		String SAMPLE_INPUT_STRING = new Gson().toJson(ccr);
