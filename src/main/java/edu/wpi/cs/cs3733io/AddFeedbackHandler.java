@@ -6,6 +6,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
+import edu.wpi.cs.cs3733io.db.ChoicesDAO;
 import edu.wpi.cs.cs3733io.db.FeedbackDAO;
 import edu.wpi.cs.cs3733io.http.AddFeedbackRequest;
 import edu.wpi.cs.cs3733io.http.AllResponse;
@@ -52,6 +53,22 @@ public class AddFeedbackHandler implements RequestHandler<AddFeedbackRequest, Al
 	}
 
 	/**
+	 * Checks to see if choice is complete
+	 * 
+	 * @param choiceUUID String.
+	 * @return Returns true if choice complete, false otherwise.
+	 */
+	boolean choiceNotComplete(String choiceUUID) throws Exception {
+		if (logger != null) {
+			logger.log("in getApprove");
+		}
+
+		ChoicesDAO choice = new ChoicesDAO();
+
+		return !choice.getChoice(choiceUUID).getIsCompleted();
+	}
+
+	/**
 	 * Generates a response for adding Feedback.
 	 */
 	@Override
@@ -68,7 +85,7 @@ public class AddFeedbackHandler implements RequestHandler<AddFeedbackRequest, Al
 
 		try {
 
-			if (addFeedback(feedback)) {
+			if (addFeedback(feedback) && choiceNotComplete(feedback.getUuidChoice())) {
 				LinkedList<Feedback> allFeedback = getFeedback(feedback.getUuidChoice(),
 						feedback.getAlternativeIndex());
 				response = new AllResponse(feedback.toString(allFeedback), 200);
