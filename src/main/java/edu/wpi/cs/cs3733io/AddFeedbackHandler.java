@@ -85,7 +85,7 @@ public class AddFeedbackHandler implements RequestHandler<AddFeedbackRequest, Al
 
 		try {
 
-			if (addFeedback(feedback) && choiceNotComplete(feedback.getUuidChoice())) {
+			if ( choiceNotComplete(feedback.getUuidChoice()) && addFeedback(feedback)) {
 				LinkedList<Feedback> allFeedback = getFeedback(feedback.getUuidChoice(),
 						feedback.getAlternativeIndex());
 				response = new AllResponse(feedback.toString(allFeedback), 200);
